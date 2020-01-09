@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "WeaponBase.generated.h"
 
 UCLASS()
@@ -19,6 +20,14 @@ protected:
 
 	// Timer to call next attack function
 	FTimerHandle AttackTimerHandle;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+		USkeletalMeshComponent* WeaponMesh = nullptr;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+		USkeletalMeshComponent* ArmsMesh = nullptr; 
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
+		USceneComponent* BarrelEnd = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 		float AttackRate = 1.f;

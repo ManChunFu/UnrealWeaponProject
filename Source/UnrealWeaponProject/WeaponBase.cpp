@@ -8,6 +8,12 @@
 AWeaponBase::AWeaponBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	BarrelEnd = CreateDefaultSubobject<USceneComponent>(TEXT("Barrel End"));
+	ArmsMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
+	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	WeaponMesh->AttachToComponent(ArmsMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "GripPoint");
+	WeaponMesh->Transform
+	RootComponent = ArmsMesh;
 }
 
 // Called when the game starts or when spawned
