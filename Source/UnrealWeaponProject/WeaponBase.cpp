@@ -12,7 +12,7 @@ AWeaponBase::AWeaponBase()
 	ArmsMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
 	WeaponMesh->AttachToComponent(ArmsMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "GripPoint");
-	WeaponMesh->Transform
+	//WeaponMesh->Transform
 	RootComponent = ArmsMesh;
 }
 
