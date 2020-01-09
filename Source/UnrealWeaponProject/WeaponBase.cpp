@@ -11,16 +11,22 @@ AWeaponBase::AWeaponBase()
 	BarrelEnd = CreateDefaultSubobject<USceneComponent>(TEXT("Barrel End"));
 	ArmsMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
-	WeaponMesh->AttachToComponent(ArmsMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "GripPoint");
-	//WeaponMesh->Transform
+	
+	
 	RootComponent = ArmsMesh;
 }
 
 // Called when the game starts or when spawned
 void AWeaponBase::BeginPlay()
 {
+	
 	Super::BeginPlay();
 
+}
+
+void AWeaponBase::OnConstruction(const FTransform& Transform)
+{
+	WeaponMesh->AttachToComponent(ArmsMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "GripPoint");
 }
 
 void AWeaponBase::StartFire()
