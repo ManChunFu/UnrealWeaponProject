@@ -1,0 +1,2 @@
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Intermediate\Build\Win64\UE4Editor\Development\UnrealWeaponProject\Definitions.UnrealWeaponProject.h
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Source\UnrealWeaponProject\UnrealWeaponProject.h

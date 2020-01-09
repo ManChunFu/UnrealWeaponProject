@@ -1,0 +1,9 @@
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Intermediate\Build\Win64\UE4Editor\Development\UnrealWeaponProject\Definitions.UnrealWeaponProject.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Source\UnrealWeaponProject/UnrealWeaponProjectCharacter.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\GameFramework/Character.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\GameFramework/RootMotionSource.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\RootMotionSource.generated.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Character.generated.h
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Intermediate\Build\Win64\UE4Editor\Inc\UnrealWeaponProject\UnrealWeaponProjectCharacter.generated.h

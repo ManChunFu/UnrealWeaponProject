@@ -1,0 +1,11 @@
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Intermediate\Build\Win64\UE4Editor\Development\UnrealWeaponProject\Definitions.UnrealWeaponProject.h
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Source\UnrealWeaponProject\UnrealWeaponProjectProjectile.h
+C:\Users\Man.Chun.Fu\Desktop\UnrealWeaponProject\UnrealWeaponProject\Intermediate\Build\Win64\UE4Editor\Inc\UnrealWeaponProject\UnrealWeaponProjectProjectile.generated.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\GameFramework/ProjectileMovementComponent.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\GameFramework/MovementComponent.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\MovementComponent.generated.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ProjectileMovementComponent.generated.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\Components/SphereComponent.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Runtime\Engine\Classes\Components/ShapeComponent.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ShapeComponent.generated.h
+C:\Program Files\Epic Games\UE_4.24\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SphereComponent.generated.h
