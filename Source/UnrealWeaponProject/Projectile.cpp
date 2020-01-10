@@ -35,7 +35,6 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 	ProjectileMovement->bShouldBounce = false;
 	// Die after 30 seconds by default
 	InitialLifeSpan = 30.0f;
-	UE_LOG(LogTemp, Warning, TEXT("Spawned Projectile"));
 }
 
 

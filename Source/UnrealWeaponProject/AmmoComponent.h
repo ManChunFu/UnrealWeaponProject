@@ -36,6 +36,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void OnAttack();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void Reload();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		bool DecreaseAmmo(int32 Amount = 1);

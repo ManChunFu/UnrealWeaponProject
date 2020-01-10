@@ -28,13 +28,21 @@ void UAmmoComponent::OnAttack()
 
 }
 
+void UAmmoComponent::Reload()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reloading"));
+	MagazineAmmo = MagazineSize;
+}
+
 bool UAmmoComponent::DecreaseAmmo(int32 Amount)
 {
-	if (MagazineAmmo > Amount)
+	if (MagazineAmmo >= Amount)
 	{
 		MagazineAmmo -= Amount;
+		UE_LOG(LogTemp, Warning, TEXT("Ammo Left %d"), MagazineAmmo);
 		return true;
 	}
+	Reload();
 	return false;
 }
 

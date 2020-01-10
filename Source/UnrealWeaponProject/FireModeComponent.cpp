@@ -11,7 +11,6 @@ UFireModeComponent::UFireModeComponent()
 
 void UFireModeComponent::AutoFire(float RateOfFire, AWeapon* Weapon)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Weapon Start Attack"));
 	GetWorld()->GetTimerManager().SetTimer(FireHandle, Weapon, &AWeapon::Attack, RateOfFire, true);
 	Weapon->Attack();
 }
