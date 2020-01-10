@@ -50,7 +50,7 @@ void AUnrealWeaponProjectCharacter::BeginPlay()
 			if (WeaponClass)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Spawn weapon"));
-				EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
+				EquippedWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass);
 				EquippedWeapon->AttachToComponent(FirstPersonCameraComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);	
 				
 			}
@@ -72,8 +72,8 @@ void AUnrealWeaponProjectCharacter::SetupPlayerInputComponent(class UInputCompon
 
 	// Bind fire event
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AUnrealWeaponProjectCharacter::StartAttack);
-	PlayerInputComponent->BindAction("Fire", IE_Released, this, &AUnrealWeaponProjectCharacter::StopAttack);
+	//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AUnrealWeaponProjectCharacter::StartAttack);
+	//PlayerInputComponent->BindAction("Fire", IE_Released, this, &AUnrealWeaponProjectCharacter::StopAttack);
 
 	// Bind movement events
 	PlayerInputComponent->BindAxis("MoveForward", this, &AUnrealWeaponProjectCharacter::MoveForward);
@@ -88,23 +88,6 @@ void AUnrealWeaponProjectCharacter::SetupPlayerInputComponent(class UInputCompon
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AUnrealWeaponProjectCharacter::LookUpAtRate);
 }
 
-
-
-void AUnrealWeaponProjectCharacter::StartAttack()
-{
-	if (EquippedWeapon)
-	{
-		EquippedWeapon->StartFire();
-	}
-}
-
-void AUnrealWeaponProjectCharacter::StopAttack()
-{
-	if (EquippedWeapon)
-	{
-		EquippedWeapon->StopFire();
-	}
-}
 
 void AUnrealWeaponProjectCharacter::MoveForward(float Value)
 {

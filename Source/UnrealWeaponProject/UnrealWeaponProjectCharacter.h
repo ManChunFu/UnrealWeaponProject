@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "WeaponBase.h"
+#include "Weapon.h"
 #include "UnrealWeaponProjectCharacter.generated.h"
 
 class UInputComponent;
@@ -23,10 +23,10 @@ public:
 
 	/** Weapon */
 	UPROPERTY(EditAnywhere, Category = "Weapon")
-	TSubclassOf<AWeaponBase> WeaponClass;
+	TSubclassOf<AWeapon> WeaponClass;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon")
-	AWeaponBase* EquippedWeapon;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
+	AWeapon* EquippedWeapon;
 
 protected:
 	virtual void BeginPlay();
@@ -43,9 +43,7 @@ public:
 protected:
 
 
-	/** Calls attack on equipped weapon */
-	void StartAttack();
-	void StopAttack();
+
 
 
 	/** Handles moving forward/backward */

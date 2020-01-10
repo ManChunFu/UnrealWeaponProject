@@ -28,7 +28,7 @@ public:
 		int32 SpareAmmo = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
-		int32 MagazineAmmo = 0;
+		int32 MagazineAmmo = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
 		int32 MaxSpareAmmo = 200;
@@ -38,6 +38,6 @@ public:
 		void OnAttack();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		int32 DecreaseAmmo(int32 Amount);
+		bool DecreaseAmmo(int32 Amount = 1);
 
 };

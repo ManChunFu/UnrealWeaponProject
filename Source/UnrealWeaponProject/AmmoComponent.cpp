@@ -28,14 +28,14 @@ void UAmmoComponent::OnAttack()
 
 }
 
-int32 UAmmoComponent::DecreaseAmmo(int32 Amount)
+bool UAmmoComponent::DecreaseAmmo(int32 Amount)
 {
 	if (MagazineAmmo > Amount)
 	{
 		MagazineAmmo -= Amount;
-		return MagazineAmmo;
+		return true;
 	}
-	return MagazineAmmo;
+	return false;
 }
 
 
