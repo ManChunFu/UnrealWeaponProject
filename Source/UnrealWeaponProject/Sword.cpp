@@ -5,7 +5,7 @@
 
 ASword::ASword()
 {
-	bUseAmmo = false;
+	//bUseAmmo = false;
 }
 void ASword::Attack()
 {

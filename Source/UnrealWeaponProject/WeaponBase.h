@@ -5,7 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Ammo.h"
 #include "WeaponBase.generated.h"
+
+
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AWeaponBase : public AActor
@@ -38,18 +41,8 @@ protected:
 		float Damage = 1.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 		bool bAutoAttack = true;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		bool bUseAmmo = true;
 
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		int32 CurrentAmmo = 1;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		int32 MaxAmmo = 30;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		int32 ClipSize = 10;
-
-
+	
 	virtual void BeginPlay() override;
 	virtual void OnConstruction(const FTransform& Transform) override;
 
