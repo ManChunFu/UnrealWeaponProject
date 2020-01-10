@@ -52,6 +52,7 @@ void AUnrealWeaponProjectCharacter::BeginPlay()
 				UE_LOG(LogTemp, Warning, TEXT("Spawn weapon"));
 				EquippedWeapon = GetWorld()->SpawnActor<AWeaponBase>(WeaponClass);
 				EquippedWeapon->AttachToComponent(FirstPersonCameraComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);	
+				
 			}
 		}
 	}

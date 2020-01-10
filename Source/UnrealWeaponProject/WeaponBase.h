@@ -27,6 +27,9 @@ protected:
 		USkeletalMeshComponent* ArmsMesh = nullptr; 
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
+		USceneComponent* WeaponRoot = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		USceneComponent* BarrelEnd = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")

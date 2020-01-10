@@ -11,10 +11,10 @@ void AWeaponProjectile::Attack()
 	if (World != NULL)
 	{
 		{
-			const FRotator SpawnRotation = GetActorRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 			
-			const FVector SpawnLocation = GetActorLocation();
+			FVector SpawnLocation = BarrelEnd->GetComponentLocation();
+			FRotator SpawnRotation = BarrelEnd->GetComponentRotation();
 			//const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
 			
 			FActorSpawnParameters ActorSpawnParams;
