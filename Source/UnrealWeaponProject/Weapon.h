@@ -40,6 +40,9 @@ public:
 		void StartAttacking();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+		void Reload();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void StopAttacking();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")

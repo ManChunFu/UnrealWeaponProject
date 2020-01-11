@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Projectile.h"
 #include "ProjectileComponent.generated.h"
 
 
@@ -21,7 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 public:	
 	UFUNCTION(BlueprintCallable)
-		void FireProjectile(TSubclassOf<AActor> ProjectileClass, FTransform SpawnLocation);
+		void FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,  FTransform SpawnLocation, float SpeedMultiplier = 1);
 
 
 };

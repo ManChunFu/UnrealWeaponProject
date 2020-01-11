@@ -6,11 +6,7 @@
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -18,20 +14,31 @@ UAmmoComponent::UAmmoComponent()
 void UAmmoComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 	
-}
-
-void UAmmoComponent::OnAttack()
-{
-
 }
 
 void UAmmoComponent::Reload()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Reloading"));
-	MagazineAmmo = MagazineSize;
+
+	// Magazine is Full or 0 Spare Ammo
+	if (MagazineAmmo >= MagazineSize && SpareAmmo <= 0)
+	{
+		return;
+	}
+
+	// Enough Ammo to Fill Magazine
+	if (MagazineAmmo + SpareAmmo >= MagazineSize)
+	{
+		SpareAmmo += MagazineAmmo;
+		MagazineAmmo = MagazineSize;
+		SpareAmmo -= MagazineSize;
+		return;
+	}
+	// Little ammo left to top up magazine
+	MagazineAmmo += SpareAmmo;
+	SpareAmmo = 0;
+
 }
 
 bool UAmmoComponent::DecreaseAmmo(int32 Amount)
@@ -39,7 +46,8 @@ bool UAmmoComponent::DecreaseAmmo(int32 Amount)
 	if (MagazineAmmo >= Amount)
 	{
 		MagazineAmmo -= Amount;
-		UE_LOG(LogTemp, Warning, TEXT("Ammo Left %d"), MagazineAmmo);
+		UE_LOG(LogTemp, Warning, TEXT("Ammo in mag %d"), MagazineAmmo);
+		UE_LOG(LogTemp, Warning, TEXT("Ammo in bag %d"), SpareAmmo);
 		return true;
 	}
 	Reload();

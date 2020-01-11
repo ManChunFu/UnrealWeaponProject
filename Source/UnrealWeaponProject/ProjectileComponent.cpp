@@ -19,19 +19,16 @@ void UProjectileComponent::BeginPlay()
 	
 }
 
-void UProjectileComponent::FireProjectile(TSubclassOf<AActor> ProjectileClass, FTransform SpawnLocation)
+void UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass,  AActor* Owner, FTransform SpawnLocation, float SpeedMultiplier)
 {
-
 	UWorld* const World = GetWorld();
 	if (World != NULL)
 	{
 		{
 			//const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
-
-			AActor* ProjectileInstance = World->SpawnActorDeferred<AActor>(ProjectileClass, SpawnLocation, nullptr);
-
+			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnLocation, Owner);
+			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			UGameplayStatics::FinishSpawningActor(ProjectileInstance, SpawnLocation);
 		}
 	}
-
 }

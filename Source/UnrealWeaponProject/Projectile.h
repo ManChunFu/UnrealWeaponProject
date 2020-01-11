@@ -19,17 +19,26 @@ public:
 protected:
 	// Projectile Movement
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-		class UProjectileMovementComponent* ProjectileMovement;
+	class UProjectileMovementComponent* ProjectileMovement;
+	
+	// Sphere component for collision
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	class USphereComponent* CollisionComp;
 	// Projectile Mesh
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* ProjectileMesh;
 
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	
 	// Called when the game starts or when spawned
 	UFUNCTION()
 	virtual void BeginPlay() override;
+	
 	UFUNCTION()
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 public:	
-
+	UPROPERTY(EditAnywhere)
+		float ProjectileSpeed = 1000;
 };
