@@ -3,21 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "WeaponBase.h"
+#include "Weapon.h"
 #include "MeleeSpear.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UNREALWEAPONPROJECT_API AMeleeSpear : public AWeaponBase
+class UNREALWEAPONPROJECT_API AMeleeSpear : public AWeapon
 {
 	GENERATED_BODY()
 	
-	virtual void OnConstruction(const FTransform& Transform) override;
-
-public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-	FString Name = "Spear";
-	virtual void Attack() override;
 };
