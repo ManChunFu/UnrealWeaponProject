@@ -33,4 +33,5 @@ public:
 	bool bDeath = false;
 	virtual float ApplyDamage_Implementation(float InDamage) override;
 
+
 };

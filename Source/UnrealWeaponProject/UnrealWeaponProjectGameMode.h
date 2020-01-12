@@ -13,6 +13,7 @@ class AUnrealWeaponProjectGameMode : public AGameModeBase
 
 public:
 	AUnrealWeaponProjectGameMode();
+	
 };
 
 

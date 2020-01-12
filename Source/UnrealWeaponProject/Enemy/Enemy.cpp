@@ -45,3 +45,4 @@ float AEnemy::ApplyDamage_Implementation(float InDamage)
 	return CurrentHealth;
 }
 
+

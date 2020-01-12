@@ -5,6 +5,7 @@
 #include "UnrealWeaponProjectCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
+
 AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 	: Super()
 {
@@ -15,3 +16,5 @@ AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 	// use our custom HUD class
 	HUDClass = AUnrealWeaponProjectHUD::StaticClass();
 }
+
+
