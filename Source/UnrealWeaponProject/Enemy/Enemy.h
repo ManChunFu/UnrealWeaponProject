@@ -3,12 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UnrealWeaponProject/DamageableInterface.h"
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
 UCLASS()
-class UNREALWEAPONPROJECT_API AEnemy : public ACharacter, public IDamageableInterface
+class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -28,10 +27,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
-	int32 CurrentHealth = 100;
+	float CurrentHealth = 100;
+	
+	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
 	bool bDeath = false;
-	virtual float ApplyDamage_Implementation(float InDamage) override;
-
 
 };
