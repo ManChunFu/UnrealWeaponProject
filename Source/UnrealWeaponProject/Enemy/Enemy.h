@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class AGameLevelManager;
+
 UCLASS()
 class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
 {
@@ -27,10 +29,15 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
-	float CurrentHealth = 100;
+	float CurrentHealth = 50;
 	
+	UPROPERTY (EditAnywhere, BlueprintReadWrite, Category = "Health")
+	bool bDeath = false;
+
 	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
-	bool bDeath = false;
+	FTimerHandle TimeHandle;
+
+	AGameLevelManager* GameLevelManager = nullptr;
 
 };

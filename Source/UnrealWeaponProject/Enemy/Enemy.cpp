@@ -2,7 +2,10 @@
 
 
 #include "Enemy.h"
-#include <Engine/Engine.h>
+#include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
+#include "UnrealWeaponProject/GameLevelManager.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -16,7 +19,6 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
@@ -48,12 +50,17 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
 		if (CurrentHealth <= 0.f)
 		{
+			bDeath = true;
+			//GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::OnTimerEnd, 3.f, false);
 			SetLifeSpan(0.001f);
+			GameLevelManager->RegisterEnemyDeath();
 		}
 	}
 
 	return ActualDamage;
 }
+
+
 
 
 

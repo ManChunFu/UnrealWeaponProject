@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Engine/World.h"
-#include "Enemy.h"
 #include "SpawnPoint.h"
+#include "Enemy.h"
+#include "Engine/World.h"
+#include "UnrealWeaponProject/GameLevelManager.h"
 
 void ASpawnPoint::SpawnEnemy()
 {
@@ -19,5 +20,6 @@ void ASpawnPoint::BeginPlay()
 	Super::BeginPlay();
 
 	SpawnEnemy();
+	GameLevelManager->RegisterSpawnedEnemy(ActorSpawnAmout);
 }
 

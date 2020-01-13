@@ -7,7 +7,7 @@
 #include "SpawnPoint.generated.h"
 
 class AEnemy;
-class AUnrealWeaponProjectGameState;
+class AGameLevelManager;
 
 /**
  * 
@@ -28,5 +28,6 @@ public:
     void SpawnEnemy();
 
 private:
+    AGameLevelManager* GameLevelManager = nullptr;
     virtual void BeginPlay() override;
 };
