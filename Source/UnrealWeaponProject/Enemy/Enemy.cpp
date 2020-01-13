@@ -41,9 +41,9 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 	if (ActualDamage > 0.f)
 	{
 		CurrentHealth -= ActualDamage;
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, TEXT("Currernt Healt: "));
-			
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Cyan, FString::SanitizeFloat(CurrentHealth));
+
+		FString CurrentHealthReport = TEXT("Current Health: ") + FString::SanitizeFloat(CurrentHealth);
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
 
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
 		if (CurrentHealth <= 0.f)

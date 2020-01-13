@@ -28,10 +28,9 @@ public:
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Health")
 	float CurrentHealth = 100;
-
-	bool bDeath = false;
-
+	
 	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
+	bool bDeath = false;
 
 };
