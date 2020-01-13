@@ -27,6 +27,8 @@ AProjectile::AProjectile()
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	UGameplayStatics::ApplyDamage(OtherActor, 5.f, nullptr, nullptr, nullptr);
+	FString Name = OtherActor->GetName();
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
 	Destroy();
 }
 
