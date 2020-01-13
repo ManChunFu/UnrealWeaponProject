@@ -24,6 +24,10 @@ void UProjectileComponent::BeginPlay()
 
 AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass,  AActor* Owner, FTransform CameraTransform, FTransform SpawnTransform, float SpeedMultiplier)
 {
+	//Will spawn two projectiles, One visible that does not have any collision.
+	//One invisible with the correct spawn location (inside camera center) which is invisible but carries out the collision.
+	// My reference is Blizzards Overwatch which from my testing uses a system like this to provide accurate shots while giving visual feedback that makes sense
+
 	UWorld* const World = GetWorld();
 	if (World != NULL)
 	{
