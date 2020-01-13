@@ -13,23 +13,19 @@ UCLASS()
 class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
-
-
-		UPROPERTY(VisibleAnywhere, Category = Weapon)
-		USkeletalMeshComponent* WeaponMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = Weapon)
-		USkeletalMeshComponent* ArmsMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Weapon")
-		USceneComponent* WeaponRoot = nullptr;
-
-	
-
-
 public:
 	AWeapon();
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
+		USkeletalMeshComponent* WeaponMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
+		USkeletalMeshComponent* ArmsMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+		USceneComponent* WeaponRoot = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UArrowComponent* BarrelEnd = nullptr;
 protected:
 	virtual void BeginPlay() override;
