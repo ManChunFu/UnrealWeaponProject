@@ -37,6 +37,8 @@ void AWeaponBase::OnConstruction(const FTransform& Transform)
 	ArmsMesh->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
 	ArmsMesh->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
 	WeaponMesh->AttachToComponent(ArmsMesh, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "GripPoint");
+	WeaponMesh->SetCollisionProfileName("NoCollision");
+	ArmsMesh->SetCollisionProfileName("NoCollision");
 }
 
 void AWeaponBase::StartFire()

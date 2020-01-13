@@ -18,7 +18,9 @@ public:
 	// Sets default values for this component's properties
 	UFireModeComponent();
 
-protected:
+private:
+	UFUNCTION()
+		void Burst(AWeapon* Weapon);
 
 public:	
 
@@ -27,7 +29,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 
-		void BurstFire(float RateOfFire, int32 AttacksPerBurst);
+		void BurstFire(float RateOfFire, AWeapon* Weapon, int32 AttacksPerBurst);
+
+	
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Stop();

@@ -15,8 +15,14 @@ void UFireModeComponent::AutoFire(float RateOfFire, AWeapon* Weapon)
 	Weapon->Attack();
 }
 
-void UFireModeComponent::BurstFire(float RateOfFire, int32 AttacksPerBurst)
+void UFireModeComponent::BurstFire(float RateOfFire, AWeapon* Weapon, int32 AttacksPerBurst)
 {
+	GetWorld()->GetTimerManager().SetTimer(FireHandle, Weapon, &AWeapon::Attack, RateOfFire, true);
+}
+
+void UFireModeComponent::Burst(AWeapon* Weapon)
+{
+
 }
 
 void UFireModeComponent::Stop()

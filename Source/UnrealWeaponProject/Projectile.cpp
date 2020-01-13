@@ -9,7 +9,7 @@
 // Sets default values
 AProjectile::AProjectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	CollisionComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComp"));
 	CollisionComp->InitSphereRadius(5.0f);
@@ -26,18 +26,21 @@ AProjectile::AProjectile()
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UGameplayStatics::ApplyDamage(OtherActor, 5.f, nullptr, nullptr, nullptr);
-	FString Name = OtherActor->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
-	Destroy();
+	if (OtherActor != GetOwner())
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, 5.f, nullptr, nullptr, nullptr);
+		FString Name = OtherActor->GetName();
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
+		Destroy();
+	}
 }
 
 // Called when the game starts or when spawned
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	
+
+
 }
 
 void AProjectile::OnConstruction(const FTransform& Transform)

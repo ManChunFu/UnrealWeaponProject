@@ -42,7 +42,7 @@ void AUnrealWeaponProjectCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	//Todo Attach gun
+	//Spawn and attach gun to player
 	UWorld* const World = GetWorld();
 	if (World != NULL)
 	{
@@ -51,6 +51,7 @@ void AUnrealWeaponProjectCharacter::BeginPlay()
 			{
 				UE_LOG(LogTemp, Warning, TEXT("Spawn weapon"));
 				EquippedWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass);
+				EquippedWeapon->Holder = this;
 				EquippedWeapon->AttachToComponent(FirstPersonCameraComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);	
 				
 			}
