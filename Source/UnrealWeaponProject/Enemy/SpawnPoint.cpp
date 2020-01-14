@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "Enemy.h"
 
+
 void ASpawnPoint::SpawnEnemy()
 {
 	FVector Location = GetActorLocation();
@@ -23,7 +24,7 @@ void ASpawnPoint::SpawnEnemy()
 void ASpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SpawnEnemy();
 }
+
+
 

@@ -43,7 +43,7 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 	{
 		CurrentHealth -= ActualDamage;
 
-		FString CurrentHealthReport = TEXT("Current Health: ") + FString::SanitizeFloat(CurrentHealth);
+		FString CurrentHealthReport = TEXT("Current Health:  ") + FString::SanitizeFloat(CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
 
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  

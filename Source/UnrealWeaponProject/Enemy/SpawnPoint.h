@@ -7,6 +7,7 @@
 #include "SpawnPoint.generated.h"
 
 class AEnemy;
+class AGameLevelManager;
 
 /**
  * 
@@ -14,7 +15,8 @@ class AEnemy;
 UCLASS()
 class UNREALWEAPONPROJECT_API ASpawnPoint : public ATargetPoint
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
+
 
 public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
@@ -27,5 +29,6 @@ public:
     void SpawnEnemy();
 
 private:
+    AEnemy* Enemy = nullptr;
     virtual void BeginPlay() override;
 };
