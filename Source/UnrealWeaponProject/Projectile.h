@@ -16,14 +16,18 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+	// Sphere component for collision
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectile")
+		class USphereComponent* CollisionComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+		float GravityScale = 1.f;
+
 protected:
 	// Projectile Movement
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovement;
 	
-	// Sphere component for collision
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class USphereComponent* CollisionComp;
+
 	// Projectile Mesh
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* ProjectileMesh;

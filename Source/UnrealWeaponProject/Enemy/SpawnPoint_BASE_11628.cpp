@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SpawnPoint.h"
 #include "Engine/World.h"
 #include "Enemy.h"
+#include "SpawnPoint.h"
 
 void ASpawnPoint::SpawnEnemy()
 {

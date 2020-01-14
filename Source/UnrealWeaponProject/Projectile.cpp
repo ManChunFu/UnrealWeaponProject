@@ -21,6 +21,7 @@ AProjectile::AProjectile()
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	ProjectileMesh->SetupAttachment(CollisionComp);
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
+	
 
 }
 
@@ -52,6 +53,7 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 	ProjectileMovement->MaxSpeed = 1000000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
 	ProjectileMovement->bShouldBounce = false;
+	ProjectileMovement->ProjectileGravityScale = GravityScale;
 	// Die after 30 seconds by default
 	InitialLifeSpan = 30.0f;
 }
