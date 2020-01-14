@@ -32,6 +32,10 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		UGameplayStatics::ApplyDamage(OtherActor, 5.f, nullptr, nullptr, nullptr);
 		FString Name = OtherActor->GetName();
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
+		if (PhantomBullet)
+		{
+			PhantomBullet->Destroy();
+		}
 		Destroy();
 	}
 }
@@ -48,6 +52,7 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	this->SetActorTickEnabled(true);
+	CollisionComp->IgnoreActorWhenMoving(GetOwner(), true);
 	ProjectileMovement->UpdatedComponent = RootComponent;
 	ProjectileMovement->InitialSpeed = ProjectileSpeed;
 	ProjectileMovement->MaxSpeed = 1000000.f;

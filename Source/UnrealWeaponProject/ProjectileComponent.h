@@ -16,13 +16,12 @@ class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UProjectileComponent();
-
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 public:	
 	UFUNCTION(BlueprintCallable)
-		AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,FTransform CameraTransform,  FTransform SpawnLocation, float SpeedMultiplier = 1);
+		AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,FTransform CameraTransform,  FTransform SpawnLocation, float SpeedMultiplier = 1, bool bDebugLine = false);
 
 
 };
