@@ -3,16 +3,21 @@
 
 #include "GameLevelManager.h"
 #include "Enemy/SpawnPoint.h"
+#include "Enemy/Enemy.h"
 
-void AGameLevelManager::RegisterSpawnedEnemy(int32 ActorSpawnAmout)
+AGameLevelManager::AGameLevelManager()
 {
-	TotalEnemy += ActorSpawnAmout;
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void AGameLevelManager::RegisterEnemyDeath()
 {
-	TotalEnemy--;
-	SpawnPoint->SpawnEnemy();
+	TotalSpawnedEnemy--;
+}
+
+void AGameLevelManager::RegisterSpawnEnemy(int32 ActorSpawnAmout)
+{
+	TotalSpawnedEnemy += ActorSpawnAmout;
 }
 
 void AGameLevelManager::BeginPlay()
@@ -23,4 +28,14 @@ void AGameLevelManager::BeginPlay()
 	{
 		SpawnPoint->SpawnEnemy();
 	}
+}
+
+void AGameLevelManager::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	/*if (TotalSpawnedEnemy == 0)
+	{
+		SpawnPoint->SpawnEnemy();
+	}*/
 }

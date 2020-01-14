@@ -7,6 +7,8 @@
 #include "GameLevelManager.generated.h"
 
 class ASpawnPoint;
+class AEnemy;
+
 /**
  * 
  */
@@ -15,15 +17,19 @@ class UNREALWEAPONPROJECT_API AGameLevelManager : public ALevelScriptActor
 {
 	GENERATED_BODY()
 
-public:
-	void RegisterSpawnedEnemy(int32 ActorSpawnAmout);
-	void RegisterEnemyDeath();
+		AGameLevelManager();
 
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
 	ASpawnPoint* SpawnPoint = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+	AEnemy* Enemy = nullptr;
+
+	void RegisterEnemyDeath();
+	void RegisterSpawnEnemy(int32 ActorSpawnAmout);
 private:
-	int32 TotalEnemy = 0;
-
-
+	int32 TotalSpawnedEnemy;
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 };

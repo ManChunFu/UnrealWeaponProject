@@ -30,5 +30,5 @@ public:
 
 private:
     AEnemy* Enemy = nullptr;
-    virtual void BeginPlay() override;
+    AGameLevelManager* GameLevelManager = nullptr;
 };
