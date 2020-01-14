@@ -19,7 +19,11 @@ public:
 	void RegisterSpawnedEnemy(int32 ActorSpawnAmout);
 	void RegisterEnemyDeath();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+	ASpawnPoint* SpawnPoint = nullptr;
 private:
 	int32 TotalEnemy = 0;
-	ASpawnPoint* SpawnPoint;
+
+
+	virtual void BeginPlay() override;
 };

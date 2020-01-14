@@ -14,3 +14,13 @@ void AGameLevelManager::RegisterEnemyDeath()
 	TotalEnemy--;
 	SpawnPoint->SpawnEnemy();
 }
+
+void AGameLevelManager::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (SpawnPoint)
+	{
+		SpawnPoint->SpawnEnemy();
+	}
+}
