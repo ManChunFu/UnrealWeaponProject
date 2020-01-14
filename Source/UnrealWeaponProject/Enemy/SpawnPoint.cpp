@@ -17,10 +17,24 @@ void ASpawnPoint::SpawnEnemy()
 	{
 		for (int32 Cout = 0; Cout < ActorSpawnAmout; Cout++)
 		{
-			GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
-			//GameLevelManager->RegisterSpawnEnemy(ActorSpawnAmout);
+			try
+			{
+				GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
+			}
+			catch (const std::exception&)
+			{	
+				UE_LOG(LogTemp, Warning, TEXT("Failed in SpawnEnemy"));
+			}			
 		}
 	}
+}
+
+void ASpawnPoint::BeginPlay()
+{
+	Super::BeginPlay();
+	SpawnEnemy();
+
+	//GameLevelManager->RegisterSpawnEnemy(ActorSpawnAmout));
 }
 
 

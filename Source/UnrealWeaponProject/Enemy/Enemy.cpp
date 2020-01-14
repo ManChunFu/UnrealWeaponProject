@@ -25,16 +25,13 @@ void AEnemy::BeginPlay()
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
-
 
 float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
@@ -51,13 +48,17 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 		if (CurrentHealth <= 0.f)
 		{
 			bDead = true;
-			//GameLevelManager->RegisterEnemyDeath();
-			//GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::OnTimerEnd, 3.f, false);
-			//SetLifeSpan(0.001f);
+			GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::KillEnemy, 1.f, false);
 		}
 	}
 
 	return ActualDamage;
+}
+
+void AEnemy::KillEnemy()
+{
+	SetLifeSpan(0.001f);
+	//GameLevelManager->RegisterEnemyDeath();
 }
 
 

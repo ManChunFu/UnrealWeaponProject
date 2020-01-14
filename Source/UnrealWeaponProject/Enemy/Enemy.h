@@ -41,6 +41,7 @@ public:
 
 private:
 	AGameLevelManager* GameLevelManager = nullptr;
+	void KillEnemy();
 
 
 };

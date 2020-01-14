@@ -12,22 +12,25 @@ AGameLevelManager::AGameLevelManager()
 
 void AGameLevelManager::RegisterEnemyDeath()
 {
+	if (TotalSpawnedEnemy == 0)
+		return;
+
 	TotalSpawnedEnemy--;
 }
 
 void AGameLevelManager::RegisterSpawnEnemy(int32 ActorSpawnAmout)
 {
-	TotalSpawnedEnemy += ActorSpawnAmout;
+	 TotalSpawnedEnemy += ActorSpawnAmout;
 }
 
 void AGameLevelManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (SpawnPoint)
+	/*if (SpawnPoint)
 	{
 		SpawnPoint->SpawnEnemy();
-	}
+	}*/
 }
 
 void AGameLevelManager::Tick(float DeltaSeconds)

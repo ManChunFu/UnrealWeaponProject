@@ -27,8 +27,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void SpawnEnemy();
-
+    
 private:
     AEnemy* Enemy = nullptr;
     AGameLevelManager* GameLevelManager = nullptr;
+    virtual void BeginPlay() override;
 };
