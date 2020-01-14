@@ -3,6 +3,8 @@
 #include "SpawnPoint.h"
 #include "Engine/World.h"
 #include "Enemy.h"
+#include "UnrealWeaponProject/GameLevelManager.h"
+
 
 void ASpawnPoint::SpawnEnemy()
 {
@@ -16,14 +18,12 @@ void ASpawnPoint::SpawnEnemy()
 		for (int32 Cout = 0; Cout < ActorSpawnAmout; Cout++)
 		{
 			GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
+			//GameLevelManager->RegisterSpawnEnemy(ActorSpawnAmout);
 		}
 	}
 }
 
-void ASpawnPoint::BeginPlay()
-{
-	Super::BeginPlay();
 
-	SpawnEnemy();
-}
+
+
 
