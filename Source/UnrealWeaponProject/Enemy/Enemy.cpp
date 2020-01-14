@@ -51,7 +51,7 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 		{
 			bDeath = true;
 			//GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::OnTimerEnd, 3.f, false);
-			SetLifeSpan(0.001f);
+			//SetLifeSpan(0.001f);
 		}
 	}
 
