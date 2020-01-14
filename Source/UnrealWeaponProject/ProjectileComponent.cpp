@@ -68,7 +68,7 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 			UGameplayStatics::FinishSpawningActor(VisibleProj, SpawnTransform);
 
 			FTransform CamSpawn = CameraTransform;
-			CamSpawn.SetLocation(CamSpawn.GetLocation() +CamSpawn..ForwardVector*100.f);
+			CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetLocation().ForwardVector *100.f);
 			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, CamSpawn, Owner);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			ProjectileInstance->PhantomBullet = VisibleProj;
