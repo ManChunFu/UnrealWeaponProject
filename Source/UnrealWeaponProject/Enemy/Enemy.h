@@ -6,7 +6,6 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
-class AGameLevelManager;
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
@@ -38,6 +37,5 @@ public:
 
 	FTimerHandle TimeHandle;
 
-	AGameLevelManager* GameLevelManager = nullptr;
 
 };

@@ -8,9 +8,15 @@ void ASpawnPoint::SpawnEnemy()
 {
 	FVector Location = GetActorLocation();
 	FRotator Rotation = GetActorRotation().Add(0.f, 180.f, 0.f);
-	for (int32 Cout = 0; Cout < ActorSpawnAmout; Cout++)
+
+	UWorld* World = GetWorld();
+
+	if (World)
 	{
-		GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
+		for (int32 Cout = 0; Cout < ActorSpawnAmout; Cout++)
+		{
+			GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
+		}
 	}
 }
 

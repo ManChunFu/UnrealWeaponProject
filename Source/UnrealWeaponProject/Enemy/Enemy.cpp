@@ -5,7 +5,6 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
-#include "UnrealWeaponProject/GameLevelManager.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -53,7 +52,6 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 			bDeath = true;
 			//GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::OnTimerEnd, 3.f, false);
 			SetLifeSpan(0.001f);
-			GameLevelManager->RegisterEnemyDeath();
 		}
 	}
 
