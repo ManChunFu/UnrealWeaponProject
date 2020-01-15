@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "SpawnPoint.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -40,7 +41,11 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 	if (ActualDamage > 0.f)
 	{
 		CurrentHealth -= ActualDamage;
-
+		if (CurrentHealth - ActualDamage < 0)
+		{
+			CurrentHealth = 0;
+		}
+		
 		FString CurrentHealthReport = TEXT("Current Health:  ") + FString::SanitizeFloat(CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
 
