@@ -14,7 +14,7 @@ UAmmoComponent::UAmmoComponent()
 void UAmmoComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	if (GetOwner()) { UE_LOG(LogTemp, Warning, TEXT("We are owned by: %s"), *GetOwner()->GetFName().ToString()); }
 }
 
 void UAmmoComponent::Reload()

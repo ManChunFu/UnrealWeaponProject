@@ -16,6 +16,7 @@ class UNREALWEAPONPROJECT_API UAmmo : public UObject
 private:
 
 public:
+
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
 		int32 MagazineSize = 10;
 
@@ -31,6 +32,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void OnAttack();
+
 	//UFUNCTION()
 	//	void Reload();
 };

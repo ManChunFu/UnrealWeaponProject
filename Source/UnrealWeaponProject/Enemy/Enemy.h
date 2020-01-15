@@ -7,7 +7,7 @@
 #include "Enemy.generated.h"
 
 
-class AGameLevelManager;
+class ASpawnPoint;
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
@@ -39,8 +39,10 @@ public:
 
 	FTimerHandle TimeHandle;
 
+	ASpawnPoint* SpawnPoint  = nullptr;
 private:
-	AGameLevelManager* GameLevelManager = nullptr;
+
+	void KillEnemy();
 
 
 };

@@ -28,8 +28,11 @@ public:
 
 	void RegisterEnemyDeath();
 	void RegisterSpawnEnemy(int32 ActorSpawnAmout);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn")
+	int32 TotalSpawnedEnemy = 0;
 private:
-	int32 TotalSpawnedEnemy;
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
 };

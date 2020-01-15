@@ -7,7 +7,7 @@
 #include "SpawnPoint.generated.h"
 
 class AEnemy;
-class AGameLevelManager;
+class ASpawnPointManager;
 
 /**
  * 
@@ -28,7 +28,20 @@ public:
     UFUNCTION(BlueprintCallable)
     void SpawnEnemy();
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+    ASpawnPointManager* SpawnPointManager = nullptr;
+
+    int ActiveEnemy();
+
+    UFUNCTION(BlueprintCallable)
+    void RegisterEnemyDeath(AEnemy* DeadEnemy);
+
+    virtual void OnConstruction(FTransform& Transform);
+    
 private:
-    AEnemy* Enemy = nullptr;
-    AGameLevelManager* GameLevelManager = nullptr;
+    UPROPERTY()
+    TArray<AEnemy*> Enemy;
+    
+    virtual void BeginPlay() override;
+
 };
