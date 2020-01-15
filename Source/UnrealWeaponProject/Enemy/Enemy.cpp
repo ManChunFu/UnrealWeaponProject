@@ -5,7 +5,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "TimerManager.h"
-#include "UnrealWeaponProject/GameLevelManager.h"
+#include "SpawnPoint.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -45,7 +45,7 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
 
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
-		if (CurrentHealth <= 0.f && !bDead)
+		if (CurrentHealth <= 0.f)
 		{
 			bDead = true;
 			GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::KillEnemy, 1.f, false);
@@ -57,8 +57,11 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 
 void AEnemy::KillEnemy()
 {
+	if (SpawnPoint != nullptr)
+	{
+		SpawnPoint->RegisterEnemyDeath(this);
+	}
 	SetLifeSpan(0.001f);
-	//GameLevelManager->RegisterEnemyDeath();
 }
 
 

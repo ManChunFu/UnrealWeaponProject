@@ -3,15 +3,21 @@
 #include "SpawnPoint.h"
 #include "Engine/World.h"
 #include "Enemy.h"
-#include "UnrealWeaponProject/GameLevelManager.h"
+#include "SpawnPointManager.h"
+#include "EngineUtils.h"
+#include "Engine/StaticMeshActor.h"
 
 
 void ASpawnPoint::SpawnEnemy()
 {
+	FActorSpawnParameters SpawnParamters;
+	SpawnParamters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
 	FVector Location = GetActorLocation();
 	FRotator Rotation = GetActorRotation().Add(0.f, 180.f, 0.f);
 
 	UWorld* World = GetWorld();
+	
 
 	if (World)
 	{
@@ -19,7 +25,8 @@ void ASpawnPoint::SpawnEnemy()
 		{
 			try
 			{
-				GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation);
+				Enemy.Add(GetWorld()->SpawnActor<AEnemy>(ActorToSpawn, Location, Rotation, SpawnParamters));
+				Enemy.Last()->SpawnPoint = this;
 			}
 			catch (const std::exception&)
 			{	
@@ -29,13 +36,35 @@ void ASpawnPoint::SpawnEnemy()
 	}
 }
 
+int ASpawnPoint::ActiveEnemy()
+{
+	return Enemy.Num();
+}
+
+void ASpawnPoint::RegisterEnemyDeath(AEnemy* DeadEnemy)
+{
+	if (Enemy.Num() > 0)
+	{
+		Enemy.RemoveAt(Enemy.Find(DeadEnemy));
+	}
+}
+
+void ASpawnPoint::OnConstruction(FTransform& Transform)
+{
+	for (TActorIterator<ASpawnPointManager> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		// Same as with the Object Iterator, access the subclass instance with the * or -> operators.
+		
+	}
+}
+
 void ASpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnEnemy();
-
-	//GameLevelManager->RegisterSpawnEnemy(ActorSpawnAmout));
 }
+
+
 
 
 

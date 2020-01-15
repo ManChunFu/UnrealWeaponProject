@@ -7,7 +7,7 @@
 #include "Enemy.generated.h"
 
 
-class AGameLevelManager;
+class ASpawnPoint;
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
@@ -37,10 +37,11 @@ public:
 
 	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
+	ASpawnPoint* SpawnPoint  = nullptr;
 	FTimerHandle TimeHandle;
 
 private:
-	AGameLevelManager* GameLevelManager = nullptr;
+
 	void KillEnemy();
 
 
