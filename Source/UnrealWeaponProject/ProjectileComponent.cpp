@@ -61,18 +61,20 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 				SpawnTransform.SetRotation(Rotation.Quaternion());
 			}
 			
-
+			// Make visible, fake bullet
 			AProjectile* VisibleProj = World->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform, Owner);
 			VisibleProj->ProjectileSpeed *= SpeedMultiplier;
 			VisibleProj->CollisionComp->SetCollisionProfileName("NoCollision");
 			UGameplayStatics::FinishSpawningActor(VisibleProj, SpawnTransform);
 
+
+			// Make invisible real bullet
 			FTransform CamSpawn = CameraTransform;
-			CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetLocation().ForwardVector *100.f);
+			CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetRotation().GetForwardVector() *100.f);
 			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, CamSpawn, Owner);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			ProjectileInstance->PhantomBullet = VisibleProj;
-			ProjectileInstance->ProjectileMesh->SetVisibility(true);
+			ProjectileInstance->ProjectileMesh->SetVisibility(false);
 			UGameplayStatics::FinishSpawningActor(ProjectileInstance, CamSpawn);
 
 
