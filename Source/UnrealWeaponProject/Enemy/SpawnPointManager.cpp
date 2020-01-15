@@ -3,6 +3,8 @@
 
 #include "SpawnPointManager.h"
 #include "SpawnPoint.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 
 // Sets default values
 ASpawnPointManager::ASpawnPointManager()
@@ -17,6 +19,12 @@ void ASpawnPointManager::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	UWorld* World = GetWorld();
+	
+	if (World)
+	{
+		World->GetTimerManager().SetTimer(TimerHandle, this, &ASpawnPointManager::Spawn, SpawnRate, true);
+	}
 }
 
 // Called every frame
@@ -24,6 +32,10 @@ void ASpawnPointManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASpawnPointManager::Spawn()
+{
 	for (auto point : SpawnPoint)
 	{
 		if (point->ActiveEnemy() == 0)

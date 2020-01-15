@@ -43,7 +43,10 @@ int ASpawnPoint::ActiveEnemy()
 
 void ASpawnPoint::RegisterEnemyDeath(AEnemy* DeadEnemy)
 {
-	Enemy.RemoveAt(Enemy.Find(DeadEnemy));
+	if (Enemy.Num() > 0)
+	{
+		Enemy.RemoveAt(Enemy.Find(DeadEnemy));
+	}
 }
 
 void ASpawnPoint::OnConstruction(FTransform& Transform)

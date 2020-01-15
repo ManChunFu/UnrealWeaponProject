@@ -26,11 +26,15 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
-	int32 TotalSpawnedEnemy = 0;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
 	TArray<ASpawnPoint*> SpawnPoint;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+	float SpawnRate = 5.f;
+
+
+private:
+	FTimerHandle TimerHandle;
+	void Spawn();
 
 };

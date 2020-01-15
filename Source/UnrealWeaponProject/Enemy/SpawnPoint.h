@@ -41,7 +41,6 @@ public:
 private:
     UPROPERTY()
     TArray<AEnemy*> Enemy;
-    
     virtual void BeginPlay() override;
 
 };

@@ -37,9 +37,9 @@ public:
 
 	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
+	ASpawnPoint* SpawnPoint  = nullptr;
 	FTimerHandle TimeHandle;
 
-	ASpawnPoint* SpawnPoint  = nullptr;
 private:
 
 	void KillEnemy();

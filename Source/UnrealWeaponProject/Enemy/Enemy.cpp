@@ -57,7 +57,10 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 
 void AEnemy::KillEnemy()
 {
-	SpawnPoint->RegisterEnemyDeath(this);
+	if (SpawnPoint != nullptr)
+	{
+		SpawnPoint->RegisterEnemyDeath(this);
+	}
 	SetLifeSpan(0.001f);
 }
 
