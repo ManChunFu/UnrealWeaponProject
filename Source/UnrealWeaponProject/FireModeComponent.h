@@ -17,24 +17,48 @@ class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UFireModeComponent();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon/Burstfire")
+		int32 AttacksPerBurst = 3;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon/Burstfire")
+		float BurstDelay = 0.05f;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+		float AttacksPerSecond = 1.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+		AWeapon* Weapon = nullptr;
 
 private:
+	int32 BurstCounter = 0;
 	UFUNCTION()
-		void Burst(AWeapon* Weapon);
+		void Burst();
 
 public:	
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void AutoFire(float RateOfFire, AWeapon* Weapon);
+	void BeginPlay();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void AutoFire();
 
-		void BurstFire(float RateOfFire, AWeapon* Weapon, int32 AttacksPerBurst);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void BurstFire();
 
-	
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void Attack();
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Stop();
 
+private:
+
+	bool CanAttack();
+
+	float LastAttackTime = -1.f;
+	bool bBursting = false;
 	FTimerHandle FireHandle;
+	FTimerHandle BurstHandle;
+	FTimerDelegate BurstDelegate;
 };

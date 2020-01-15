@@ -29,6 +29,11 @@ public:
 		UArrowComponent* BarrelEnd = nullptr;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		AActor* Holder = nullptr;
+
+	// If this is 0, the weapon can attack. Increment it if you want to suspend weapon
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+		int32 SuspendedFromAttack = 0;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnConstruction(const FTransform& Transform) override;

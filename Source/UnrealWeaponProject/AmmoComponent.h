@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "TimerManager.h"
 #include "AmmoComponent.generated.h"
 
 
@@ -21,6 +22,10 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Ammo")
+		bool bIsReloading = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
+		float ReloadTime = 2.f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
 		int32 MagazineSize = 10;
 
@@ -37,7 +42,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Reload();
 
+
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		bool DecreaseAmmo(int32 Amount = 1);
-
+private:
+	FTimerHandle ReloadTimer;
+	//The weapon this component is attached to
+	class AWeapon* Weapon = nullptr;
+	UFUNCTION()
+		void FinishReload();
 };

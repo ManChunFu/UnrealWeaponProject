@@ -5,6 +5,8 @@
 #include "DrawDebugHelpers.h"
 #include "Weapon.h"
 #include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "UnrealWeaponProjectCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -22,17 +24,40 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner, FTransform CameraTransform, FTransform SpawnTransform, float SpeedMultiplier, bool bDebugLine)
+AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner, FTransform CameraTransform, float SpeedMultiplier)
 {
-	//Will spawn two projectiles, One visible that does not have any collision.
-	//One invisible with the correct spawn location (inside camera center) which is invisible but carries out the collision.
-	// My reference is Blizzards Overwatch which from my testing uses a system like this to provide accurate shots while giving visual feedback that makes sense
-
 	UWorld* const World = GetWorld();
 	if (World != NULL)
 	{
 		{
-			FHitResult Hit;
+			// Spawn bullet from camera position
+
+			FTransform CamSpawn = CameraTransform;
+			//CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetRotation().GetForwardVector() *50.f);
+			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, CamSpawn, Owner);
+			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
+			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Owner);
+			if (Player)
+			{
+				Player->GetCapsuleComponent()->IgnoreActorWhenMoving(ProjectileInstance, true);
+			}
+			UGameplayStatics::FinishSpawningActor(ProjectileInstance, CamSpawn);
+
+
+			return ProjectileInstance;
+		}
+	}
+	return nullptr;
+}
+// David är en bananrumpa
+
+
+
+
+
+
+// Not used but if i have time i should fix this
+			/*FHitResult Hit;
 			FCollisionQueryParams temp;
 			temp.AddIgnoredActor(Owner);
 			World->LineTraceSingleByChannel(Hit, CameraTransform.GetLocation(),
@@ -44,7 +69,7 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 			if (bDebugLine)
 			{
 				DrawDebugLine(GetWorld(), CameraTransform.GetLocation(), CameraTransform.GetLocation() + CameraTransform.GetRotation().GetForwardVector() * 10000.f, FColor::Red, false, 1.f);
-				
+
 				if (Hit.bBlockingHit)
 				{
 					DrawDebugLine(GetWorld(), SpawnTransform.GetLocation(), Hit.Location, FColor::Green, false, 1.f);
@@ -59,28 +84,12 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 			{
 				FRotator Rotation((Hit.Location - SpawnTransform.GetLocation()).Rotation());
 				SpawnTransform.SetRotation(Rotation.Quaternion());
-			}
-			
-			// Make visible, fake bullet
-			AProjectile* VisibleProj = World->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform, Owner);
-			VisibleProj->ProjectileSpeed *= SpeedMultiplier;
-			VisibleProj->CollisionComp->SetCollisionProfileName("NoCollision");
-			UGameplayStatics::FinishSpawningActor(VisibleProj, SpawnTransform);
+			}*/
 
 
-			// Make invisible real bullet
-			FTransform CamSpawn = CameraTransform;
-			CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetRotation().GetForwardVector() *100.f);
-			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, CamSpawn, Owner);
-			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
-			ProjectileInstance->PhantomBullet = VisibleProj;
-			ProjectileInstance->ProjectileMesh->SetVisibility(false);
-			UGameplayStatics::FinishSpawningActor(ProjectileInstance, CamSpawn);
-
-
-			return ProjectileInstance;
-		}
-	}
-	return nullptr;
-}
-// David är en bananrumpa
+			// not using at the moment
+			//// Make visible, fake bullet
+			//AProjectile* VisibleProj = World->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform, Owner);
+			//VisibleProj->ProjectileSpeed *= SpeedMultiplier;
+			//VisibleProj->CollisionComp->SetCollisionProfileName("PhantomProjectile");
+			//UGameplayStatics::FinishSpawningActor(VisibleProj, SpawnTransform);

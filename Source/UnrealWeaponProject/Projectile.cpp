@@ -20,6 +20,7 @@ AProjectile::AProjectile()
 
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	ProjectileMesh->SetupAttachment(CollisionComp);
+	ProjectileMesh->SetCollisionProfileName("NoCollision");
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	
 
@@ -31,10 +32,6 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, 5.f, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
-		if (PhantomBullet)
-		{
-			PhantomBullet->Destroy();
-		}
 		Destroy();
 	}
 }

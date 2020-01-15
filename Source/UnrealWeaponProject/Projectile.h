@@ -16,9 +16,6 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
-	//The visible invisibles bullet reference to the visible bullet
-	AProjectile* PhantomBullet = nullptr;
-
 	// Sphere component for collision
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Projectile")
 		class USphereComponent* CollisionComp;
