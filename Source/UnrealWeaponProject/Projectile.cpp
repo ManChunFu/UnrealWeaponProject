@@ -29,8 +29,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 {
 	if (OtherActor != GetOwner())
 	{
-		UGameplayStatics::ApplyDamage(OtherActor, 5.f, nullptr, nullptr, nullptr);
-		FString Name = OtherActor->GetName();
+		UGameplayStatics::ApplyDamage(OtherActor, 5.f, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
 		if (PhantomBullet)
 		{
