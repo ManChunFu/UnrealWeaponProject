@@ -34,9 +34,12 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UCameraShakeComponent::DoCameraShake(UCameraComponent* Camera)
 {
-	FRotator NewRotation = FRotator(1.f, 1.f, 1.f);
+	FRotator NewRotation = FRotator(0.f, 100.f, 100.f);
 	FQuat QuatRotation = FQuat(NewRotation);
-	Camera->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
+	//Camera->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
+	//Camera->SetRelativeRotation(NewRotation);
+	//Camera->AddRelativeRotation(NewRotation); 
+	Camera->RelativeRotation += NewRotation;
 	
 }
 
