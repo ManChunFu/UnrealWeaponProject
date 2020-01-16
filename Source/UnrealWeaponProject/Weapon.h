@@ -7,12 +7,16 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "AmmoComponent.h"
 #include "Components/ArrowComponent.h"
+#include "TimerManager.h"
 #include "Weapon.generated.h"
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
+private:
+	FTimerDelegate DropDelegate;
+	FTimerHandle DropHandle;
 public:
 	AWeapon();
 
@@ -31,13 +35,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		int32 SuspendedFromAttack = 0;
 
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Drop();
+
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Equip(USceneComponent* AttachTo, FName SocketName);
 
@@ -52,5 +56,8 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
 		void Attack();
+	UFUNCTION()
+		void Drop();
+private:
 
 };

@@ -28,10 +28,24 @@ void AWeapon::OnConstruction(const FTransform& Transform)
 
 void AWeapon::Drop()
 {
+	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
-	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector()*5000.f);
+	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector()*5000.f + Holder->GetRootComponent()->GetUpVector()*2000.f);
+	WeaponMesh->IgnoreActorWhenMoving(Holder, true);
+	StopAttacking();
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Holder = nullptr;
-	DetachRootComponentFromParent();
+
+	// Wait two seconds before letting the weapon be overlappable again
+	if (!DropDelegate.IsBound())
+	{
+		DropDelegate.BindLambda([=]
+			{
+				WeaponMesh->SetGenerateOverlapEvents(true);
+			});
+	}
+	GetWorld()->GetTimerManager().SetTimer(DropHandle, DropDelegate, 2.f, false);
+	
 }
 
 void AWeapon::Equip(USceneComponent* AttachTo, FName SocketName)
