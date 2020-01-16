@@ -16,14 +16,22 @@ class AUnrealWeaponProjectCharacter : public ACharacter
 	/** First person camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
+
+
 	   
 
 public:
 	AUnrealWeaponProjectCharacter();
 
+	/** Pawn mesh: 1st person view (arms; seen only by self) */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = Mesh)
+		class USkeletalMeshComponent* Mesh1P;
+
 	/** Weapon */
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AWeapon> WeaponClass;
+
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	AWeapon* EquippedWeapon;
@@ -39,6 +47,9 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void EquipWeapon(AWeapon* Weapon);
 
 protected:
 

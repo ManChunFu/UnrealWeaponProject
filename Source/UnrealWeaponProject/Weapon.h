@@ -19,11 +19,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 		USkeletalMeshComponent* WeaponMesh = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
-		USkeletalMeshComponent* ArmsMesh = nullptr;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		USceneComponent* WeaponRoot = nullptr;
+	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
+	//	USkeletalMeshComponent* ArmsMesh = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UArrowComponent* BarrelEnd = nullptr;
@@ -39,6 +36,9 @@ protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 public:
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void Equip(USceneComponent* AttachTo, FName SocketName);
+
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void StartAttacking();
 

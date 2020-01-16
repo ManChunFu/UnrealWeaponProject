@@ -34,6 +34,14 @@ AUnrealWeaponProjectCharacter::AUnrealWeaponProjectCharacter()
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
 
+	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	Mesh1P->SetOnlyOwnerSee(true);
+	Mesh1P->SetupAttachment(FirstPersonCameraComponent);
+	Mesh1P->bCastDynamicShadow = false;
+	Mesh1P->CastShadow = false;
+	Mesh1P->SetRelativeRotation(FRotator(1.9f, -19.19f, 5.2f));
+	Mesh1P->SetRelativeLocation(FVector(-0.5f, -4.4f, -155.7f));
+
 }
 
 void AUnrealWeaponProjectCharacter::BeginPlay()
@@ -42,21 +50,7 @@ void AUnrealWeaponProjectCharacter::BeginPlay()
 	Super::BeginPlay();
 
 
-	//Spawn and attach gun to player
-	UWorld* const World = GetWorld();
-	if (World != NULL)
-	{
-		{
-			if (WeaponClass)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Spawn weapon"));
-				EquippedWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass);
-				EquippedWeapon->Holder = this;
-				EquippedWeapon->AttachToComponent(FirstPersonCameraComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale);	
-				
-			}
-		}
-	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,6 +83,16 @@ void AUnrealWeaponProjectCharacter::SetupPlayerInputComponent(class UInputCompon
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AUnrealWeaponProjectCharacter::LookUpAtRate);
 }
 
+
+void AUnrealWeaponProjectCharacter::EquipWeapon(AWeapon* Weapon)
+{
+	if (Weapon)
+	{
+		Weapon->Holder = this;
+		Weapon->WeaponMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+		EquippedWeapon = Weapon;
+	}
+}
 
 void AUnrealWeaponProjectCharacter::MoveForward(float Value)
 {

@@ -22,6 +22,7 @@ AProjectile::AProjectile()
 	ProjectileMesh->SetupAttachment(CollisionComp);
 	ProjectileMesh->SetCollisionProfileName("NoCollision");
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
+	ProjectileMesh->SetCastShadow(false);
 	
 
 }

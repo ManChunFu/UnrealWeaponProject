@@ -17,18 +17,18 @@ class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UFireModeComponent();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon/Burstfire")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Burstfire")
 		int32 AttacksPerBurst = 3;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon/Burstfire")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Burstfire")
 		float BurstDelay = 0.05f;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		float AttacksPerSecond = 1.f;
+		float AttacksPerSecond = 3.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
 		AWeapon* Weapon = nullptr;
 
 private:

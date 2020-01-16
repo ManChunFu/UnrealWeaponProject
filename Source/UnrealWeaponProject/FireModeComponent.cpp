@@ -26,8 +26,8 @@ void UFireModeComponent::BeginPlay()
 
 void UFireModeComponent::AutoFire()
 {
-	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AttacksPerSecond, true);
 
+	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AttacksPerSecond, true);
 }
 
 void UFireModeComponent::BurstFire()
@@ -66,6 +66,7 @@ void UFireModeComponent::Stop()
 
 bool UFireModeComponent::CanAttack()
 {
-	return (1.f / AttacksPerSecond)*0.9f + LastAttackTime <= GetWorld()->GetTimeSeconds();
+	// Give a little extra room for attack so no attacks get missed
+	return (1.f / AttacksPerSecond)*0.95f + LastAttackTime <= GetWorld()->GetTimeSeconds();
 }
 
