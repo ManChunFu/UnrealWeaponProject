@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealWeaponProjectCharacter.h"
 #include "CameraShakeComponent.generated.h"
+class UInputComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UCameraShakeComponent : public UActorComponent
 {
@@ -23,9 +26,9 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	UFUNCTION(BlueprintCallable)
-		void DoCameraShake(UCameraComponent* Camera);
+		void DoCameraShake(AUnrealWeaponProjectCharacter* Character);
 		
 private:
-
+	
 
 };

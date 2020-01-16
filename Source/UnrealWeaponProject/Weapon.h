@@ -37,6 +37,8 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void Drop();
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Equip(USceneComponent* AttachTo, FName SocketName);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")

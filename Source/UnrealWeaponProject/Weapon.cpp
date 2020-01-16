@@ -8,13 +8,9 @@ AWeapon::AWeapon()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	WeaponMesh->SetCollisionProfileName("Weapon");
 	BarrelEnd = CreateDefaultSubobject<UArrowComponent>(TEXT("Barrel End"));
-
-	//ArmsMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 	BarrelEnd->SetupAttachment(WeaponMesh);
-
-
-
 	RootComponent = WeaponMesh;
 }
 
@@ -30,9 +26,18 @@ void AWeapon::OnConstruction(const FTransform& Transform)
 	BarrelEnd->AttachToComponent(WeaponMesh, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
+void AWeapon::Drop()
+{
+	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector()*5000.f);
+	Holder = nullptr;
+	DetachRootComponentFromParent();
+}
+
 void AWeapon::Equip(USceneComponent* AttachTo, FName SocketName)
 {
-	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, "SocketName");
+	WeaponMesh->SetSimulatePhysics(false);
+	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
 }
 
 

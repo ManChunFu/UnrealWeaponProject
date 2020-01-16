@@ -18,6 +18,18 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 //////////////////////////////////////////////////////////////////////////
 // AUnrealWeaponProjectCharacter
 
+
+
+void AUnrealWeaponProjectCharacter::RotateCamera(float test)
+{
+	AddControllerYawInput(test);
+}
+
+void AUnrealWeaponProjectCharacter::PitchCamera(float test)
+{
+	AddControllerPitchInput(test);
+}
+
 AUnrealWeaponProjectCharacter::AUnrealWeaponProjectCharacter()
 {
 	// Set size for collision capsule
@@ -88,9 +100,21 @@ void AUnrealWeaponProjectCharacter::EquipWeapon(AWeapon* Weapon)
 {
 	if (Weapon)
 	{
+		GetCapsuleComponent()->IgnoreActorWhenMoving(Weapon, true);
+		Weapon->Equip(Mesh1P, "GripPoint");
 		Weapon->Holder = this;
-		Weapon->WeaponMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 		EquippedWeapon = Weapon;
+		//Weapon->WeaponMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+	}
+}
+
+void AUnrealWeaponProjectCharacter::DropWeapon()
+{
+	if (EquippedWeapon)
+	{
+		GetCapsuleComponent()->IgnoreActorWhenMoving(EquippedWeapon, false);
+		EquippedWeapon->Drop();
+		EquippedWeapon = nullptr;
 	}
 }
 
