@@ -11,8 +11,18 @@ class AUnrealWeaponProjectGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
+	virtual void BeginPlay() override;
+
 public:
 	AUnrealWeaponProjectGameMode();
+
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stamina", Meta = (BlueprintProtected = "true"))
+	TSubclassOf<class UUserWidget> WeaponHUDClass;
+
+	UPROPERTY()
+	class UUserWidget* CurrentWidget;
+
 	
 };
 

@@ -4,7 +4,26 @@
 #include "UnrealWeaponProjectHUD.h"
 #include "UnrealWeaponProjectCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
+
+void AUnrealWeaponProjectGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AUnrealWeaponProjectCharacter* MyCharacter = Cast<AUnrealWeaponProjectCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+
+	if (WeaponHUDClass != nullptr)
+	{
+		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WeaponHUDClass);
+
+		if (CurrentWidget != nullptr)
+		{
+			CurrentWidget->AddToViewport();
+		}
+	}
+}
 
 AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 	: Super()
