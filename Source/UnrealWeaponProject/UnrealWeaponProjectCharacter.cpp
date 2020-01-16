@@ -18,6 +18,18 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 //////////////////////////////////////////////////////////////////////////
 // AUnrealWeaponProjectCharacter
 
+
+
+void AUnrealWeaponProjectCharacter::RotateCamera(float test)
+{
+	AddControllerYawInput(test);
+}
+
+void AUnrealWeaponProjectCharacter::PitchCamera(float test)
+{
+	AddControllerPitchInput(test);
+}
+
 AUnrealWeaponProjectCharacter::AUnrealWeaponProjectCharacter()
 {
 	// Set size for collision capsule

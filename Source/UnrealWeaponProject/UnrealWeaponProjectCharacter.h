@@ -17,10 +17,20 @@ class AUnrealWeaponProjectCharacter : public ACharacter
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FirstPersonCameraComponent;
 
-
+	
 	   
 
 public:
+
+
+
+
+	UFUNCTION(BlueprintCallable)
+		void RotateCamera(float test);
+
+	UFUNCTION(BlueprintCallable)
+		void PitchCamera(float test);
+
 	AUnrealWeaponProjectCharacter();
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */

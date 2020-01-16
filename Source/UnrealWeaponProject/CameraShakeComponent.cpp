@@ -32,14 +32,16 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UCameraShakeComponent::DoCameraShake(UCameraComponent* Camera)
+void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Character)
 {
 	FRotator NewRotation = FRotator(0.f, 100.f, 100.f);
 	FQuat QuatRotation = FQuat(NewRotation);
 	//Camera->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
 	//Camera->SetRelativeRotation(NewRotation);
 	//Camera->AddRelativeRotation(NewRotation); 
-	Camera->RelativeRotation += NewRotation;
 	
+	
+	Character->RotateCamera(5);
+
 }
 
