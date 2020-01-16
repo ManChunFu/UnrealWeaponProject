@@ -12,13 +12,14 @@ AWeapon::AWeapon()
 	BarrelEnd = CreateDefaultSubobject<UArrowComponent>(TEXT("Barrel End"));
 	BarrelEnd->SetupAttachment(WeaponMesh);
 	RootComponent = WeaponMesh;
+	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetGenerateOverlapEvents(true);
 }
 
 // Called when the game starts or when spawned
 void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void AWeapon::OnConstruction(const FTransform& Transform)
@@ -31,7 +32,6 @@ void AWeapon::Drop()
 	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector()*5000.f + Holder->GetRootComponent()->GetUpVector()*2000.f);
-	WeaponMesh->IgnoreActorWhenMoving(Holder, true);
 	StopAttacking();
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Holder = nullptr;
