@@ -24,7 +24,7 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner, FTransform CameraTransform, float SpeedMultiplier)
+AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner, FTransform CameraTransform, float InaccuracyZ, float InaccuracyY, float SpeedMultiplier)
 {
 	UWorld* const World = GetWorld();
 	if (World != NULL)
@@ -32,16 +32,23 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 		{
 			// Spawn bullet from camera position
 
-			FTransform CamSpawn = CameraTransform;
+			FTransform ProjSpawn = CameraTransform;
+
+			FQuat ZRotation(FVector::UpVector, InaccuracyZ);
+			FQuat YRotation(FVector::RightVector, InaccuracyY);
+
+			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
+
+
 			//CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetRotation().GetForwardVector() *50.f);
-			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, CamSpawn, Owner);
+			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Owner);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Owner);
 			if (Player)
 			{
 				Player->GetCapsuleComponent()->IgnoreActorWhenMoving(ProjectileInstance, true);
 			}
-			UGameplayStatics::FinishSpawningActor(ProjectileInstance, CamSpawn);
+			UGameplayStatics::FinishSpawningActor(ProjectileInstance, ProjSpawn);
 
 
 			return ProjectileInstance;

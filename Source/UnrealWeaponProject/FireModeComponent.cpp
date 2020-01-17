@@ -6,6 +6,8 @@
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
 {
+	AllowedFireModes.Add(EFireMode::FM_SemiAuto);
+	CurrentFireMode = EFireMode::FM_SemiAuto;
 }
 
 void UFireModeComponent::BeginPlay()
@@ -24,16 +26,17 @@ void UFireModeComponent::BeginPlay()
 		});
 }
 
-void UFireModeComponent::AutoFire()
+void UFireModeComponent::ChangeFireMode()
 {
-
-	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AttacksPerSecond, true);
+	int32 Index = AllowedFireModes.Find(CurrentFireMode);
+	CurrentFireMode = AllowedFireModes[(Index + 1) % AllowedFireModes.Num()];
 }
+
 
 void UFireModeComponent::BurstFire()
 {
 	Burst();
-	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / AttacksPerSecond, true);
+	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
 
 }
 
@@ -42,7 +45,19 @@ void UFireModeComponent::Attack()
 	if (CanAttack())
 	{
 		Weapon->Attack();
-		LastAttackTime = GetWorld()->GetTimeSeconds();
+		switch (CurrentFireMode)
+		{
+		case EFireMode::FM_AutoAttack:
+			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / AutoAttacksPerSecond) * 0.95f;
+			break;
+
+		case EFireMode::FM_SemiAuto:
+			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / SemiAutoAttackPerSecond) * 0.95f;
+			break;
+
+		default :
+			break;
+		}
 	}
 }
 
@@ -53,10 +68,33 @@ void UFireModeComponent::Burst()
 	{
 		BurstCounter = 0;
 		bBursting = true;
-		BurstDelegate.Execute();
-		LastAttackTime = GetWorld()->GetTimeSeconds();
-		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true);
+		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f/BurstsPerSecond)*0.95f;
+		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true, 0.f);
 	}
+}
+
+void UFireModeComponent::Start()
+{
+
+	switch (CurrentFireMode)
+	{
+	case EFireMode::FM_AutoAttack:
+		Attack();
+		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
+		break;
+
+
+	case EFireMode::FM_BurstFire:
+		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
+		break;
+
+
+	case EFireMode::FM_SemiAuto:
+		Attack();
+
+		break;
+	}
+
 }
 
 void UFireModeComponent::Stop()
@@ -66,7 +104,6 @@ void UFireModeComponent::Stop()
 
 bool UFireModeComponent::CanAttack()
 {
-	// Give a little extra room for attack so no attacks get missed
-	return (1.f / AttacksPerSecond)*0.95f + LastAttackTime <= GetWorld()->GetTimeSeconds();
+	return NextAttackTime <= GetWorld()->GetTimeSeconds();
 }
 

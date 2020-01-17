@@ -21,7 +21,7 @@ protected:
 	virtual void BeginPlay() override;
 public:	
 	UFUNCTION(BlueprintCallable)
-		AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,FTransform CameraTransform, float SpeedMultiplier = 1.F);
+	AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,FTransform CameraTransform, float InaccuracyZ, float InaccuracyY, float SpeedMultiplier = 1.F);
 
 
 };
