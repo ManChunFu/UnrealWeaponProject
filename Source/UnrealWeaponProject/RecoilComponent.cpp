@@ -121,14 +121,14 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	}
 
 
-	if (CurrentMaxRecoil < MaxRecoilUpLimit)
+	/*if (CurrentMaxRecoil < MaxRecoilUpLimit)
 	{
 		CurrentMaxRecoil += MaxRecoilAddAmount;
 	}
 	if (CurrentMinRecoil < MinRecoilUpLimit)
 	{
 		CurrentMinRecoil += MinRecoilAddAmount;
-	}
+	}*/
 
 	if (!GetWorld()->GetTimerManager().IsTimerActive(Handle))
 	{
@@ -138,6 +138,12 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 
 	UE_LOG(LogTemp, Warning, TEXT("MaxRecoil %f"), CurrentMaxRecoil);
 	UE_LOG(LogTemp, Warning, TEXT("MinRecoil %f"), CurrentMinRecoil);
+}
+
+void URecoilComponent::AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd)
+{
+	CurrentMaxRecoil += MaxRecoilToAdd;
+	CurrentMinRecoil += MinRecoildToAdd;
 }
 
 

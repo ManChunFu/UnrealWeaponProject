@@ -72,6 +72,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void DoRecoil(float& ActualRecoilX, float& ActualRecoilY);
 
+
+	UFUNCTION(BlueprintCallable)
+		void AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd);
 	//UFUNCTION(BlueprintCallable, Category = "MyBlueprintFunctionLibrary") 
 		//void GetCurrentRecoil(float& ActualRecoilX, float& ActualRecoilY, float& MaxRecoil, float& MinRecoil);
 

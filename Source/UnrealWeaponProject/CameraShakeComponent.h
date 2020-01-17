@@ -21,10 +21,41 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		float rate = 50;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		float speed = 1;
+	
+		float timer = 0;
+		float test = 5;
+
+	
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MaxRandYaw = 1;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MinRandYaw = 0;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MaxRandPitch = 1;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MinRandPitch = 0;
+
+		float RandYaw;
+		float RandPitch;
+
+		float startYaw;
+		float startPitch;
+
+		float currentYaw;
+		float currentPitch;
+		AUnrealWeaponProjectCharacter* TargetCharacter;
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	UFUNCTION(BlueprintCallable)
 		void DoCameraShake(AUnrealWeaponProjectCharacter* Character);
 		

@@ -2,6 +2,7 @@
 
 
 #include "CameraShakeComponent.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
 UCameraShakeComponent::UCameraShakeComponent()
@@ -18,30 +19,47 @@ UCameraShakeComponent::UCameraShakeComponent()
 void UCameraShakeComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	PrimaryComponentTick.SetTickFunctionEnable(false);
 	// ...
 	
+}
+
+void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	if (TargetCharacter != nullptr)
+	{
+		TargetCharacter->RotateCamera(rate * GetWorld()->GetDeltaSeconds());
+		TargetCharacter->PitchCamera(rate * GetWorld()->GetDeltaSeconds());
+		
+		timer += GetWorld()->GetDeltaSeconds();
+		if (timer >= 2.f)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Stuff"));
+			PrimaryComponentTick.SetTickFunctionEnable(false);
+			timer = 0;
+		}
+	}
 }
 
 
 // Called every frame
-void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
-}
 
 void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Character)
 {
-	FRotator NewRotation = FRotator(0.f, 100.f, 100.f);
-	FQuat QuatRotation = FQuat(NewRotation);
-	//Camera->AddWorldRotation(QuatRotation, false, 0, ETeleportType::None);
-	//Camera->SetRelativeRotation(NewRotation);
-	//Camera->AddRelativeRotation(NewRotation); 
-	
-	
-	Character->RotateCamera(5);
+	TargetCharacter = Character;
 
+	
+	PrimaryComponentTick.SetTickFunctionEnable(true);
+	
+	
+
+	RandPitch = FMath::RandRange(MinRandPitch, MaxRandPitch);
+	RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
+
+	//startPitch += RandPitch * -1;
+	//startYaw += RandYaw * -1;
 }
 

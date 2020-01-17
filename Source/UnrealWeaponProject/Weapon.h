@@ -35,6 +35,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		int32 SuspendedFromAttack = 0;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+		UObject* Soundclip = nullptr;
+
 
 protected:
 	virtual void BeginPlay() override;
