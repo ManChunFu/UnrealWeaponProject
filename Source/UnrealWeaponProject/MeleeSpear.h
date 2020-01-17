@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
 	TSubclassOf<UDamageType> DamageClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	float Damage = 10.f;
+
 	UFUNCTION()
 	void OnHit(AActor* ThisActor, AActor* OtherActor);
 

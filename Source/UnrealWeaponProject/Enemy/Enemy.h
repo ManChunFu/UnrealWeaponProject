@@ -41,7 +41,6 @@ public:
 	FTimerHandle TimeHandle;
 
 private:
-
 	void KillEnemy();
 
 

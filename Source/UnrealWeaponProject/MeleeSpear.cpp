@@ -20,7 +20,11 @@ void AMeleeSpear::OnHit(AActor* ThisActor, AActor* OtherActor)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, TEXT("Attack"));
 
-		UGameplayStatics::ApplyDamage(OtherActor, 10.f, Cast<ACharacter>(OtherActor)->GetController(), ThisActor, DamageClass);
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, Cast<ACharacter>(OtherActor)->GetController(), ThisActor, DamageClass);
 	}
+
+	/*if (OtherActor != GetOwner())
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetOwner()->GetInstigatorController(), GetOwner(), DamageClass);
+	}*/
 }
