@@ -98,7 +98,15 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	UE_LOG(LogTemp, Warning, TEXT("MaxRecoil %f"), CurrentMaxRecoil);
 	UE_LOG(LogTemp, Warning, TEXT("MinRecoil %f"), CurrentMinRecoil);
 	bool bNegativeValue = FMath::RandBool();
-	if (bNegativeValue)
+	float a = FMath::RandRange(0, 1) * 2 * PI;
+	float r = 1 * sqrt(FMath::RandRange(0, 1));
+
+
+	ActualRecoilX = r * cos(a);
+	ActualRecoilY = r * sin(a);
+
+
+	/*if (bNegativeValue)
 	{
 		ActualRecoilX = FMath::RandRange(CurrentMaxRecoil, CurrentMinRecoil);
 	}
@@ -109,7 +117,7 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 
 
 
-
+	
 	bNegativeValue = FMath::RandBool();
 	if (bNegativeValue)
 	{
@@ -118,7 +126,7 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	else
 	{
 		ActualRecoilY = FMath::RandRange(CurrentMaxRecoil * -1, CurrentMinRecoil * -1);
-	}
+	}*/
 
 
 	/*if (CurrentMaxRecoil < MaxRecoilUpLimit)
