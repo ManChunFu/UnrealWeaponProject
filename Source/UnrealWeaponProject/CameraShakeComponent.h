@@ -32,6 +32,27 @@ public:
 	
 		float timer = 0;
 		float test = 5;
+
+	
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MaxRandYaw = 1;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MinRandYaw = 0;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MaxRandPitch = 1;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float MinRandPitch = 0;
+
+		float RandYaw;
+		float RandPitch;
+
+		float startYaw;
+		float startPitch;
+
+		float currentYaw;
+		float currentPitch;
 		AUnrealWeaponProjectCharacter* TargetCharacter;
 	// Called every frame
 	
