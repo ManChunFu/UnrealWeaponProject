@@ -2,6 +2,7 @@
 
 
 #include "CameraShakeComponent.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
 UCameraShakeComponent::UCameraShakeComponent()
@@ -30,6 +31,8 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	if (TargetCharacter != nullptr)
 	{
 		TargetCharacter->RotateCamera(rate * GetWorld()->GetDeltaSeconds());
+		TargetCharacter->PitchCamera(rate * GetWorld()->GetDeltaSeconds());
+		
 		timer += GetWorld()->GetDeltaSeconds();
 		if (timer >= 2.f)
 		{
@@ -46,10 +49,17 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Character)
 {
-	FRotator NewRotation = FRotator(0.f, 100.f, 100.f);
-	FQuat QuatRotation = FQuat(NewRotation);
-	
 	TargetCharacter = Character;
+
+	
 	PrimaryComponentTick.SetTickFunctionEnable(true);
+	
+	
+
+	RandPitch = FMath::RandRange(MinRandPitch, MaxRandPitch);
+	RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
+
+	//startPitch += RandPitch * -1;
+	//startYaw += RandYaw * -1;
 }
 

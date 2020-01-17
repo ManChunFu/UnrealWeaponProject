@@ -23,6 +23,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 void AUnrealWeaponProjectCharacter::RotateCamera(float test)
 {
 	AddControllerYawInput(test);
+	
 }
 
 void AUnrealWeaponProjectCharacter::PitchCamera(float test)

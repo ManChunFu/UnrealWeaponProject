@@ -9,46 +9,74 @@
 #include "FireModeComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UENUM(BlueprintType)
+enum class EFireMode : uint8
+{
+	FM_SemiAuto		UMETA(DisplayName = "Semi Auto"),
+	FM_AutoAttack	UMETA(DisplayName = "Full Auto"),
+	FM_BurstFire	UMETA(DisplayName = "Burst Fire")
+};
+
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UFireModeComponent();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Burstfire")
-		int32 AttacksPerBurst = 3;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Burstfire")
-		float BurstDelay = 0.05f;
-
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+		TArray<EFireMode> AllowedFireModes;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		float AttacksPerSecond = 3.f;
+		EFireMode CurrentFireMode;
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Weapon")
 		AWeapon* Weapon = nullptr;
+
+
+
+	// Semi Auto Settings
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|SemiAuto")
+		float SemiAutoAttackPerSecond = 5.f;
+
+	// Burst Settings
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|Burstfire")
+		int32 AttacksPerBurst = 3;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|Burstfire")
+		float BurstDelay = 0.05f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|Burstfire")
+		float BurstsPerSecond = 3.f;
+
+	// AutoAttack Settings
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|AutoAttack")
+		float AutoAttacksPerSecond = 5.f;
+
 
 private:
 	int32 BurstCounter = 0;
 	UFUNCTION()
 		void Burst();
 
-public:	
+public:
 
 	void BeginPlay();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void AutoFire();
+	UFUNCTION(BlueprintCallable, Category="Weapon")
+	void ChangeFireMode();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	UFUNCTION()
 		void BurstFire();
-
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	UFUNCTION()
 		void Attack();
 
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void Start();
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Stop();
 
@@ -56,7 +84,7 @@ private:
 
 	bool CanAttack();
 
-	float LastAttackTime = -1.f;
+	float NextAttackTime = -1.f;
 	bool bBursting = false;
 	FTimerHandle FireHandle;
 	FTimerHandle BurstHandle;
