@@ -21,10 +21,20 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 public:	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		float rate = 50;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		float speed = 1;
+	
+		float timer = 0;
+		float test = 5;
+		AUnrealWeaponProjectCharacter* TargetCharacter;
 	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
 	UFUNCTION(BlueprintCallable)
 		void DoCameraShake(AUnrealWeaponProjectCharacter* Character);
 		
