@@ -36,8 +36,6 @@ public:
     UFUNCTION(BlueprintCallable)
     void RegisterEnemyDeath(AEnemy* DeadEnemy);
 
-    virtual void OnConstruction(FTransform& Transform);
-    
 private:
     UPROPERTY()
     TArray<AEnemy*> Enemy;
