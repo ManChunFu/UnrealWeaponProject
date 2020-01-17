@@ -99,7 +99,7 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	UE_LOG(LogTemp, Warning, TEXT("MinRecoil %f"), CurrentMinRecoil);
 	bool bNegativeValue = FMath::RandBool();
 	float a = FMath::RandRange(0, 1) * 2 * PI;
-	float r = 1 * sqrt(FMath::RandRange(0, 1));
+	float r = FMath::RandRange(CurrentMinRecoil,CurrentMaxRecoil) * sqrt(FMath::RandRange(0, 1));
 
 
 	ActualRecoilX = r * cos(a);
