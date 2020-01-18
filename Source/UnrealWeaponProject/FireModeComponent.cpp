@@ -78,6 +78,12 @@ void UFireModeComponent::Burst()
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
+		if (SoundAudioComponent && SoundCue)
+		{
+			SoundAudioComponent->SetSound(SoundCue);
+			SoundAudioComponent->Play(0.f);
+		}
+
 		BurstCounter = 0;
 		bBursting = true;
 		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f/BurstsPerSecond)*0.95f;
