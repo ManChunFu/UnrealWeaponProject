@@ -2,6 +2,8 @@
 
 
 #include "Weapon.h"
+#include "UnrealWeaponProjectCharacter.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -31,7 +33,7 @@ void AWeapon::Drop()
 {
 	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
-	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector()*5000.f + Holder->GetRootComponent()->GetUpVector()*2000.f);
+	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector() * 5000.f + Holder->GetRootComponent()->GetUpVector() * 2000.f);
 	StopAttacking();
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Holder = nullptr;
@@ -45,11 +47,22 @@ void AWeapon::Drop()
 			});
 	}
 	GetWorld()->GetTimerManager().SetTimer(DropHandle, DropDelegate, 2.f, false);
-	
 }
 
-void AWeapon::Equip(USceneComponent* AttachTo, FName SocketName)
+void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName)
 {
+	Holder = NewHolder;
+	if (Holder->IsA<AUnrealWeaponProjectCharacter>())
+	{
+		SpawnPoint = &Cast<AUnrealWeaponProjectCharacter>(Holder)->GetFirstPersonCameraComponent()->GetComponentTransform();
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Weapon Start Attack"));
+
+		SpawnPoint = &BarrelEnd->GetComponentTransform();
+	}
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
 }
