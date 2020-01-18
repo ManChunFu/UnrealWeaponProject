@@ -24,15 +24,24 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner, FTransform CameraTransform, float InaccuracyZ, float InaccuracyY, float SpeedMultiplier)
+AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor*& Owner, float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
 {
 	UWorld* const World = GetWorld();
 	if (World != NULL)
 	{
 		{
-			// Spawn bullet from camera position
+			FTransform ProjSpawn;
+			// Before spawning, rotate the spawn transform to account for inaccuracy
+			if (OverrideSpawn.Equals(FTransform()))
+			{
+				ProjSpawn = *Cast<AWeapon>(GetOwner())->SpawnPoint;
+			}
+			else
+			{
+				ProjSpawn = OverrideSpawn;
+			}
 
-			FTransform ProjSpawn = CameraTransform;
+			 
 
 			FQuat ZRotation(FVector::UpVector, InaccuracyZ);
 			FQuat YRotation(FVector::RightVector, InaccuracyY);
@@ -40,7 +49,6 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
 
 
-			//CamSpawn.SetLocation(CamSpawn.GetLocation() + CamSpawn.GetRotation().GetForwardVector() *50.f);
 			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Owner);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Owner);

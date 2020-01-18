@@ -100,10 +100,8 @@ void AUnrealWeaponProjectCharacter::EquipWeapon(AWeapon* Weapon)
 	if (Weapon)
 	{
 		GetCapsuleComponent()->IgnoreActorWhenMoving(Weapon, true);
-		Weapon->Equip(Mesh1P, "GripPoint");
-		Weapon->Holder = this;
+		Weapon->Equip(this, Mesh1P, "GripPoint");
 		EquippedWeapon = Weapon;
-		//Weapon->WeaponMesh->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
 	}
 }
 

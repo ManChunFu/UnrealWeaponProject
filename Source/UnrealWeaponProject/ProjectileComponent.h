@@ -8,20 +8,20 @@
 #include "ProjectileComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UProjectileComponent();
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
-public:	
+public:
 	UFUNCTION(BlueprintCallable)
-	AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor* Owner,FTransform CameraTransform, float InaccuracyZ, float InaccuracyY, float SpeedMultiplier = 1.F);
+		AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, UPARAM(ref) AActor*& Owner, float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
 
 
 };

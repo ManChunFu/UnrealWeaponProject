@@ -29,7 +29,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UArrowComponent* BarrelEnd = nullptr;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
 	// If this is 0, the weapon can attack. Increment it if you want to suspend weapon
@@ -37,6 +37,8 @@ public:
 		int32 SuspendedFromAttack = 0;
 
 
+	// World location for any spawns caused by this weapon
+	const FTransform* SpawnPoint;
 
 protected:
 	virtual void BeginPlay() override;
@@ -45,7 +47,7 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Equip(USceneComponent* AttachTo, FName SocketName);
+		void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void StartAttacking();
