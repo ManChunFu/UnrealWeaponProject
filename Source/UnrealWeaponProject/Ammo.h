@@ -16,22 +16,21 @@ class UNREALWEAPONPROJECT_API UAmmo : public UObject
 private:
 
 public:
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
-		int32 MagazineSize = 10;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
+	int32 MagazineSize = 10;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
-		int32 SpareAmmo = 100;
+	int32 SpareAmmo = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
-		int32 MagazineAmmo = 0;
+	int32 MagazineAmmo = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ammo")
-		int32 MaxSpareAmmo = 200;
+	int32 MaxSpareAmmo = 200;
 
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void OnAttack();
+	void OnAttack();
 
 	//UFUNCTION()
 	//	void Reload();

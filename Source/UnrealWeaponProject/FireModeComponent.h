@@ -8,6 +8,7 @@
 #include "Weapon.h"
 #include "FireModeComponent.generated.h"
 
+class UAudioComponent;
 
 UENUM(BlueprintType)
 enum class EFireMode : uint8
@@ -56,6 +57,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|AutoAttack")
 		float AutoAttacksPerSecond = 5.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
+		class USoundBase* SoundCue;
+
 
 private:
 	int32 BurstCounter = 0;
@@ -89,4 +93,6 @@ private:
 	FTimerHandle FireHandle;
 	FTimerHandle BurstHandle;
 	FTimerDelegate BurstDelegate;
+
+	UAudioComponent* SoundAudioComponent;
 };

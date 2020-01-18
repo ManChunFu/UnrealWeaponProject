@@ -2,12 +2,15 @@
 
 
 #include "FireModeComponent.h"
+#include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
 {
 	AllowedFireModes.Add(EFireMode::FM_SemiAuto);
 	CurrentFireMode = EFireMode::FM_SemiAuto;
+
+	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
 }
 
 void UFireModeComponent::BeginPlay()
@@ -24,6 +27,7 @@ void UFireModeComponent::BeginPlay()
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
+	
 }
 
 void UFireModeComponent::ChangeFireMode()
@@ -45,6 +49,7 @@ void UFireModeComponent::Attack()
 	if (CanAttack())
 	{
 		Weapon->Attack();
+
 		switch (CurrentFireMode)
 		{
 		case EFireMode::FM_AutoAttack:
@@ -57,6 +62,13 @@ void UFireModeComponent::Attack()
 
 		default :
 			break;
+		}
+
+		// play the sound effects
+		if (SoundAudioComponent && SoundCue)
+		{
+			SoundAudioComponent->SetSound(SoundCue);
+			SoundAudioComponent->Play(0.f);
 		}
 	}
 }

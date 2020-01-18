@@ -14,6 +14,7 @@ AWeapon::AWeapon()
 	RootComponent = WeaponMesh;
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->SetGenerateOverlapEvents(true);
+
 }
 
 // Called when the game starts or when spawned
@@ -52,6 +53,7 @@ void AWeapon::Equip(USceneComponent* AttachTo, FName SocketName)
 {
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
+
 }
 
 

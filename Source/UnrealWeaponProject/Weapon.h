@@ -10,6 +10,7 @@
 #include "TimerManager.h"
 #include "Weapon.generated.h"
 
+
 UCLASS()
 class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
@@ -35,8 +36,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		int32 SuspendedFromAttack = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
-		UObject* Soundclip = nullptr;
 
 
 protected:
@@ -62,5 +61,6 @@ public:
 	UFUNCTION()
 		void Drop();
 private:
+	
 
 };
