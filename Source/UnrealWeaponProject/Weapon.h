@@ -10,16 +10,21 @@
 #include "TimerManager.h"
 #include "Weapon.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWeaponDropped);
 
 UCLASS()
 class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
 private:
+
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
 public:
 	AWeapon();
+
+	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
+	FOnWeaponDropped WeaponDropped;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 		USkeletalMeshComponent* WeaponMesh = nullptr;
@@ -50,19 +55,29 @@ public:
 		void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StartAttacking();
+		void StartAttack();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+		void StopAttack();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+		void StartAltAttack();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+		void StopAltAttack();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void Reload();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StopAttacking();
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
 		void Attack();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
+		void AltAttack();
+
 	UFUNCTION()
 		void Drop();
 private:
-	
+
 
 };

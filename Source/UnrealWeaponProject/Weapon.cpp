@@ -3,6 +3,7 @@
 
 #include "Weapon.h"
 #include "UnrealWeaponProjectCharacter.h"
+#include "WeaponComponentInterface.h"
 #include "Camera/CameraComponent.h"
 
 // Sets default values
@@ -32,10 +33,20 @@ void AWeapon::OnConstruction(const FTransform& Transform)
 
 void AWeapon::Drop()
 {
+	// Notify components they weapon was dropped
+	//TArray<UActorComponent*> Components = this->GetInstanceComponents();
+	//for (UActorComponent* Component : Components)
+	//{
+	//	if (Component->Implements<IWeaponComponentInterface>())
+	//	{
+	//		Cast<IWeaponComponentInterface>(Component)->OnWeaponDropped();
+	//	}
+	//}
+
 	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector() * 5000.f + Holder->GetRootComponent()->GetUpVector() * 2000.f);
-	StopAttacking();
+	StopAttack();
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	Holder = nullptr;
 
@@ -66,6 +77,17 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 	}
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
+
+
+	// Notify components they weapon was picked up
+	//TArray<UActorComponent*> Components = this->GetInstanceComponents();
+	//for (UActorComponent* Component : Components)
+	//{
+	//	if (Component->Implements<IWeaponComponentInterface>())
+	//	{
+	//		Cast<IWeaponComponentInterface>(Component)->OnWeaponEquipped();
+	//	}
+	//}
 
 }
 
