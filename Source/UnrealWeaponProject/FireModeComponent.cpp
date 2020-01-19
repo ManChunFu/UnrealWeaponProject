@@ -3,7 +3,6 @@
 
 #include "FireModeComponent.h"
 #include "Components/AudioComponent.h"
-#include "AmmoComponent.h"
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
@@ -67,7 +66,7 @@ void UFireModeComponent::Attack()
 			break;
 		}
 
-			PlaySound(FireSoundCue);
+		PlaySound(FireSoundCue);
 	}
 }
 
@@ -76,7 +75,6 @@ void UFireModeComponent::Burst()
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
-	
 		PlaySound(FireSoundCue);
 	
 		BurstCounter = 0;
