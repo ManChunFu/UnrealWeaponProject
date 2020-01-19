@@ -2,6 +2,7 @@
 
 
 #include "CameraShakeComponent.h"
+#include "UnrealWeaponProjectCharacter.h"
 #include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties
@@ -27,18 +28,55 @@ void UCameraShakeComponent::BeginPlay()
 void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
-	if (TargetCharacter != nullptr)
+	UE_LOG(LogTemp, Warning, TEXT("currentPitch: %f"), currentPitch);
+	UE_LOG(LogTemp, Warning, TEXT("currentYaw: %f"), currentYaw);
+	if (TargetCharacter != nullptr && bCurrentlymoving)
 	{
-		TargetCharacter->RotateCamera(rate * GetWorld()->GetDeltaSeconds());
-		TargetCharacter->PitchCamera(rate * GetWorld()->GetDeltaSeconds());
+		//UE_LOG(LogTemp, Warning, TEXT("StuffY: %s"), bCurrentlymoving);
+		float x = RandPitch - currentPitch;
+		float y = RandYaw - currentYaw;
 		
-		timer += GetWorld()->GetDeltaSeconds();
-		if (timer >= 2.f)
+		
+		TargetCharacter->RotateCamera(x * rate * GetWorld()->GetDeltaSeconds());
+		currentPitch += rate * x * GetWorld()->GetDeltaSeconds();
+
+		TargetCharacter->PitchCamera(y* rate*GetWorld()->GetDeltaSeconds());
+		currentYaw += rate * y * GetWorld()->GetDeltaSeconds();
+
+		UE_LOG(LogTemp, Warning, TEXT("StuffX: %f"), x);
+		UE_LOG(LogTemp, Warning, TEXT("StuffY: %f"), y);
+		
+		if ((x >= -0.1f && x <= 0.1f )&& (y >= -0.1f && y <= 0.1f))
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Stuff"));
+			TargetCharacter->RotateCamera(x);
+			TargetCharacter->PitchCamera(y);
+			
+			
+			bCurrentlymoving = false;
+			//PrimaryComponentTick.SetTickFunctionEnable(false);
+		}
+	}
+	
+	if (!bCurrentlymoving)
+	{
+		
+		UE_LOG(LogTemp, Warning, TEXT("False"));
+		float x = RandPitch + currentPitch ;
+		float y = RandYaw + currentYaw ;
+
+		TargetCharacter->RotateCamera((x *-1)* rate*GetWorld()->GetDeltaSeconds());
+		currentPitch -=  x  *rate* GetWorld()->GetDeltaSeconds();
+
+		TargetCharacter->PitchCamera((y*-1)  * rate*GetWorld()->GetDeltaSeconds());
+		currentYaw -=   y *rate* GetWorld()->GetDeltaSeconds();
+
+		if ((currentPitch >= -0.1f && currentPitch <= 0.1) && (currentYaw >= -0.1f && currentYaw <= 0.1f))
+		{
+			TargetCharacter->RotateCamera(currentPitch);
+			TargetCharacter->PitchCamera(currentYaw);
 			PrimaryComponentTick.SetTickFunctionEnable(false);
-			timer = 0;
+			UE_LOG(LogTemp, Warning, TEXT("currentPitch: %f"), currentPitch);
+			UE_LOG(LogTemp, Warning, TEXT("currentYaw: %f"), currentYaw);
 		}
 	}
 }
@@ -49,16 +87,21 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Character)
 {
-	TargetCharacter = Character;
+
+	if (Character != nullptr)
+	{
+		TargetCharacter = Character;
+
+		PrimaryComponentTick.SetTickFunctionEnable(true);
+
+		RandPitch = FMath::RandRange(MinRandPitch, MaxRandPitch);
+		RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
+
+		bCurrentlymoving = true;
+	}
+	
 
 	
-	PrimaryComponentTick.SetTickFunctionEnable(true);
-	
-	
-
-	RandPitch = FMath::RandRange(MinRandPitch, MaxRandPitch);
-	RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
-
 	//startPitch += RandPitch * -1;
 	//startYaw += RandYaw * -1;
 }
