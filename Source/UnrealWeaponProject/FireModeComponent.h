@@ -9,6 +9,7 @@
 #include "FireModeComponent.generated.h"
 
 class UAudioComponent;
+class UAmmoComponent;
 
 UENUM(BlueprintType)
 enum class EFireMode : uint8
@@ -100,5 +101,6 @@ private:
 	FTimerDelegate BurstDelegate;
 
 	UAudioComponent* SoundAudioComponent;
+	UAmmoComponent* AmmoComponent;
 	void PlaySound(USoundBase* SoundCue);
 };

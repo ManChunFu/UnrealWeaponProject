@@ -31,8 +31,6 @@ void UFireModeComponent::BeginPlay()
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
-	
-	//AmmoComponent = Cast<UAmmoComponent>(GetOwner());
 }
 
 void UFireModeComponent::ChangeFireMode()
@@ -69,18 +67,7 @@ void UFireModeComponent::Attack()
 			break;
 		}
 
-		// play firing sound or play empty magazine sound
-		//if (AmmoComponent)
-		//{
-		//	if (AmmoComponent->MagazineAmmo > 0)
-		//	{
-				PlaySound(FireSoundCue);
-		//	}
-		//	else
-		//	{
-		//		PlaySound(EmptyMagazineSoundCue);
-		//	}
-		//}
+			PlaySound(FireSoundCue);
 	}
 }
 
@@ -89,19 +76,9 @@ void UFireModeComponent::Burst()
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
-		// play firing sound or play empty magagzine sound
-		/*if (AmmoComponent)
-		{
-			if (AmmoComponent->MagazineAmmo > 0)
-			{
-			*/	PlaySound(FireSoundCue);
-		//	}
-		//	else
-		//	{
-		//		PlaySound(EmptyMagazineSoundCue);
-		//	}
-		//}
-
+	
+		PlaySound(FireSoundCue);
+	
 		BurstCounter = 0;
 		bBursting = true;
 		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f/BurstsPerSecond)*0.95f;

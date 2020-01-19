@@ -9,6 +9,7 @@
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()
 {
+	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
 }
 
 

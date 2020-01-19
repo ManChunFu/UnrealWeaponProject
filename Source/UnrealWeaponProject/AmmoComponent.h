@@ -5,10 +5,9 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TimerManager.h"
-#include "Components/AudioComponent.h"
 #include "AmmoComponent.generated.h"
 
-//class UAudioComponent;
+class UAudioComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UAmmoComponent : public UActorComponent
@@ -64,6 +63,6 @@ private:
 	UFUNCTION()
 		void FinishReload();
 
-	UAudioComponent* SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
+	UAudioComponent* SoundAudioComponent;
 	void PlaySound(USoundBase* SoundCue);
 };
