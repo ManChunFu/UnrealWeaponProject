@@ -26,8 +26,9 @@ void UProjectileComponent::BeginPlay()
 
 AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor*& Owner, float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
 {
+
 	UWorld* const World = GetWorld();
-	if (World != NULL)
+	if (World != NULL && ProjectileClass->IsValidLowLevel())
 	{
 		{
 			FTransform ProjSpawn;
