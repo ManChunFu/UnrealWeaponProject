@@ -7,15 +7,18 @@
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
 {
-	AllowedFireModes.Add(EFireMode::FM_SemiAuto);
-	CurrentFireMode = EFireMode::FM_SemiAuto;
-
 	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
 }
 
 void UFireModeComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	if (AllowedFireModes.Num() <= 0)
+	{
+		AllowedFireModes.Add(CurrentFireMode);
+		UE_LOG(LogTemp, Warning, TEXT("No assigned fire modes for weapon : %s"), *GetOwner()->GetName());
+
+	}
 	Weapon = Cast<AWeapon>(GetOwner());
 	BurstDelegate.BindLambda([=]
 		{
@@ -52,11 +55,11 @@ void UFireModeComponent::Attack()
 
 		switch (CurrentFireMode)
 		{
-		case EFireMode::FM_AutoAttack:
+		case EFireMode::FullAuto:
 			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / AutoAttacksPerSecond) * 0.95f;
 			break;
 
-		case EFireMode::FM_SemiAuto:
+		case EFireMode::SemiAuto:
 			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / SemiAutoAttackPerSecond) * 0.95f;
 			break;
 
@@ -96,18 +99,18 @@ void UFireModeComponent::Start()
 
 	switch (CurrentFireMode)
 	{
-	case EFireMode::FM_AutoAttack:
+	case EFireMode::FullAuto:
 		Attack();
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
 		break;
 
 
-	case EFireMode::FM_BurstFire:
+	case EFireMode::BurstFire:
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
 		break;
 
 
-	case EFireMode::FM_SemiAuto:
+	case EFireMode::SemiAuto:
 		Attack();
 
 		break;

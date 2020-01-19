@@ -43,8 +43,8 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 
 			 
 
-			FQuat ZRotation(FVector::UpVector, InaccuracyZ);
-			FQuat YRotation(FVector::RightVector, InaccuracyY);
+			FQuat ZRotation(FVector::UpVector, InaccuracyZ * PI / 180.f);
+			FQuat YRotation(FVector::RightVector, InaccuracyY * PI / -180.f);
 
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
 

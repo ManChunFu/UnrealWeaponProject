@@ -13,9 +13,9 @@ class UAudioComponent;
 UENUM(BlueprintType)
 enum class EFireMode : uint8
 {
-	FM_SemiAuto		UMETA(DisplayName = "Semi Auto"),
-	FM_AutoAttack	UMETA(DisplayName = "Full Auto"),
-	FM_BurstFire	UMETA(DisplayName = "Burst Fire")
+	SemiAuto	UMETA(DisplayName = "Semi Auto"),
+	FullAuto	UMETA(DisplayName = "Full Auto"),
+	BurstFire	UMETA(DisplayName = "Burst Fire")
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
