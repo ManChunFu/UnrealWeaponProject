@@ -3,6 +3,7 @@
 
 #include "FireModeComponent.h"
 #include "Components/AudioComponent.h"
+#include "AmmoComponent.h"
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
@@ -31,6 +32,7 @@ void UFireModeComponent::BeginPlay()
 			}
 		});
 	
+	//AmmoComponent = Cast<UAmmoComponent>(GetOwner());
 }
 
 void UFireModeComponent::ChangeFireMode()
@@ -67,8 +69,18 @@ void UFireModeComponent::Attack()
 			break;
 		}
 
-		// play firing sound
-		PlaySound();
+		// play firing sound or play empty magazine sound
+		//if (AmmoComponent)
+		//{
+		//	if (AmmoComponent->MagazineAmmo > 0)
+		//	{
+				PlaySound(FireSoundCue);
+		//	}
+		//	else
+		//	{
+		//		PlaySound(EmptyMagazineSoundCue);
+		//	}
+		//}
 	}
 }
 
@@ -77,8 +89,18 @@ void UFireModeComponent::Burst()
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
-		// play firing sound
-		PlaySound();
+		// play firing sound or play empty magagzine sound
+		/*if (AmmoComponent)
+		{
+			if (AmmoComponent->MagazineAmmo > 0)
+			{
+			*/	PlaySound(FireSoundCue);
+		//	}
+		//	else
+		//	{
+		//		PlaySound(EmptyMagazineSoundCue);
+		//	}
+		//}
 
 		BurstCounter = 0;
 		bBursting = true;
@@ -121,11 +143,11 @@ bool UFireModeComponent::CanAttack()
 	return NextAttackTime <= GetWorld()->GetTimeSeconds();
 }
 
-void UFireModeComponent::PlaySound()
+void UFireModeComponent::PlaySound(USoundBase* SoundCue)
 {
-	if (SoundAudioComponent && FireSoundCue)
+	if (SoundAudioComponent && SoundCue)
 	{
-		SoundAudioComponent->SetSound(FireSoundCue);
+		SoundAudioComponent->SetSound(SoundCue);
 		SoundAudioComponent->Play(0.f);
 	}
 }

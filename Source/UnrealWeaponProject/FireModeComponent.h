@@ -62,6 +62,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 		class USoundBase* FireSoundCue;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
+		class USoundBase* EmptyMagazineSoundCue;
+
+
 private:
 	int32 BurstCounter = 0;
 	UFUNCTION()
@@ -96,5 +100,5 @@ private:
 	FTimerDelegate BurstDelegate;
 
 	UAudioComponent* SoundAudioComponent;
-	void PlaySound();
+	void PlaySound(USoundBase* SoundCue);
 };
