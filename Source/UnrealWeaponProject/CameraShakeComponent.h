@@ -45,15 +45,18 @@ public:
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
 			float MinRandPitch = 0;
 
-		float RandYaw;
-		float RandPitch;
+		float RandYaw = 0;
+		float RandPitch = 0;
 
-		float startYaw;
-		float startPitch;
+		float startYaw = 0;
+		float startPitch = 0;
 
-		float currentYaw;
-		float currentPitch;
-		AUnrealWeaponProjectCharacter* TargetCharacter;
+		float currentYaw = 0;
+		float currentPitch = 0;
+
+		bool bCurrentlymoving = false;
+		AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
+		UCameraComponent* Camera = nullptr;
 	// Called every frame
 	
 	UFUNCTION(BlueprintCallable)
