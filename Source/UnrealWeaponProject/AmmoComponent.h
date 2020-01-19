@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "TimerManager.h"
+#include "Components/AudioComponent.h"
 #include "AmmoComponent.generated.h"
 
+//class UAudioComponent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UAmmoComponent : public UActorComponent
@@ -45,10 +47,23 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		bool DecreaseAmmo(int32 Amount = 1);
+
+
+	// Audio sound setting for reloading and empty magazine
+	// TODO try to move to weapon class
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
+		class USoundBase* ReloadSoundCue;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
+		class USoundBase* EmptyMagazineSoundCue;
+
 private:
 	FTimerHandle ReloadTimer;
 	//The weapon this component is attached to
 	class AWeapon* Weapon = nullptr;
 	UFUNCTION()
 		void FinishReload();
+
+	UAudioComponent* SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
+	void PlaySound(USoundBase* SoundCue);
 };

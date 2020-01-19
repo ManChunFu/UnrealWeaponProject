@@ -57,9 +57,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|AutoAttack")
 		float AutoAttacksPerSecond = 5.f;
 
+	// Audio sound setting for firing
+	// TODO try to move to weapon class
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
-		class USoundBase* SoundCue;
-
+		class USoundBase* FireSoundCue;
 
 private:
 	int32 BurstCounter = 0;
@@ -95,4 +96,5 @@ private:
 	FTimerDelegate BurstDelegate;
 
 	UAudioComponent* SoundAudioComponent;
+	void PlaySound();
 };

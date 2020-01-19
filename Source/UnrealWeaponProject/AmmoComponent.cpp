@@ -4,10 +4,11 @@
 #include "AmmoComponent.h"
 #include "Engine/World.h"
 #include "Weapon.h"
+#include "Components/AudioComponent.h"
+
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()
 {
-
 }
 
 
@@ -27,6 +28,10 @@ void UAmmoComponent::Reload()
 	if (bIsReloading == false)
 	{
 		bIsReloading = true;
+
+		 //play reload sound effect
+		PlaySound(ReloadSoundCue);
+
 		Weapon->SuspendedFromAttack++;
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UAmmoComponent::FinishReload, ReloadTime, false);
 		UE_LOG(LogTemp, Warning, TEXT("Starting Reload"));
@@ -62,6 +67,15 @@ void UAmmoComponent::FinishReload()
 	MagazineAmmo += SpareAmmo;
 	SpareAmmo = 0;
 
+}
+
+void UAmmoComponent::PlaySound(USoundBase* SoundCue)
+{
+	if (SoundAudioComponent && SoundCue)
+	{
+		SoundAudioComponent->SetSound(SoundCue);
+		SoundAudioComponent->Play(0.f);
+	}
 }
 
 

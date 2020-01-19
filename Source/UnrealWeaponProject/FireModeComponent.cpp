@@ -67,12 +67,8 @@ void UFireModeComponent::Attack()
 			break;
 		}
 
-		// play the sound effects
-		if (SoundAudioComponent && SoundCue)
-		{
-			SoundAudioComponent->SetSound(SoundCue);
-			SoundAudioComponent->Play(0.f);
-		}
+		// play firing sound
+		PlaySound();
 	}
 }
 
@@ -81,11 +77,8 @@ void UFireModeComponent::Burst()
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
-		if (SoundAudioComponent && SoundCue)
-		{
-			SoundAudioComponent->SetSound(SoundCue);
-			SoundAudioComponent->Play(0.f);
-		}
+		// play firing sound
+		PlaySound();
 
 		BurstCounter = 0;
 		bBursting = true;
@@ -126,5 +119,14 @@ void UFireModeComponent::Stop()
 bool UFireModeComponent::CanAttack()
 {
 	return NextAttackTime <= GetWorld()->GetTimeSeconds();
+}
+
+void UFireModeComponent::PlaySound()
+{
+	if (SoundAudioComponent && FireSoundCue)
+	{
+		SoundAudioComponent->SetSound(FireSoundCue);
+		SoundAudioComponent->Play(0.f);
+	}
 }
 
