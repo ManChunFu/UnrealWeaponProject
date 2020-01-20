@@ -6,6 +6,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
+#include "Projectile.h"
 
 
 void AUnrealWeaponProjectGameMode::BeginPlay()
@@ -36,4 +37,7 @@ AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 	HUDClass = AUnrealWeaponProjectHUD::StaticClass();
 }
 
-
+float AUnrealWeaponProjectGameMode::GetDamage()
+{
+	return Damage;	
+}

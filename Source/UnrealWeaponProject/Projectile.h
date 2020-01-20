@@ -44,4 +44,7 @@ protected:
 public:	
 	UPROPERTY(EditAnywhere)
 		float ProjectileSpeed = 1000;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+		float Damage;
 };

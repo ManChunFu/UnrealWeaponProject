@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "UnrealWeaponProjectGameMode.generated.h"
 
+class AProjectile;
+
 UCLASS(minimalapi)
 class AUnrealWeaponProjectGameMode : public AGameModeBase
 {
@@ -23,6 +25,13 @@ protected:
 	UPROPERTY()
 	class UUserWidget* CurrentWidget;
 
+	UPROPERTY()
+	float Damage = 0.0f;
+
+private:
+
+	UFUNCTION(BlueprintCallable, Category = "HUD")
+	float GetDamage();
 	
 };
 

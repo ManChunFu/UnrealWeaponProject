@@ -60,7 +60,7 @@ public:
 	// Audio sound setting for firing
 	// TODO try to move to weapon class
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
-		class USoundBase* FireSoundCue;
+		class USoundBase* FireSoundCue = nullptr;
 
 
 private:
