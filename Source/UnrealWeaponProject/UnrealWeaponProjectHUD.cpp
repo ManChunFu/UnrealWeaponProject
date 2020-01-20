@@ -33,3 +33,40 @@ void AUnrealWeaponProjectHUD::DrawHUD()
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 }
+
+void AUnrealWeaponProjectHUD::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (WeaponWidgetClass)
+	{
+		WeaponWidget = CreateWidget<UWeaponWidget>(GetWorld(), WeaponWidgetClass);
+		if (WeaponWidget)
+		{
+			WeaponWidget->AddToViewport();
+		}
+	}
+}
+
+void AUnrealWeaponProjectHUD::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+}
+
+void AUnrealWeaponProjectHUD::UpdateDamageCount(float Value)
+{
+	if (WeaponWidget)
+	{
+		WeaponWidget->UpdateDamageCout(Value);
+	}
+}
+
+void AUnrealWeaponProjectHUD::ResetDamage()
+{
+	if (WeaponWidget)
+	{
+		WeaponWidget->ResetDamage();
+	}
+}
+
+

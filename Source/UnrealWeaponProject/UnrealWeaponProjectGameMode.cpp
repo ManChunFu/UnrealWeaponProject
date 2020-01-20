@@ -43,10 +43,7 @@ AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 
 float AUnrealWeaponProjectGameMode::GetDamage()
 {
-	if (Enemy)
-	{
-		Damage = Enemy->DamageReceived;
-	}
+	
 	return Damage;	
 
 }

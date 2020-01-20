@@ -6,10 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
-
 class ASpawnPoint;
-class AFloatingActor;
-
 UCLASS()
 class UNREALWEAPONPROJECT_API AEnemy : public ACharacter
 {
@@ -36,17 +33,16 @@ public:
 	UPROPERTY (EditAnywhere, BlueprintReadWrite, Category = "Health")
 	bool bDead = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "TEXT")
-	TSubclassOf<AFloatingActor> TextToSpawn;
 
 	virtual float TakeDamage(float DamageAmout, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) override;
 
 	ASpawnPoint* SpawnPoint  = nullptr;
 	FTimerHandle TimeHandle;
 
-	float DamageReceived = 0.f;
+	FTimerHandle DamageResetHandle;
 
 private:
 	void KillEnemy();
+	void PrintDamageOnHUD(float Value);
 	
 };

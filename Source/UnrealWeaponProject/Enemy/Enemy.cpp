@@ -7,11 +7,12 @@
 #include "TimerManager.h"
 #include "SpawnPoint.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values
 AEnemy::AEnemy()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 }
@@ -38,26 +39,28 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 {
 	// Call the base class - this will tell us how much damage to apply  
 	const float ActualDamage = Super::TakeDamage(DamageAmout, DamageEvent, EventInstigator, DamageCauser);
-	DamageReceived = ActualDamage;
+
+	// Show on UI
+	//PrintDamageOnHUD(ActualDamage);
 
 	if (ActualDamage > 0.f)
 	{
 		CurrentHealth -= ActualDamage;
-		if (CurrentHealth - ActualDamage < 0)
-		{
-			CurrentHealth = 0;
-		}
-		
+
+		PrintDamageOnHUD(CurrentHealth);
+
 		FString CurrentHealthReport = TEXT("Current Health:  ") + FString::SanitizeFloat(CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
 
 		// If the damage depletes our health set our lifespan to zero - which will destroy the actor  
 		if (CurrentHealth <= 0.f)
 		{
+			CurrentHealth = 0.f;
 			bDead = true;
 			GetWorld()->GetTimerManager().SetTimer(TimeHandle, this, &AEnemy::KillEnemy, 1.f, false);
 		}
 	}
+
 
 	return ActualDamage;
 }
@@ -69,8 +72,20 @@ void AEnemy::KillEnemy()
 		SpawnPoint->RegisterEnemyDeath(this);
 	}
 	SetLifeSpan(0.001f);
+}
+
+void AEnemy::PrintDamageOnHUD(float Value)
+{
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->UpdateDamageCount(Value);
+	}
 
 }
+
+
+
 
 
 

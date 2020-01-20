@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "Components/WidgetComponent.h"	
+#include "WeaponWidget.h"
 #include "UnrealWeaponProjectHUD.generated.h"
 
 UCLASS()
@@ -17,9 +19,23 @@ public:
 	/** Primary draw call for the HUD */
 	virtual void DrawHUD() override;
 
+	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+		TSubclassOf<UUserWidget> WeaponWidgetClass;
+
+	UFUNCTION()
+		void UpdateDamageCount(float Value);
+
+	UFUNCTION()
+		void ResetDamage();
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
+
+	UWeaponWidget* WeaponWidget;
 
 };
 
