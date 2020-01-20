@@ -5,23 +5,34 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Projectile.h"
+#include "WeaponComponentInterface.h"
 #include "ProjectileComponent.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent
+class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		TSubclassOf<AProjectile> ProjectileClass;
+	UPROPERTY(VisibleInstanceOnly, Category="Weapon")
+		AActor* Holder = nullptr;
+
 public:
-	// Sets default values for this component's properties
 	UProjectileComponent();
+
+	virtual void OnWeaponDropped_Implementation() override;
+
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
+
 protected:
-	// Called when the game starts
+
 	virtual void BeginPlay() override;
 public:
 	UFUNCTION(BlueprintCallable)
-		AProjectile* FireProjectile(TSubclassOf<AProjectile> ProjectileClass, UPARAM(ref) AActor*& Owner, float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
+		AProjectile* FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
 
 
 };

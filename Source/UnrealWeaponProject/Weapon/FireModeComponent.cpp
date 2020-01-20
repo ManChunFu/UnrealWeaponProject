@@ -22,7 +22,7 @@ void UFireModeComponent::BeginPlay()
 	Weapon = Cast<AWeapon>(GetOwner());
 	BurstDelegate.BindLambda([=]
 		{
-			Weapon->Attack();
+			Weapon->TryAttack();
 			BurstCounter++;
 			if (BurstCounter >= AttacksPerBurst)
 			{
@@ -48,10 +48,8 @@ void UFireModeComponent::BurstFire()
 
 void UFireModeComponent::Attack()
 {
-	if (CanAttack())
+	if (Weapon->TryAttack())
 	{
-		Weapon->Attack();
-
 		switch (CurrentFireMode)
 		{
 		case EFireMode::FullAuto:
@@ -62,7 +60,7 @@ void UFireModeComponent::Attack()
 			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / SemiAutoAttackPerSecond) * 0.95f;
 			break;
 
-		default :
+		default:
 			break;
 		}
 
@@ -80,10 +78,10 @@ void UFireModeComponent::Burst()
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
 	{
 		PlaySound(FireSoundCue);
-	
+
 		BurstCounter = 0;
 		bBursting = true;
-		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f/BurstsPerSecond)*0.95f;
+		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / BurstsPerSecond) * 0.95f;
 		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true, 0.f);
 	}
 	else
@@ -122,7 +120,7 @@ void UFireModeComponent::Stop()
 	GetWorld()->GetTimerManager().ClearTimer(FireHandle);
 }
 
-bool UFireModeComponent::CanAttack()
+bool UFireModeComponent::CanAttack_Implementation()
 {
 	return NextAttackTime <= GetWorld()->GetTimeSeconds();
 }

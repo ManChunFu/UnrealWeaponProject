@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "TimerManager.h"
 #include "Weapon.h"
+#include "WeaponComponentInterface.h"
 #include "FireModeComponent.generated.h"
 
 class UAudioComponent;
@@ -19,7 +20,7 @@ enum class EFireMode : uint8
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent
+class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()
 
@@ -54,7 +55,7 @@ public:
 		float BurstsPerSecond = 3.f;
 
 	// AutoAttack Settings
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|AutoAttack")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon|FullAuto")
 		float AutoAttacksPerSecond = 5.f;
 
 	// Audio sound setting for firing
@@ -79,15 +80,14 @@ public:
 		void BurstFire();
 	UFUNCTION()
 		void Attack();
-
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Start();
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Stop();
 private:
 
-	bool CanAttack();
+	virtual bool CanAttack_Implementation();
 
 	float NextAttackTime = -1.f;
 	bool bBursting = false;

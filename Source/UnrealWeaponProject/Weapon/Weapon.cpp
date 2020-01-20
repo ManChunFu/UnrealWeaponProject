@@ -4,6 +4,7 @@
 #include "Weapon.h"
 #include "../UnrealWeaponProjectCharacter.h"
 #include "WeaponComponentInterface.h"
+#include "FireModeComponent.h"
 #include "Camera/CameraComponent.h"
 
 // Sets default values
@@ -11,6 +12,7 @@ AWeapon::AWeapon()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
+	FireModeComponent = CreateDefaultSubobject<UFireModeComponent>(TEXT("FireMode"));
 	WeaponMesh->SetCollisionProfileName("Weapon");
 	BarrelEnd = CreateDefaultSubobject<UArrowComponent>(TEXT("Barrel End"));
 	BarrelEnd->SetupAttachment(WeaponMesh);
@@ -24,6 +26,10 @@ AWeapon::AWeapon()
 void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
+	AmmoComponent = Cast<UAmmoComponent>(GetComponentByClass(UAmmoComponent::StaticClass()));
+
+
+	CachedComponents = GetComponentsByInterface(UWeaponComponentInterface::StaticClass());
 }
 
 void AWeapon::OnConstruction(const FTransform& Transform)
@@ -31,17 +37,39 @@ void AWeapon::OnConstruction(const FTransform& Transform)
 	BarrelEnd->AttachToComponent(WeaponMesh, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
+void AWeapon::Reload_Implementation()
+{
+	if (AmmoComponent)
+	{
+		AmmoComponent->Reload();
+	}
+}
+
+void AWeapon::Attack_Implementation()
+{
+
+	for (auto Component : CachedComponents)
+	{
+		IWeaponComponentInterface::Execute_OnWeaponAttack(Component);
+	}
+}
+
+bool AWeapon::TryAttack()
+{
+	if (CanAttack())
+	{
+		Attack();
+		return true;
+	}
+	return false;
+}
+
 void AWeapon::Drop()
 {
-	// Notify components they weapon was dropped
-	//TArray<UActorComponent*> Components = this->GetInstanceComponents();
-	//for (UActorComponent* Component : Components)
-	//{
-	//	if (Component->Implements<IWeaponComponentInterface>())
-	//	{
-	//		Cast<IWeaponComponentInterface>(Component)->OnWeaponDropped();
-	//	}
-	//}
+	for (auto Component : CachedComponents)
+	{
+		IWeaponComponentInterface::Execute_OnWeaponDropped(Component);
+	}
 
 	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
@@ -59,6 +87,18 @@ void AWeapon::Drop()
 			});
 	}
 	GetWorld()->GetTimerManager().SetTimer(DropHandle, DropDelegate, 2.f, false);
+}
+
+bool AWeapon::CanAttack()
+{
+	for (auto Component : CachedComponents)
+	{
+		if (!IWeaponComponentInterface::Execute_CanAttack(Component))
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName)
@@ -79,16 +119,21 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
 
 
-	// Notify components they weapon was picked up
-	//TArray<UActorComponent*> Components = this->GetInstanceComponents();
-	//for (UActorComponent* Component : Components)
-	//{
-	//	if (Component->Implements<IWeaponComponentInterface>())
-	//	{
-	//		Cast<IWeaponComponentInterface>(Component)->OnWeaponEquipped();
-	//	}
-	//}
+	for (auto Component : CachedComponents)
+	{
+		IWeaponComponentInterface::Execute_OnWeaponEquipped(Component, Holder);
+	}
 
+}
+
+void AWeapon::StartAttack_Implementation()
+{
+	FireModeComponent->Start();
+}
+
+void AWeapon::StopAttack_Implementation()
+{
+	FireModeComponent->Stop();
 }
 
 

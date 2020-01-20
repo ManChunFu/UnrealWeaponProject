@@ -40,18 +40,15 @@ void UAmmoComponent::Reload()
 
 }
 
-bool UAmmoComponent::DecreaseAmmo(int32 Amount)
+
+bool UAmmoComponent::CanAttack_Implementation()
 {
-	if (MagazineAmmo >= Amount)
-	{
-		MagazineAmmo -= Amount;
-		return true;
-	}
+	return MagazineAmmo > 0 && !bIsReloading;
+}
 
-	// play empty magazine sound
-	PlaySound(EmptyMagazineSoundCue);
-
-	return false;
+void UAmmoComponent::OnWeaponAttack_Implementation()
+{
+	MagazineAmmo--;
 }
 
 void UAmmoComponent::FinishReload()

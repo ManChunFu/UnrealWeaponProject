@@ -15,6 +15,16 @@ UProjectileComponent::UProjectileComponent()
 }
 
 
+void UProjectileComponent::OnWeaponDropped_Implementation()
+{
+	Holder = nullptr;
+}
+
+void UProjectileComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
+{
+	Holder = NewHolder;
+}
+
 // Called when the game starts
 void UProjectileComponent::BeginPlay()
 {
@@ -24,7 +34,7 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> ProjectileClass, AActor*& Owner, float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
+AProjectile* UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
 {
 
 	UWorld* const World = GetWorld();
@@ -32,7 +42,7 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 	{
 		{
 			FTransform ProjSpawn;
-			// Before spawning, rotate the spawn transform to account for inaccuracy
+
 			if (OverrideSpawn.Equals(FTransform()))
 			{
 				ProjSpawn = *Cast<AWeapon>(GetOwner())->SpawnPoint;
@@ -42,17 +52,14 @@ AProjectile* UProjectileComponent::FireProjectile(TSubclassOf<AProjectile> Proje
 				ProjSpawn = OverrideSpawn;
 			}
 
-			 
-
+			// Before spawning, rotate the spawn transform to account for inaccuracy
 			FQuat ZRotation(FVector::UpVector, InaccuracyZ * PI / 180.f);
 			FQuat YRotation(FVector::RightVector, InaccuracyY * PI / -180.f);
-
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
 
-
-			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Owner);
+			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Holder);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
-			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Owner);
+			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Holder);
 			if (Player)
 			{
 				Player->GetCapsuleComponent()->IgnoreActorWhenMoving(ProjectileInstance, true);

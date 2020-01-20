@@ -28,33 +28,65 @@ void UCameraShakeComponent::BeginPlay()
 void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	UE_LOG(LogTemp, Warning, TEXT("currentPitch: %f"), currentPitch);
-	UE_LOG(LogTemp, Warning, TEXT("currentYaw: %f"), currentYaw);
+
 	if (TargetCharacter != nullptr && bCurrentlymoving)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("StuffY: %s"), bCurrentlymoving);
-		float x = RandPitch - currentPitch;
-		float y = RandYaw - currentYaw;
+		//float x = RandPitch - currentPitch;
+		//float y = RandYaw - currentYaw;
 		
-		
-		TargetCharacter->RotateCamera(x * rate * GetWorld()->GetDeltaSeconds());
-		currentPitch += rate * x * GetWorld()->GetDeltaSeconds();
-
-		TargetCharacter->PitchCamera(y* rate*GetWorld()->GetDeltaSeconds());
-		currentYaw += rate * y * GetWorld()->GetDeltaSeconds();
-
-		UE_LOG(LogTemp, Warning, TEXT("StuffX: %f"), x);
-		UE_LOG(LogTemp, Warning, TEXT("StuffY: %f"), y);
-		
-		if ((x >= -0.1f && x <= 0.1f )&& (y >= -0.1f && y <= 0.1f))
+		if (PitchToAdd < -0.1f || PitchToAdd > 0.1f)
 		{
-			TargetCharacter->RotateCamera(x);
-			TargetCharacter->PitchCamera(y);
-			
-			
-			bCurrentlymoving = false;
-			//PrimaryComponentTick.SetTickFunctionEnable(false);
+			float PitchAdded = -0.5f;
+			PitchToAdd += PitchAdded;
+			CurrentPitchOffset += PitchAdded;
+
+			TargetCharacter->PitchCamera(PitchAdded);
 		}
+		else if(CurrentPitchOffset < -0.1f || CurrentPitchOffset > 0.1f)
+		{
+			float PitchRemoved = 0.5f;
+			CurrentPitchOffset += PitchRemoved;
+
+			TargetCharacter->PitchCamera(PitchRemoved);
+		}
+
+
+
+		if (YawToAdd < -0.4f || YawToAdd > 0.4f)
+		{
+			float sign = YawToAdd > 0 ? 1 : -1;
+			float YawAdded = 0.5f * sign;
+			YawToAdd -= YawAdded;
+			CurrentYawOffset += YawAdded;
+			
+			TargetCharacter->RotateCamera(YawAdded);
+		}
+		else if (CurrentYawOffset < -0.4f || CurrentYawOffset > 0.4f)
+		{
+			float sign = CurrentYawOffset > 0 ? 1 : -1;
+			float YawRemoved = 0.5f * sign;
+			CurrentYawOffset -= YawRemoved;
+
+			TargetCharacter->RotateCamera(-YawRemoved);
+		}
+
+		//TargetCharacter->PitchCamera(y* rate*GetWorld()->GetDeltaSeconds());
+		//currentYaw += rate * y * GetWorld()->GetDeltaSeconds();
+
+		//UE_LOG(LogTemp, Warning, TEXT("StuffX: %f"), x);
+		//UE_LOG(LogTemp, Warning, TEXT("StuffY: %f"), y);
+		
+
+		//if ((x >= -0.1f && x <= 0.1f )&& (y >= -0.1f && y <= 0.1f))
+		//{
+		//	TargetCharacter->RotateCamera(x);
+		//	TargetCharacter->PitchCamera(y);
+		//	
+		//	
+		//	bCurrentlymoving = false;
+		//	//PrimaryComponentTick.SetTickFunctionEnable(false);
+		//}
 	}
 	
 	if (!bCurrentlymoving)
@@ -62,22 +94,22 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		
 		UE_LOG(LogTemp, Warning, TEXT("False"));
 		float x = RandPitch + currentPitch ;
-		float y = RandYaw + currentYaw ;
+		//float y = RandYaw + currentYaw ;
 
 		TargetCharacter->RotateCamera((x *-1)* rate*GetWorld()->GetDeltaSeconds());
 		currentPitch -=  x  *rate* GetWorld()->GetDeltaSeconds();
 
-		TargetCharacter->PitchCamera((y*-1)  * rate*GetWorld()->GetDeltaSeconds());
-		currentYaw -=   y *rate* GetWorld()->GetDeltaSeconds();
+		//TargetCharacter->PitchCamera((y*-1)  * rate*GetWorld()->GetDeltaSeconds());
+		//currentYaw -=   y *rate* GetWorld()->GetDeltaSeconds();
 
-		if ((currentPitch >= -0.1f && currentPitch <= 0.1) && (currentYaw >= -0.1f && currentYaw <= 0.1f))
+		/*if ((currentPitch >= -0.1f && currentPitch <= 0.1) && (currentYaw >= -0.1f && currentYaw <= 0.1f))
 		{
 			TargetCharacter->RotateCamera(currentPitch);
 			TargetCharacter->PitchCamera(currentYaw);
 			PrimaryComponentTick.SetTickFunctionEnable(false);
 			UE_LOG(LogTemp, Warning, TEXT("currentPitch: %f"), currentPitch);
 			UE_LOG(LogTemp, Warning, TEXT("currentYaw: %f"), currentYaw);
-		}
+		}*/
 	}
 }
 
@@ -94,8 +126,10 @@ void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Charact
 
 		PrimaryComponentTick.SetTickFunctionEnable(true);
 
-		RandPitch = FMath::RandRange(MinRandPitch, MaxRandPitch);
-		RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
+		RandPitch = 10.f;
+		PitchToAdd += 10.f;
+		YawToAdd += FMath::RandRange(-5.f, 5.f);
+		//RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
 
 		bCurrentlymoving = true;
 	}

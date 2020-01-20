@@ -1,16 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ScopeComponent.h"
+#include "../UnrealWeaponProjectCharacter.h"
 #include "Weapon.h"
 
 // Sets default values for this component's properties
 UScopeComponent::UScopeComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -18,34 +14,48 @@ UScopeComponent::UScopeComponent()
 void UScopeComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	
-	
 }
 
-void UScopeComponent::Zoom(UCameraComponent* Camera)
+void UScopeComponent::Zoom()
 {
-	if (OriginalFov == -1)
+	if (HolderCamera)
 	{
-		OriginalFov = Camera->FieldOfView;
-	}
 
-	if (Camera->FieldOfView == OriginalFov)
+		if (OriginalFov == -1)
+		{
+			OriginalFov = HolderCamera->FieldOfView;
+		}
+
+		if (HolderCamera->FieldOfView == OriginalFov)
+		{
+			HolderCamera->FieldOfView = ZoomedFoV;
+		}
+		else
+		{
+			HolderCamera->FieldOfView = OriginalFov;
+		}
+	}
+}
+
+
+void UScopeComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
+{
+	if (NewHolder->IsA<AUnrealWeaponProjectCharacter>())
 	{
-		Camera->FieldOfView = ZoomedFoV;
+		HolderCamera = Cast<AUnrealWeaponProjectCharacter>(NewHolder)->GetFirstPersonCameraComponent();
 	}
 	else
 	{
-		Camera->FieldOfView = OriginalFov;
+		HolderCamera = nullptr;
 	}
 }
 
-
-// Called every frame
-void UScopeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UScopeComponent::OnWeaponDropped_Implementation()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
+	if (HolderCamera)
+	{
+		HolderCamera->FieldOfView = OriginalFov;
+	}
+	HolderCamera = nullptr;
 }
 
