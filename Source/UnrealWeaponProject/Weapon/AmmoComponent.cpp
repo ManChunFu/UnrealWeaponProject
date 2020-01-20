@@ -40,14 +40,15 @@ void UAmmoComponent::Reload()
 
 }
 
-bool UAmmoComponent::DecreaseAmmo(int32 Amount)
+
+bool UAmmoComponent::CanAttack_Implementation()
 {
-	if (MagazineAmmo >= Amount)
-	{
-		MagazineAmmo -= Amount;
-		return true;
-	}
-	return false;
+	return MagazineAmmo > 0 && !bIsReloading;
+}
+
+void UAmmoComponent::OnWeaponAttack_Implementation()
+{
+	MagazineAmmo--;
 }
 
 void UAmmoComponent::FinishReload()

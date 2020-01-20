@@ -20,10 +20,27 @@ class UNREALWEAPONPROJECT_API IWeaponComponentInterface
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
 	void OnWeaponDropped();
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
-	void OnWeaponEquipped();
+	virtual void OnWeaponDropped_Implementation()
+	{};
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
+	bool CanAttack();
+	virtual bool CanAttack_Implementation()
+	{
+		return true;
+	};
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
+	void OnWeaponAttack();
+	virtual void OnWeaponAttack_Implementation()
+	{};
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
+	void OnWeaponEquipped(AActor* NewHolder);
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder)
+	{};
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:

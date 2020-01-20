@@ -32,7 +32,6 @@ void UWeaponHitScanComponent::OnAttack(FVector StartTrace, FVector ForwardVector
 	
 	FVector EndTrace = ((ForwardVector * 2000.f) + StartTrace);
 	FCollisionQueryParams* TraceParams = new FCollisionQueryParams();
-
 	
 	if (bDebugLine)
 	{

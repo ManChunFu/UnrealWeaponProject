@@ -16,6 +16,7 @@ class UNREALWEAPONPROJECT_API UScopeComponent : public UActorComponent, public I
 
 private:
 	float OriginalFov = -1;
+	UCameraComponent* HolderCamera = nullptr;
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float ZoomedFoV = 50.f;
@@ -26,11 +27,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Zoom(UCameraComponent* Camera);
+		void Zoom();
 
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder);
+	virtual void OnWeaponDropped_Implementation();
 };

@@ -17,7 +17,7 @@ class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
 private:
-
+	TArray<UActorComponent*> CachedComponents;
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
 public:
@@ -28,6 +28,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 		USkeletalMeshComponent* WeaponMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
+	class UFireModeComponent* FireModeComponent = nullptr;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
+		class UAmmoComponent* AmmoComponent = nullptr;
 
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	//	USkeletalMeshComponent* ArmsMesh = nullptr;
@@ -54,11 +60,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
 		void StartAttack();
+	virtual void StartAttack_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
 		void StopAttack();
+	virtual void StopAttack_Implementation();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void StartAltAttack();
@@ -66,17 +74,23 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
 		void StopAltAttack();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
 		void Reload();
+	virtual void Reload_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
+	UFUNCTION(BlueprintNativeEvent, Category = "Weapon")
 		void Attack();
+	virtual void Attack_Implementation();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
 		void AltAttack();
 
+	bool TryAttack();
+
 	UFUNCTION()
 		void Drop();
+
+	bool CanAttack();
 private:
 
 
