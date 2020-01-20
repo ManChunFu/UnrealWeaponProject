@@ -54,6 +54,9 @@ public:
 		float currentYaw = 0;
 		float currentPitch = 0;
 
+		float PitchToAdd = 0.f;
+		float CurrentPitchOffset = 0.f;
+
 		bool bCurrentlymoving = false;
 		AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
 		UCameraComponent* Camera = nullptr;
