@@ -46,5 +46,5 @@ public:
 		float ProjectileSpeed = 1000;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
-		float Damage;
+		float Damage = 10.f;
 };

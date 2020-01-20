@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Weapon.h"
+#include "Weapon/Weapon.h"
 #include "UnrealWeaponProjectCharacter.generated.h"
 
 class UInputComponent;

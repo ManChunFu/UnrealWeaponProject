@@ -6,7 +6,7 @@
 #include "Weapon.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "UnrealWeaponProjectCharacter.h"
+#include "../UnrealWeaponProjectCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties

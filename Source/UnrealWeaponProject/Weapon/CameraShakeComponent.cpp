@@ -2,7 +2,7 @@
 
 
 #include "CameraShakeComponent.h"
-#include "UnrealWeaponProjectCharacter.h"
+#include "../UnrealWeaponProjectCharacter.h"
 #include "Math/UnrealMathUtility.h"
 
 // Sets default values for this component's properties

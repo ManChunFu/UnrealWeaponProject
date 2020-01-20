@@ -6,7 +6,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "Projectile.h"
+#include "Weapon/Projectile.h"
 
 
 void AUnrealWeaponProjectGameMode::BeginPlay()

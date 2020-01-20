@@ -2,7 +2,7 @@
 
 
 #include "Weapon.h"
-#include "UnrealWeaponProjectCharacter.h"
+#include "../UnrealWeaponProjectCharacter.h"
 #include "WeaponComponentInterface.h"
 #include "Camera/CameraComponent.h"
 

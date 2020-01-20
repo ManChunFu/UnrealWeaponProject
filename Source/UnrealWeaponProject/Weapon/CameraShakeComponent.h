@@ -6,7 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
-#include "UnrealWeaponProjectCharacter.h"
+#include "../UnrealWeaponProjectCharacter.h"
 #include "CameraShakeComponent.generated.h"
 class UInputComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
