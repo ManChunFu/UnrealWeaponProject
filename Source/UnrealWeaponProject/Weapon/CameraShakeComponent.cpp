@@ -28,35 +28,48 @@ void UCameraShakeComponent::BeginPlay()
 void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	UE_LOG(LogTemp, Warning, TEXT("currentPitch: %f"), currentPitch);
-	UE_LOG(LogTemp, Warning, TEXT("currentYaw: %f"), currentYaw);
+
 	if (TargetCharacter != nullptr && bCurrentlymoving)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("StuffY: %s"), bCurrentlymoving);
 		//float x = RandPitch - currentPitch;
 		//float y = RandYaw - currentYaw;
 		
-		if (PitchToAdd > 0.01f)
+		if (PitchToAdd < -0.1f || PitchToAdd > 0.1f)
 		{
-			float PitchAdded = 0.5f;
-			PitchToAdd -= PitchAdded;
+			float PitchAdded = -0.5f;
+			PitchToAdd += PitchAdded;
 			CurrentPitchOffset += PitchAdded;
 
-			TargetCharacter->PitchCamera(-PitchAdded);
+			TargetCharacter->PitchCamera(PitchAdded);
 		}
-		else if(CurrentPitchOffset > 0.01f)
+		else if(CurrentPitchOffset < -0.1f || CurrentPitchOffset > 0.1f)
 		{
 			float PitchRemoved = 0.5f;
-			CurrentPitchOffset -= PitchRemoved;
+			CurrentPitchOffset += PitchRemoved;
 
 			TargetCharacter->PitchCamera(PitchRemoved);
-			if (CurrentPitchOffset < 0.01f)
-			{
-
-			}
 		}
-		
 
+
+
+		if (YawToAdd < -0.4f || YawToAdd > 0.4f)
+		{
+			float sign = YawToAdd > 0 ? 1 : -1;
+			float YawAdded = 0.5f * sign;
+			YawToAdd -= YawAdded;
+			CurrentYawOffset += YawAdded;
+			
+			TargetCharacter->RotateCamera(YawAdded);
+		}
+		else if (CurrentYawOffset < -0.4f || CurrentYawOffset > 0.4f)
+		{
+			float sign = CurrentYawOffset > 0 ? 1 : -1;
+			float YawRemoved = 0.5f * sign;
+			CurrentYawOffset -= YawRemoved;
+
+			TargetCharacter->RotateCamera(-YawRemoved);
+		}
 
 		//TargetCharacter->PitchCamera(y* rate*GetWorld()->GetDeltaSeconds());
 		//currentYaw += rate * y * GetWorld()->GetDeltaSeconds();
@@ -115,6 +128,7 @@ void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Charact
 
 		RandPitch = 10.f;
 		PitchToAdd += 10.f;
+		YawToAdd += FMath::RandRange(-5.f, 5.f);
 		//RandYaw = FMath::RandRange(MinRandYaw, MaxRandYaw);
 
 		bCurrentlymoving = true;
