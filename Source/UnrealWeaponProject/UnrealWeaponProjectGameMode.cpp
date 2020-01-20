@@ -6,7 +6,8 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "Weapon/Projectile.h"
+#include "Enemy/Enemy.h"
+#include "Weapon/Weapon.h"
 
 
 void AUnrealWeaponProjectGameMode::BeginPlay()
@@ -24,6 +25,9 @@ void AUnrealWeaponProjectGameMode::BeginPlay()
 			CurrentWidget->AddToViewport();
 		}
 	}
+
+	Enemy = Cast<AEnemy>(UGameplayStatics::GetActorOfClass(this, 0));
+
 }
 
 AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
@@ -39,5 +43,11 @@ AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 
 float AUnrealWeaponProjectGameMode::GetDamage()
 {
+	if (Enemy)
+	{
+		Damage = Enemy->DamageReceived;
+	}
 	return Damage;	
+
 }
+

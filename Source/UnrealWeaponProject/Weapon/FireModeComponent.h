@@ -97,4 +97,5 @@ private:
 
 	UAudioComponent* SoundAudioComponent;
 	void PlaySound(USoundBase* SoundCue);
+	void StopSound();
 };

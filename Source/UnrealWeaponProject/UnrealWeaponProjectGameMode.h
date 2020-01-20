@@ -6,7 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "UnrealWeaponProjectGameMode.generated.h"
 
-class AProjectile;
+class AEnemy;
 
 UCLASS(minimalapi)
 class AUnrealWeaponProjectGameMode : public AGameModeBase
@@ -22,6 +22,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stamina", Meta = (BlueprintProtected = "true"))
 	TSubclassOf<class UUserWidget> WeaponHUDClass;
 
+	
 	UPROPERTY()
 	class UUserWidget* CurrentWidget;
 
@@ -29,9 +30,10 @@ protected:
 	float Damage = 0.0f;
 
 private:
-
+	AEnemy* Enemy;
 	UFUNCTION(BlueprintCallable, Category = "HUD")
 	float GetDamage();
+
 	
 };
 
