@@ -38,6 +38,8 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 {
 	// Call the base class - this will tell us how much damage to apply  
 	const float ActualDamage = Super::TakeDamage(DamageAmout, DamageEvent, EventInstigator, DamageCauser);
+	DamageReceived = ActualDamage;
+
 	if (ActualDamage > 0.f)
 	{
 		CurrentHealth -= ActualDamage;
@@ -67,7 +69,11 @@ void AEnemy::KillEnemy()
 		SpawnPoint->RegisterEnemyDeath(this);
 	}
 	SetLifeSpan(0.001f);
+
 }
+
+
+
 
 
 

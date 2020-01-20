@@ -68,6 +68,10 @@ void UFireModeComponent::Attack()
 
 		PlaySound(FireSoundCue);
 	}
+	else
+	{
+		StopSound();
+	}
 }
 
 void UFireModeComponent::Burst()
@@ -82,6 +86,11 @@ void UFireModeComponent::Burst()
 		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f/BurstsPerSecond)*0.95f;
 		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true, 0.f);
 	}
+	else
+	{
+		StopSound();
+	}
+
 }
 
 void UFireModeComponent::Start()
@@ -124,6 +133,14 @@ void UFireModeComponent::PlaySound(USoundBase* SoundCue)
 	{
 		SoundAudioComponent->SetSound(SoundCue);
 		SoundAudioComponent->Play(0.f);
+	}
+}
+
+void UFireModeComponent::StopSound()
+{
+	if (SoundAudioComponent->IsPlaying())
+	{
+		SoundAudioComponent->Stop();
 	}
 }
 

@@ -47,6 +47,10 @@ bool UAmmoComponent::DecreaseAmmo(int32 Amount)
 		MagazineAmmo -= Amount;
 		return true;
 	}
+
+	// play empty magazine sound
+	PlaySound(EmptyMagazineSoundCue);
+
 	return false;
 }
 
