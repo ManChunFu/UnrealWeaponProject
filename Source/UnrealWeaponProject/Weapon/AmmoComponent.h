@@ -67,5 +67,4 @@ private:
 	UAudioComponent* SoundAudioComponent;
 	void PlaySound(USoundBase* SoundCue);
 
-	void PrintAmmoCountOnHUD(int MagazineCount, int SpareCount);
 };

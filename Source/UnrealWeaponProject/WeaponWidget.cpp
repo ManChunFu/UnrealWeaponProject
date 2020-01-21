@@ -16,10 +16,8 @@ void UWeaponWidget::NativeConstruct()
 	HealthShakeAnimation = GetAnimationByName(TEXT("HealthShake"));
 }
 
-void UWeaponWidget::UpdateAmmoCount(int MagazineCount, int SpareCount)
+void UWeaponWidget::ChangeMagazineColor()
 {
-	TXTAmmoCount->SetVisibility(ESlateVisibility::Visible);
-	TXTAmmoCount->SetText(FText::FromString(FString::FromInt(MagazineCount) + " / " + FString::FromInt(SpareCount)));
 }
 
 void UWeaponWidget::UpdateHealthCout(float Value)

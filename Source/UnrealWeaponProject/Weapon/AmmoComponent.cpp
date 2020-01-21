@@ -83,14 +83,6 @@ void UAmmoComponent::PlaySound(USoundBase* SoundCue)
 	}
 }
 
-void UAmmoComponent::PrintAmmoCountOnHUD(int MagazineCount, int SpareCount)
-{
-	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
-	if (UnrealWeaponProjectHUD)
-	{
-		UnrealWeaponProjectHUD->UpdateAmmoCount(MagazineCount, SpareCount);
-	}
-}
 
 

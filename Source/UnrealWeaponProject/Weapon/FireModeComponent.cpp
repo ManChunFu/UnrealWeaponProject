@@ -98,8 +98,8 @@ void UFireModeComponent::Burst()
 
 void UFireModeComponent::Start()
 {
-	char Name = static_cast<uint8>(CurrentFireMode);
-	PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", Name));
+	/*char Name = static_cast<uint8>(CurrentFireMode);
+	PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", Name));*/
 
 	switch (CurrentFireMode)
 	{

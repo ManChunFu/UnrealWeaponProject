@@ -53,14 +53,6 @@ void AUnrealWeaponProjectHUD::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
-void AUnrealWeaponProjectHUD::UpdateAmmoCount(int MagazineCount, int SpareCount)
-{
-	if (WeaponWidget)
-	{
-		WeaponWidget->UpdateAmmoCount(MagazineCount, SpareCount);
-	}
-}
-
 void AUnrealWeaponProjectHUD::UpdateHealthCount(float Value)
 {
 	if (WeaponWidget)

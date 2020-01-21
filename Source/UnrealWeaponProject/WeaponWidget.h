@@ -20,7 +20,7 @@ public:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* TXTAmmoCount;
+	class UTextBlock* TXTAmmoMagazine;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTHealth;
@@ -34,7 +34,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTShotRate;
 
-	void UpdateAmmoCount(int MagazineCount, int SpareCount);
+	void ChangeMagazineColor();
 
 	void UpdateHealthCout(float Value);
 
