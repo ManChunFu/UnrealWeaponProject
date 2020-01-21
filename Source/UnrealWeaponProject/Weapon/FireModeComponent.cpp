@@ -36,8 +36,6 @@ void UFireModeComponent::BeginPlay()
 
 	UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	
-	/*EFireMode UseEnumValue = CurrentFireMode;
-	PrintFireModeOnHUD(*GETENUMSTRING("EUsesEnum", UseEnumValue));*/
 }
 
 void UFireModeComponent::ChangeFireMode()
@@ -100,28 +98,25 @@ void UFireModeComponent::Burst()
 
 void UFireModeComponent::Start()
 {
+	char Name = static_cast<uint8>(CurrentFireMode);
+	PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", Name));
+
 	switch (CurrentFireMode)
 	{
 	case EFireMode::FullAuto:
 		Attack();
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
-		EFireMode UseEnumValue = EFireMode::FullAuto;
-		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(AutoAttacksPerSecond);
 		break;
 
 
 	case EFireMode::BurstFire:
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
-		EFireMode UseEnumValue = EFireMode::BurstFire;
-		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(BurstsPerSecond);
 		break;
 
 
 	case EFireMode::SemiAuto:
-		EFireMode UseEnumValue = EFireMode::SemiAuto;
-		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(SemiAutoAttackPerSecond);
 		Attack();
 

@@ -27,6 +27,9 @@ public:
 		TSubclassOf<UUserWidget> WeaponWidgetClass;
 
 	UFUNCTION()
+		void UpdateAmmoCount(int MagazineCount, int SpareCount);
+
+	UFUNCTION()
 		void UpdateHealthCount(float Value);
 
 	UFUNCTION()

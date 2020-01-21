@@ -47,4 +47,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 		float Damage = 10.f;
+
+private:
+	void PrintDamagePerShotOnHUD(float Value);
 };

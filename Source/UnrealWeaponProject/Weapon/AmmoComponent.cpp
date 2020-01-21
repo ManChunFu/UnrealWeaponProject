@@ -5,11 +5,13 @@
 #include "Engine/World.h"
 #include "Weapon.h"
 #include "Components/AudioComponent.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()
 {
 	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
+
 }
 
 
@@ -18,6 +20,7 @@ void UAmmoComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Weapon = Cast<AWeapon>(GetOwner());
+
 }
 
 void UAmmoComponent::Reload()
@@ -77,6 +80,16 @@ void UAmmoComponent::PlaySound(USoundBase* SoundCue)
 	{
 		SoundAudioComponent->SetSound(SoundCue);
 		SoundAudioComponent->Play(0.f);
+	}
+}
+
+void UAmmoComponent::PrintAmmoCountOnHUD(int MagazineCount, int SpareCount)
+{
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->UpdateAmmoCount(MagazineCount, SpareCount);
 	}
 }
 
