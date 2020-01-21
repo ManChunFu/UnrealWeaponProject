@@ -104,6 +104,5 @@ private:
 
 	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD;
 	void PrintFireModeOnHUD(FString Name);
-	void PrintShotCostOnHUD(int Value);
 	void PrintShotRateOnHUD(float Value);
 };

@@ -12,31 +12,37 @@ void UWeaponWidget::NativeConstruct()
 
 	StoreWidgetAnimations();
 
-	DamageFadeAnimation = GetAnimationByName(TEXT("DamageFade"));
-	DamageShakeAnimation = GetAnimationByName(TEXT("DamageShake"));
+	HealthFadeAnimation = GetAnimationByName(TEXT("HealthFade"));
+	HealthShakeAnimation = GetAnimationByName(TEXT("HealthShake"));
 }
 
 void UWeaponWidget::UpdateHealthCout(float Value)
 {
-	if (TXTDamage && Value >= 0)
+	if (TXTHealth && Value >= 0)
 	{
 		 //turn textblock visible if already hidden
-		if (TXTDamage->Visibility == ESlateVisibility::Hidden)
+		if (TXTHealth->Visibility == ESlateVisibility::Hidden)
 		{
-			TXTDamage->SetVisibility(ESlateVisibility::Visible);
+			TXTHealth->SetVisibility(ESlateVisibility::Visible);
 		}
-		TXTDamage->SetText(FText::FromString("Current Health : " + FString::SanitizeFloat(Value)));
+		TXTHealth->SetText(FText::FromString("Current Health : " + FString::SanitizeFloat(Value)));
 
-		if (DamageFadeAnimation)
+		if (HealthFadeAnimation)
 		{
-			PlayAnimation(DamageFadeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
+			PlayAnimation(HealthFadeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
 		}
 
-		if (DamageShakeAnimation)
+		if (HealthShakeAnimation)
 		{
-			PlayAnimation(DamageShakeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
+			PlayAnimation(HealthShakeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
 		}
 	}
+}
+
+void UWeaponWidget::PrintDamagePerShot(float Value)
+{
+	TXTDamagePerShot->SetVisibility(ESlateVisibility::Visible);
+	TXTDamagePerShot->SetText(FText::FromString(FString::SanitizeFloat(Value)));
 }
 
 void UWeaponWidget::PrintFireMode(FString Name)
@@ -45,11 +51,6 @@ void UWeaponWidget::PrintFireMode(FString Name)
 	TXTFireMode->SetText(FText::FromString(Name));
 }
 
-void UWeaponWidget::PrintShotCost(int Value)
-{
-	TXTShotCost->SetVisibility(ESlateVisibility::Visible);
-	TXTShotCost->SetText(FText::FromString(FString::FromInt(Value)));
-}
 
 void UWeaponWidget::PrintShotRate(float Value)
 {

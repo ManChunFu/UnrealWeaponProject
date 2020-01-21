@@ -27,13 +27,13 @@ public:
 		TSubclassOf<UUserWidget> WeaponWidgetClass;
 
 	UFUNCTION()
-		void UpdateDamageCount(float Value);
+		void UpdateHealthCount(float Value);
+
+	UFUNCTION()
+		void PrintDamagePerShot(float Value);
 
 	UFUNCTION()
 		void PrintFireMode(FString Name);
-
-	UFUNCTION()
-		void PrintShotCost(int Value);
 
 	UFUNCTION()
 		void PrintShotRate(float Value);

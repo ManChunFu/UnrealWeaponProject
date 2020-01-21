@@ -53,11 +53,19 @@ void AUnrealWeaponProjectHUD::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
-void AUnrealWeaponProjectHUD::UpdateDamageCount(float Value)
+void AUnrealWeaponProjectHUD::UpdateHealthCount(float Value)
 {
 	if (WeaponWidget)
 	{
 		WeaponWidget->UpdateHealthCout(Value);
+	}
+}
+
+void AUnrealWeaponProjectHUD::PrintDamagePerShot(float Value)
+{
+	if (WeaponWidget)
+	{
+		WeaponWidget->PrintDamagePerShot(Value);
 	}
 }
 
@@ -66,14 +74,6 @@ void AUnrealWeaponProjectHUD::PrintFireMode(FString Name)
 	if (WeaponWidget)
 	{
 		WeaponWidget->PrintFireMode(Name);
-	}
-}
-
-void AUnrealWeaponProjectHUD::PrintShotCost(int Value)
-{
-	if (WeaponWidget)
-	{
-		WeaponWidget->PrintShotCost(Value);
 	}
 }
 

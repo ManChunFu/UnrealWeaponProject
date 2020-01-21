@@ -20,13 +20,13 @@ public:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* TXTDamage;
+	class UTextBlock* TXTHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTFireMode;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* TXTShotCost;
+	class UTextBlock* TXTDamagePerShot;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTShotRate;
@@ -38,8 +38,6 @@ public:
 
 	void PrintFireMode(FString Name);;
 
-	void PrintShotCost(int Value);
-
 	void PrintShotRate(float Value);
 
 
@@ -49,6 +47,6 @@ public:
 
 private:
 	TMap<FName, UWidgetAnimation*> AnimationsMap;
-	UWidgetAnimation* DamageFadeAnimation;
-	UWidgetAnimation* DamageShakeAnimation;
+	UWidgetAnimation* HealthFadeAnimation;
+	UWidgetAnimation* HealthShakeAnimation;
 };

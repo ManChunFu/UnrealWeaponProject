@@ -79,7 +79,7 @@ void AEnemy::PrintHealthOnHUD(float Value)
 	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	if (UnrealWeaponProjectHUD)
 	{
-		UnrealWeaponProjectHUD->UpdateDamageCount(Value);
+		UnrealWeaponProjectHUD->UpdateHealthCount(Value);
 	}
 
 }
