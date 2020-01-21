@@ -74,6 +74,5 @@ public:
 		void DoCameraShake(AUnrealWeaponProjectCharacter* Character);
 		
 private:
-	
 
 };

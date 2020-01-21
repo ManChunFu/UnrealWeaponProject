@@ -12,40 +12,58 @@ void UWeaponWidget::NativeConstruct()
 
 	StoreWidgetAnimations();
 
-	DamageFadeAnimation = GetAnimationByName(TEXT("DamageFade"));
-	DamageShakeAnimation = GetAnimationByName(TEXT("DamageShake"));
+	HealthFadeAnimation = GetAnimationByName(TEXT("HealthFade"));
+	HealthShakeAnimation = GetAnimationByName(TEXT("HealthShake"));
 }
 
-void UWeaponWidget::UpdateDamageCout(float Value)
+void UWeaponWidget::UpdateAmmoCount(int MagazineCount, int SpareCount)
 {
-	if (TXTDamage && Value >= 0)
+	TXTAmmoCount->SetVisibility(ESlateVisibility::Visible);
+	TXTAmmoCount->SetText(FText::FromString(FString::FromInt(MagazineCount) + " / " + FString::FromInt(SpareCount)));
+}
+
+void UWeaponWidget::UpdateHealthCout(float Value)
+{
+	if (TXTHealth && Value >= 0)
 	{
-		 //turn textbox visible if already hidden
-		if (TXTDamage->Visibility == ESlateVisibility::Hidden)
+		 //turn textblock visible if already hidden
+		if (TXTHealth->Visibility == ESlateVisibility::Hidden)
 		{
-			TXTDamage->SetVisibility(ESlateVisibility::Visible);
+			TXTHealth->SetVisibility(ESlateVisibility::Visible);
 		}
-		TXTDamage->SetText(FText::FromString("Current Health : " + FString::SanitizeFloat(Value)));
+		TXTHealth->SetText(FText::FromString("Current Health : " + FString::SanitizeFloat(Value)));
 
-		if (DamageFadeAnimation)
+		if (HealthFadeAnimation)
 		{
-			PlayAnimation(DamageFadeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
+			PlayAnimation(HealthFadeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
 		}
 
-		if (DamageShakeAnimation)
+		if (HealthShakeAnimation)
 		{
-			PlayAnimation(DamageShakeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
+			PlayAnimation(HealthShakeAnimation, 0.f, 1, EUMGSequencePlayMode::Forward, 1.f);
 		}
 	}
 }
 
-void UWeaponWidget::ResetDamage()
+void UWeaponWidget::PrintDamagePerShot(float Value)
 {
-	if (TXTDamage)
-	{
-		TXTDamage->SetVisibility(ESlateVisibility::Hidden);
-	}
+	TXTDamagePerShot->SetVisibility(ESlateVisibility::Visible);
+	TXTDamagePerShot->SetText(FText::FromString(FString::SanitizeFloat(Value)));
 }
+
+void UWeaponWidget::PrintFireMode(FString Name)
+{
+	TXTFireMode->SetVisibility(ESlateVisibility::Visible);
+	TXTFireMode->SetText(FText::FromString(Name));
+}
+
+
+void UWeaponWidget::PrintShotRate(float Value)
+{
+	TXTShotRate->SetVisibility(ESlateVisibility::Visible);
+	TXTShotRate->SetText(FText::FromString(FString::SanitizeFloat(Value)));
+}
+
 
 void UWeaponWidget::StoreWidgetAnimations()
 {

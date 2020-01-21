@@ -3,6 +3,7 @@
 
 #include "FireModeComponent.h"
 #include "Components/AudioComponent.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
@@ -23,19 +24,25 @@ void UFireModeComponent::BeginPlay()
 	BurstDelegate.BindLambda([=]
 		{
 			Weapon->TryAttack();
+			NextAttackTime = GetWorld()->GetTimeSeconds() + (BurstDelay * NextAttackMargin);
 			BurstCounter++;
 			if (BurstCounter >= AttacksPerBurst)
 			{
 				bBursting = false;
+				NextAttackTime = GetWorld()->GetTimeSeconds() - (AttacksPerBurst*BurstDelay) + (1/BurstsPerSecond)* NextAttackMargin;
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
+
+	UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	
 }
 
 void UFireModeComponent::ChangeFireMode()
 {
 	int32 Index = AllowedFireModes.Find(CurrentFireMode);
 	CurrentFireMode = AllowedFireModes[(Index + 1) % AllowedFireModes.Num()];
+
 }
 
 
@@ -53,11 +60,11 @@ void UFireModeComponent::Attack()
 		switch (CurrentFireMode)
 		{
 		case EFireMode::FullAuto:
-			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / AutoAttacksPerSecond) * 0.95f;
+			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / AutoAttacksPerSecond) * NextAttackMargin;
 			break;
 
 		case EFireMode::SemiAuto:
-			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / SemiAutoAttackPerSecond) * 0.95f;
+			NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / SemiAutoAttackPerSecond) * NextAttackMargin;
 			break;
 
 		default:
@@ -74,14 +81,12 @@ void UFireModeComponent::Attack()
 
 void UFireModeComponent::Burst()
 {
-	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
-	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
+	if (BurstDelegate.IsBound() && !bBursting && CanAttack_Implementation())
 	{
 		PlaySound(FireSoundCue);
 
 		BurstCounter = 0;
 		bBursting = true;
-		NextAttackTime = GetWorld()->GetTimeSeconds() + (1.f / BurstsPerSecond) * 0.95f;
 		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true, 0.f);
 	}
 	else
@@ -93,21 +98,26 @@ void UFireModeComponent::Burst()
 
 void UFireModeComponent::Start()
 {
+	char Name = static_cast<uint8>(CurrentFireMode);
+	PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", Name));
 
 	switch (CurrentFireMode)
 	{
 	case EFireMode::FullAuto:
 		Attack();
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
+		PrintShotRateOnHUD(AutoAttacksPerSecond);
 		break;
 
 
 	case EFireMode::BurstFire:
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
+		PrintShotRateOnHUD(BurstsPerSecond);
 		break;
 
 
 	case EFireMode::SemiAuto:
+		PrintShotRateOnHUD(SemiAutoAttackPerSecond);
 		Attack();
 
 		break;
@@ -139,6 +149,23 @@ void UFireModeComponent::StopSound()
 	if (SoundAudioComponent->IsPlaying())
 	{
 		SoundAudioComponent->Stop();
+	}
+}
+
+void UFireModeComponent::PrintFireModeOnHUD(FString Name)
+{
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintFireMode(Name);
+	}
+}
+
+
+void UFireModeComponent::PrintShotRateOnHUD(float Value)
+{
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintShotRate(Value);
 	}
 }
 

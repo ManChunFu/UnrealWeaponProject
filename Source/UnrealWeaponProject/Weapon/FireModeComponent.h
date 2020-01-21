@@ -9,14 +9,17 @@
 #include "WeaponComponentInterface.h"
 #include "FireModeComponent.generated.h"
 
+#define GETENUMSTRING(etype, evalue) ( (FindObject<UEnum>(ANY_PACKAGE, TEXT(etype), true) != nullptr) ? FindObject<UEnum>(ANY_PACKAGE, TEXT(etype), true)->GetEnumName((int32)evalue) : FString("Invalid - are you sure enum uses UENUM() macro?") )
+
 class UAudioComponent;
+class AUnrealWeaponProjectHUD;
 
 UENUM(BlueprintType)
 enum class EFireMode : uint8
 {
 	SemiAuto	UMETA(DisplayName = "Semi Auto"),
 	FullAuto	UMETA(DisplayName = "Full Auto"),
-	BurstFire	UMETA(DisplayName = "Burst Fire")
+	BurstFire	UMETA(DisplayName = "Burst Fire"),
 };
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -63,6 +66,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 		class USoundBase* FireSoundCue = nullptr;
 
+	// Next attack times multiplied by this to prevent timers desyncing with attack times
+	float NextAttackMargin = 0.99f;
 
 private:
 	int32 BurstCounter = 0;
@@ -98,4 +103,8 @@ private:
 	UAudioComponent* SoundAudioComponent;
 	void PlaySound(USoundBase* SoundCue);
 	void StopSound();
+
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD;
+	void PrintFireModeOnHUD(FString Name);
+	void PrintShotRateOnHUD(float Value);
 };

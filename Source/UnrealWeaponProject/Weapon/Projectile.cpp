@@ -5,6 +5,7 @@
 #include "StaticMeshResources.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -34,6 +35,8 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
 		Destroy();
 	}
+
+	PrintDamagePerShotOnHUD(Damage);
 }
 
 // Called when the game starts or when spawned
@@ -57,6 +60,16 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 	ProjectileMovement->ProjectileGravityScale = GravityScale;
 	// Die after 30 seconds by default
 	InitialLifeSpan = 30.0f;
+}
+
+void AProjectile::PrintDamagePerShotOnHUD(float Value)
+{
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintDamagePerShot(Value);
+	}
 }
 
 

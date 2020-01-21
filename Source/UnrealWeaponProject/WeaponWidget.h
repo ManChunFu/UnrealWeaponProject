@@ -19,12 +19,31 @@ public:
 
 	virtual void NativeConstruct() override;
 
-	void UpdateDamageCout(float Value);
-
-	void ResetDamage();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTAmmoCount;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* TXTDamage;
+	class UTextBlock* TXTFireMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTDamagePerShot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTShotRate;
+
+	void UpdateAmmoCount(int MagazineCount, int SpareCount);
+
+	void UpdateHealthCout(float Value);
+
+	void PrintDamagePerShot(float Value);
+
+	void PrintFireMode(FString Name);;
+
+	void PrintShotRate(float Value);
+
 
 	void StoreWidgetAnimations();
 
@@ -32,6 +51,6 @@ public:
 
 private:
 	TMap<FName, UWidgetAnimation*> AnimationsMap;
-	UWidgetAnimation* DamageFadeAnimation;
-	UWidgetAnimation* DamageShakeAnimation;
+	UWidgetAnimation* HealthFadeAnimation;
+	UWidgetAnimation* HealthShakeAnimation;
 };

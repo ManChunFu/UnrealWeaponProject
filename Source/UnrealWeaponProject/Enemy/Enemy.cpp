@@ -47,7 +47,7 @@ float AEnemy::TakeDamage(float DamageAmout, FDamageEvent const& DamageEvent, ACo
 	{
 		CurrentHealth -= ActualDamage;
 
-		PrintDamageOnHUD(CurrentHealth);
+		PrintHealthOnHUD(CurrentHealth);
 
 		FString CurrentHealthReport = TEXT("Current Health:  ") + FString::SanitizeFloat(CurrentHealth);
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Cyan, FString(CurrentHealthReport));
@@ -74,12 +74,12 @@ void AEnemy::KillEnemy()
 	SetLifeSpan(0.001f);
 }
 
-void AEnemy::PrintDamageOnHUD(float Value)
+void AEnemy::PrintHealthOnHUD(float Value)
 {
 	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	if (UnrealWeaponProjectHUD)
 	{
-		UnrealWeaponProjectHUD->UpdateDamageCount(Value);
+		UnrealWeaponProjectHUD->UpdateHealthCount(Value);
 	}
 
 }

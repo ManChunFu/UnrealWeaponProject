@@ -10,7 +10,7 @@
 
 UCLASS()
 class AUnrealWeaponProjectHUD : public AHUD
-{
+{	
 	GENERATED_BODY()
 
 public:
@@ -27,10 +27,21 @@ public:
 		TSubclassOf<UUserWidget> WeaponWidgetClass;
 
 	UFUNCTION()
-		void UpdateDamageCount(float Value);
+		void UpdateAmmoCount(int MagazineCount, int SpareCount);
 
 	UFUNCTION()
-		void ResetDamage();
+		void UpdateHealthCount(float Value);
+
+	UFUNCTION()
+		void PrintDamagePerShot(float Value);
+
+	UFUNCTION()
+		void PrintFireMode(FString Name);
+
+	UFUNCTION()
+		void PrintShotRate(float Value);
+
+
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
