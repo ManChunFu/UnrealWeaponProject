@@ -66,6 +66,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 		class USoundBase* FireSoundCue = nullptr;
 
+	// Next attack times multiplied by this to prevent timers desyncing with attack times
+	float NextAttackMargin = 0.99f;
 
 private:
 	int32 BurstCounter = 0;
