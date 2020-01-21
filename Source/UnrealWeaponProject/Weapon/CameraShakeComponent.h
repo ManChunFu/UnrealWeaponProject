@@ -25,41 +25,46 @@ protected:
 
 public:	
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-		float rate = 50;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-		float speed = 1;
 	
-		float timer = 0;
-		float test = 5;
+		float timer = 0.f;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Timer")
+		float TimeUntillReset = 1.f;
 
 	
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MaxRandYaw = 1;
+			float MaxRandYaw = 2.f;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MinRandYaw = 0;
+			float MinRandYaw = -2.f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MaxRandPitch = 1;
+			float MaxRandPitch = 5.f;
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MinRandPitch = 0;
+			float MinRandPitch = 4.f;
 
-		float RandYaw = 0;
-		float RandPitch = 0;
+   
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test") 
+			bool bRecoildReset = true;
 
-		float startYaw = 0;
-		float startPitch = 0;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float PitchAddSpeed = -1.f;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float YawAddSpeed = 1.f;
+		
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")	
+			float PitchRemovedRate = 0.5f;
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float YawRemoveRate = 0.5f;
 
-		float currentYaw = 0;
-		float currentPitch = 0;
+
 
 		float PitchToAdd = 0.f;
 		float CurrentPitchOffset = 0.f;
 
 		float YawToAdd = 0.f;
 		float CurrentYawOffset = 0.f;
-
+		
 		bool bCurrentlymoving = false;
 		AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
 		UCameraComponent* Camera = nullptr;

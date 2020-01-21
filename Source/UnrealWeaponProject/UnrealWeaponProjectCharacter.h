@@ -41,7 +41,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AWeapon> WeaponClass;
 
-
+	FRotator GetPlayerControllerRotation();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	AWeapon* EquippedWeapon;

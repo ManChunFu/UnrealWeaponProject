@@ -57,6 +57,12 @@ AUnrealWeaponProjectCharacter::AUnrealWeaponProjectCharacter()
 
 }
 
+FRotator AUnrealWeaponProjectCharacter::GetPlayerControllerRotation()
+{
+	
+	return FRotator((GetControlRotation()));
+}
+
 void AUnrealWeaponProjectCharacter::BeginPlay()
 {
 	// Call the base class  
@@ -135,6 +141,7 @@ void AUnrealWeaponProjectCharacter::MoveRight(float Value)
 
 void AUnrealWeaponProjectCharacter::TurnAtRate(float Rate)
 {
+	
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
 }
