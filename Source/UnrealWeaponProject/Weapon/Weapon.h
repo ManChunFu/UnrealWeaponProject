@@ -78,9 +78,8 @@ public:
 		void Reload();
 	virtual void Reload_Implementation();
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Weapon")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
 		void Attack();
-	virtual void Attack_Implementation();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
 		void AltAttack();

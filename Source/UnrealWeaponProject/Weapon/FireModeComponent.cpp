@@ -106,7 +106,7 @@ void UFireModeComponent::Start()
 		Attack();
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
 		EFireMode UseEnumValue = EFireMode::FullAuto;
-		PrintFireModeOnHUD(*GETENUMSTRING("EUsesEnum", UseEnumValue));
+		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(AutoAttacksPerSecond);
 		break;
 
@@ -114,14 +114,14 @@ void UFireModeComponent::Start()
 	case EFireMode::BurstFire:
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
 		EFireMode UseEnumValue = EFireMode::BurstFire;
-		PrintFireModeOnHUD(*GETENUMSTRING("EUsesEnum", UseEnumValue));
+		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(BurstsPerSecond);
 		break;
 
 
 	case EFireMode::SemiAuto:
 		EFireMode UseEnumValue = EFireMode::SemiAuto;
-		PrintFireModeOnHUD(*GETENUMSTRING("EUsesEnum", UseEnumValue));
+		PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", UseEnumValue));
 		PrintShotRateOnHUD(SemiAutoAttackPerSecond);
 		Attack();
 
