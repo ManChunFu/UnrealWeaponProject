@@ -3,6 +3,7 @@
 
 #include "FireModeComponent.h"
 #include "Components/AudioComponent.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
@@ -30,12 +31,18 @@ void UFireModeComponent::BeginPlay()
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
+
+	UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	
+	/*EFireMode UseEnumValue = CurrentFireMode;
+	PrintFireModeOnHUD(*GETENUMSTRING("EUsesEnum", UseEnumValue));*/
 }
 
 void UFireModeComponent::ChangeFireMode()
 {
 	int32 Index = AllowedFireModes.Find(CurrentFireMode);
 	CurrentFireMode = AllowedFireModes[(Index + 1) % AllowedFireModes.Num()];
+
 }
 
 
@@ -75,7 +82,7 @@ void UFireModeComponent::Attack()
 void UFireModeComponent::Burst()
 {
 	//Burst is special, Last attack time should count from only the first bullet so special case is set up for that.
-	if (BurstDelegate.IsBound() && !bBursting && CanAttack())
+	if (BurstDelegate.IsBound() && !bBursting && CanAttack_Implementation())
 	{
 		PlaySound(FireSoundCue);
 
@@ -93,21 +100,23 @@ void UFireModeComponent::Burst()
 
 void UFireModeComponent::Start()
 {
-
 	switch (CurrentFireMode)
 	{
 	case EFireMode::FullAuto:
 		Attack();
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Attack, 1.f / AutoAttacksPerSecond, true);
+		PrintShotRateOnHUD(AutoAttacksPerSecond);
 		break;
 
 
 	case EFireMode::BurstFire:
 		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
+		PrintShotRateOnHUD(BurstsPerSecond);
 		break;
 
 
 	case EFireMode::SemiAuto:
+		PrintShotRateOnHUD(SemiAutoAttackPerSecond);
 		Attack();
 
 		break;
@@ -139,6 +148,30 @@ void UFireModeComponent::StopSound()
 	if (SoundAudioComponent->IsPlaying())
 	{
 		SoundAudioComponent->Stop();
+	}
+}
+
+void UFireModeComponent::PrintFireModeOnHUD(FString Name)
+{
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintFireMode(Name);
+	}
+}
+
+void UFireModeComponent::PrintShotCostOnHUD(int Value)
+{
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintShotCost(Value);
+	}
+}
+
+void UFireModeComponent::PrintShotRateOnHUD(float Value)
+{
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintShotRate(Value);
 	}
 }
 

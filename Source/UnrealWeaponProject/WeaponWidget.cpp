@@ -16,11 +16,11 @@ void UWeaponWidget::NativeConstruct()
 	DamageShakeAnimation = GetAnimationByName(TEXT("DamageShake"));
 }
 
-void UWeaponWidget::UpdateDamageCout(float Value)
+void UWeaponWidget::UpdateHealthCout(float Value)
 {
 	if (TXTDamage && Value >= 0)
 	{
-		 //turn textbox visible if already hidden
+		 //turn textblock visible if already hidden
 		if (TXTDamage->Visibility == ESlateVisibility::Hidden)
 		{
 			TXTDamage->SetVisibility(ESlateVisibility::Visible);
@@ -39,13 +39,24 @@ void UWeaponWidget::UpdateDamageCout(float Value)
 	}
 }
 
-void UWeaponWidget::ResetDamage()
+void UWeaponWidget::PrintFireMode(FString Name)
 {
-	if (TXTDamage)
-	{
-		TXTDamage->SetVisibility(ESlateVisibility::Hidden);
-	}
+	TXTFireMode->SetVisibility(ESlateVisibility::Visible);
+	TXTFireMode->SetText(FText::FromString(Name));
 }
+
+void UWeaponWidget::PrintShotCost(int Value)
+{
+	TXTShotCost->SetVisibility(ESlateVisibility::Visible);
+	TXTShotCost->SetText(FText::FromString(FString::FromInt(Value)));
+}
+
+void UWeaponWidget::PrintShotRate(float Value)
+{
+	TXTShotRate->SetVisibility(ESlateVisibility::Visible);
+	TXTShotRate->SetText(FText::FromString(FString::SanitizeFloat(Value)));
+}
+
 
 void UWeaponWidget::StoreWidgetAnimations()
 {
