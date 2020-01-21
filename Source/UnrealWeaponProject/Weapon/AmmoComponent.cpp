@@ -5,7 +5,6 @@
 #include "Engine/World.h"
 #include "Weapon.h"
 #include "Components/AudioComponent.h"
-#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()

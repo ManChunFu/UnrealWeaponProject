@@ -34,8 +34,6 @@ void UFireModeComponent::BeginPlay()
 			}
 		});
 
-	UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-	
 }
 
 void UFireModeComponent::ChangeFireMode()
@@ -98,9 +96,6 @@ void UFireModeComponent::Burst()
 
 void UFireModeComponent::Start()
 {
-	/*char Name = static_cast<uint8>(CurrentFireMode);
-	PrintFireModeOnHUD(*GETENUMSTRING("EFireMode", Name));*/
-
 	switch (CurrentFireMode)
 	{
 	case EFireMode::FullAuto:
@@ -152,17 +147,10 @@ void UFireModeComponent::StopSound()
 	}
 }
 
-void UFireModeComponent::PrintFireModeOnHUD(FString Name)
-{
-	if (UnrealWeaponProjectHUD)
-	{
-		UnrealWeaponProjectHUD->PrintFireMode(Name);
-	}
-}
-
 
 void UFireModeComponent::PrintShotRateOnHUD(float Value)
 {
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 	if (UnrealWeaponProjectHUD)
 	{
 		UnrealWeaponProjectHUD->PrintShotRate(Value);

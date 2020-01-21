@@ -14,20 +14,6 @@ void AUnrealWeaponProjectGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AUnrealWeaponProjectCharacter* MyCharacter = Cast<AUnrealWeaponProjectCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
-
-	if (WeaponHUDClass != nullptr)
-	{
-		CurrentWidget = CreateWidget<UUserWidget>(GetWorld(), WeaponHUDClass);
-
-		if (CurrentWidget != nullptr)
-		{
-			CurrentWidget->AddToViewport();
-		}
-	}
-
-	Enemy = Cast<AEnemy>(UGameplayStatics::GetActorOfClass(this, 0));
-
 }
 
 AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
@@ -41,10 +27,5 @@ AUnrealWeaponProjectGameMode::AUnrealWeaponProjectGameMode()
 	HUDClass = AUnrealWeaponProjectHUD::StaticClass();
 }
 
-float AUnrealWeaponProjectGameMode::GetDamage()
-{
-	
-	return Damage;	
 
-}
 
