@@ -19,12 +19,29 @@ public:
 
 	virtual void NativeConstruct() override;
 
-	void UpdateDamageCout(float Value);
-
-	void ResetDamage();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* TXTDamage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTFireMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTShotCost;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TXTShotRate;
+
+
+	void UpdateHealthCout(float Value);
+
+	void PrintDamagePerShot(float Value);
+
+	void PrintFireMode(FString Name);;
+
+	void PrintShotCost(int Value);
+
+	void PrintShotRate(float Value);
+
 
 	void StoreWidgetAnimations();
 

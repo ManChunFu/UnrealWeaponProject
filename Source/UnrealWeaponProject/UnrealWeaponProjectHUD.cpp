@@ -57,16 +57,36 @@ void AUnrealWeaponProjectHUD::UpdateDamageCount(float Value)
 {
 	if (WeaponWidget)
 	{
-		WeaponWidget->UpdateDamageCout(Value);
+		WeaponWidget->UpdateHealthCout(Value);
 	}
 }
 
-void AUnrealWeaponProjectHUD::ResetDamage()
+void AUnrealWeaponProjectHUD::PrintFireMode(FString Name)
 {
 	if (WeaponWidget)
 	{
-		WeaponWidget->ResetDamage();
+		WeaponWidget->PrintFireMode(Name);
 	}
 }
+
+void AUnrealWeaponProjectHUD::PrintShotCost(int Value)
+{
+	if (WeaponWidget)
+	{
+		WeaponWidget->PrintShotCost(Value);
+	}
+}
+
+void AUnrealWeaponProjectHUD::PrintShotRate(float Value)
+{
+	if (WeaponWidget)
+	{
+		WeaponWidget->PrintShotRate(Value);
+	}
+}
+
+
+
+
 
 

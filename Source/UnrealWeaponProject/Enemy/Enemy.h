@@ -39,10 +39,8 @@ public:
 	ASpawnPoint* SpawnPoint  = nullptr;
 	FTimerHandle TimeHandle;
 
-	FTimerHandle DamageResetHandle;
-
 private:
 	void KillEnemy();
-	void PrintDamageOnHUD(float Value);
+	void PrintHealthOnHUD(float Value);
 	
 };
