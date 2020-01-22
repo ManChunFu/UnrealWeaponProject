@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
+#include "FireModeComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -36,7 +37,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		Destroy();
 	}
 
-	PrintDamagePerShotOnHUD(Damage);
+	PrintDamagePerShotOnHUD(Damage, "");
 }
 
 // Called when the game starts or when spawned
@@ -62,13 +63,26 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 	InitialLifeSpan = 30.0f;
 }
 
-void AProjectile::PrintDamagePerShotOnHUD(float Value)
+void AProjectile::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 {
 	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
 
+	UFireModeComponent* FireModeComponent = Cast<UFireModeComponent>(GetOwner()->GetComponentByClass(UFireModeComponent::StaticClass()));
+	if (FireModeComponent)
+	{
+		if (FireModeComponent->CurrentFireMode == EFireMode::BurstFire)
+		{
+			Multiplier = "x 3";
+		}
+		else
+		{
+			Multiplier = "";
+		}
+	}
+
 	if (UnrealWeaponProjectHUD)
 	{
-		UnrealWeaponProjectHUD->PrintDamagePerShot(Value);
+		UnrealWeaponProjectHUD->PrintDamagePerShot(Value, Multiplier);
 	}
 }
 

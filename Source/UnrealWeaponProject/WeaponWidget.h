@@ -38,7 +38,7 @@ public:
 
 	void UpdateHealthCout(float Value);
 
-	void PrintDamagePerShot(float Value);
+	void PrintDamagePerShot(float Value, FString Multiplier);
 
 	void PrintFireMode(FString Name);;
 

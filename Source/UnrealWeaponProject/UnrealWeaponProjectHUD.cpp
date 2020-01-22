@@ -61,11 +61,11 @@ void AUnrealWeaponProjectHUD::UpdateHealthCount(float Value)
 	}
 }
 
-void AUnrealWeaponProjectHUD::PrintDamagePerShot(float Value)
+void AUnrealWeaponProjectHUD::PrintDamagePerShot(float Value, FString Multiplier)
 {
 	if (WeaponWidget)
 	{
-		WeaponWidget->PrintDamagePerShot(Value);
+		WeaponWidget->PrintDamagePerShot(Value, Multiplier);
 	}
 }
 

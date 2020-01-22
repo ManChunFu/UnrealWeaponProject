@@ -43,10 +43,10 @@ void UWeaponWidget::UpdateHealthCout(float Value)
 	}
 }
 
-void UWeaponWidget::PrintDamagePerShot(float Value)
+void UWeaponWidget::PrintDamagePerShot(float Value, FString Multiplier)
 {
 	TXTDamagePerShot->SetVisibility(ESlateVisibility::Visible);
-	TXTDamagePerShot->SetText(FText::FromString(FString::SanitizeFloat(Value)));
+	TXTDamagePerShot->SetText(FText::FromString(FString::SanitizeFloat(Value) + " " + Multiplier));
 }
 
 void UWeaponWidget::PrintFireMode(FString Name)
