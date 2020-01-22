@@ -44,12 +44,7 @@ public:
 		void Reload();
 	
 
-
-	// Audio sound setting for reloading and empty magazine
-	// TODO try to move to weapon class
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
-		class USoundBase* ReloadSoundCue = nullptr;
-
+	// only empty magazine sound calling from this class.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 		class USoundBase* EmptyMagazineSoundCue = nullptr;
 
