@@ -7,9 +7,7 @@
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
-{
-	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
-}
+{}
 
 void UFireModeComponent::BeginPlay()
 {
@@ -68,12 +66,6 @@ void UFireModeComponent::Attack()
 		default:
 			break;
 		}
-
-		PlaySound(FireSoundCue);
-	}
-	else
-	{
-		StopSound();
 	}
 }
 
@@ -81,17 +73,10 @@ void UFireModeComponent::Burst()
 {
 	if (BurstDelegate.IsBound() && !bBursting && CanAttack_Implementation())
 	{
-		PlaySound(FireSoundCue);
-
 		BurstCounter = 0;
 		bBursting = true;
 		GetWorld()->GetTimerManager().SetTimer(BurstHandle, BurstDelegate, BurstDelay, true, 0.f);
 	}
-	else
-	{
-		StopSound();
-	}
-
 }
 
 void UFireModeComponent::Start()
@@ -128,23 +113,6 @@ void UFireModeComponent::Stop()
 bool UFireModeComponent::CanAttack_Implementation()
 {
 	return NextAttackTime <= GetWorld()->GetTimeSeconds();
-}
-
-void UFireModeComponent::PlaySound(USoundBase* SoundCue)
-{
-	if (SoundAudioComponent && SoundCue)
-	{
-		SoundAudioComponent->SetSound(SoundCue);
-		SoundAudioComponent->Play(0.f);
-	}
-}
-
-void UFireModeComponent::StopSound()
-{
-	if (SoundAudioComponent->IsPlaying())
-	{
-		SoundAudioComponent->Stop();
-	}
 }
 
 

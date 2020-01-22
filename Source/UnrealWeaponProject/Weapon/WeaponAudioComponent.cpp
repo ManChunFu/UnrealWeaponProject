@@ -76,6 +76,11 @@ void UWeaponAudioComponent::OnWeaponDropped_Implementation()
 	PlaySound(WeaponDroppedSoundCue, 0.f);
 }
 
+void UWeaponAudioComponent::OnWeaponReload_Implementation()
+{
+	PlaySound(ReloadSoundCue, 0.f);
+}
+
 void UWeaponAudioComponent::PlaySound(USoundBase* SoundCue, float StartTime)
 {
 	if (AudioComponent && SoundCue)
