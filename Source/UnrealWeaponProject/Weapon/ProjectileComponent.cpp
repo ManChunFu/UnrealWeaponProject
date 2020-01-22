@@ -8,6 +8,7 @@
 #include "Components/CapsuleComponent.h"
 #include "../UnrealWeaponProjectCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "../MathHelperFunctions.h"
 
 // Sets default values for this component's properties
 UProjectileComponent::UProjectileComponent()
@@ -34,27 +35,29 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, int AmountToSpawn, float SpeedMultiplier)
+TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
 {
 	TArray<AProjectile*> Projectiles;
 
 	UWorld* const World = GetWorld();
 	if (World != NULL && ProjectileClass->IsValidLowLevel())
 	{
-		for (int i = 0; i < AmountToSpawn; i++)
+		for (int i = 0; i < ProjectilesToSpawn; i++)
 		{
 			FTransform ProjSpawn;
 			if (OverrideSpawn.Equals(FTransform()))
 			{
-				ProjSpawn = *Cast<AWeapon>(GetOwner())->SpawnPoint;
+				ProjSpawn = Cast<AWeapon>(GetOwner())->GetSpawnPoint();
 			}
 			else
 			{
 				ProjSpawn = OverrideSpawn;
 			}
+			float ZOnCircle, YOnCircle;
+			UMathHelperFunctions::GetRandomPointOnCircle(ZOnCircle, YOnCircle);
 			// Before spawning, rotate the spawn transform to account for inaccuracy
-			FQuat ZRotation(FVector::UpVector, FMath::RandRange(-InaccuracyZ, InaccuracyZ) * PI / 180.f);
-			FQuat YRotation(FVector::RightVector, FMath::RandRange(-InaccuracyY, InaccuracyY) * PI / -180.f);
+			FQuat ZRotation(FVector::UpVector, ZOnCircle * InaccuracyZ * PI / 180.f);
+			FQuat YRotation(FVector::RightVector, YOnCircle * InaccuracyY * PI / -180.f);
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
 			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Holder);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
