@@ -53,11 +53,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
-	// If this is 0, the weapon can attack. Increment it if you want to suspend weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		int32 SuspendedFromAttack = 0;
-
-
 	
 	FORCEINLINE FTransform GetSpawnPoint()
 	{
@@ -74,18 +69,18 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
+	void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void StartAttack();
+	void StartAttack();
 	virtual void StartAttack_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void StopAttack();
+	void StopAttack();
 	virtual void StopAttack_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void Reload();
+	void Reload();
 	virtual void Reload_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent, Category = "Weapon")
@@ -93,15 +88,18 @@ public:
 	virtual void Attack_Implementation();
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Weapon")
-		void AltAttack();
+	void AltAttack();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	bool CanAttack();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	bool TryAttack();
 
 	UFUNCTION()
-		void Drop();
+	void Drop();
 
-	bool CanAttack();
+	
 private:
 	UProjectileComponent* ProjectileComponent;
 	AProjectile* Projectile;
