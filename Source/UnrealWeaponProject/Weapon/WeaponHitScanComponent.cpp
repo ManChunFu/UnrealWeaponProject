@@ -7,6 +7,8 @@
 #include "CollisionQueryParams.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "../MathHelperFunctions.h"
+#include "Weapon.h"
 
 // Sets default values for this component's properties
 UWeaponHitScanComponent::UWeaponHitScanComponent()
@@ -28,23 +30,30 @@ void UWeaponHitScanComponent::BeginPlay()
 	
 }
 
-FHitResult UWeaponHitScanComponent::OnAttack(FVector StartTrace, FVector ForwardVector,float InaccuracyZ, float InaccuracyY, bool bDebugLine)
+FHitResult UWeaponHitScanComponent::OnAttack(float InaccuracyZ, float InaccuracyY, bool bDebugLine)
 {
-	ForwardVector.Z += InaccuracyZ;
-	ForwardVector.Y += InaccuracyY;
-	FVector EndTrace = ((ForwardVector * 2000.f) + StartTrace);
+	float YOnCircle, ZOnCircle;
+	UMathHelperFunctions::GetRandomPointOnCircle(ZOnCircle, YOnCircle);
+	FTransform SpawnTransform;
+
+	SpawnTransform = Cast<AWeapon>(GetOwner())->GetSpawnPoint();
+	
+	FQuat ZRotation(FVector::UpVector, ZOnCircle * InaccuracyZ * PI / 180.f);
+	FQuat YRotation(FVector::RightVector, YOnCircle * InaccuracyY * PI / -180.f);
+	SpawnTransform.SetRotation(SpawnTransform.GetRotation() * ZRotation * YRotation);
+	FVector TraceStart = SpawnTransform.GetLocation();
+	FVector TraceEnd = SpawnTransform.GetLocation() + SpawnTransform.GetRotation().GetForwardVector()*10000.f;
+
 	FCollisionQueryParams TraceParams;
-	FHitResult testwhatever;
-	GetWorld()->LineTraceSingleByChannel(testwhatever, StartTrace, EndTrace, ECC_Visibility, TraceParams);
-	//UE_LOG(LogTemp, Warning, TEXT("StartTrace: %s"), StartTrace.ToString());
+	FHitResult OutHit;
+	GetWorld()->LineTraceSingleByChannel(OutHit, TraceStart, TraceEnd, ECC_Visibility, TraceParams);
 	if (bDebugLine)
 	{
-		DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor::Green, false, 5.f);
-		UE_LOG(LogTemp, Warning, TEXT("Drawing Line"));
+		DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Green, false, 5.f);
 	}
 
 
-	return testwhatever;
+	return OutHit;
 	
 	
 

@@ -23,7 +23,7 @@ protected:
 public:	
 	
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		FHitResult OnAttack(FVector StartTrace, FVector ForwardVector, float InaccuracyZ, float InaccuracyY, bool bDebugLine);
+		FHitResult OnAttack(float InaccuracyZ, float InaccuracyY, bool bDebugLine);
 
 		
 };

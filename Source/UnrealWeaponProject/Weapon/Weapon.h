@@ -20,6 +20,9 @@ private:
 	TArray<UActorComponent*> CachedComponents;
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
+
+	// World location for any spawns caused by this weapon
+	const FTransform* SpawnPoint;
 public:
 	AWeapon();
 
@@ -48,8 +51,14 @@ public:
 		int32 SuspendedFromAttack = 0;
 
 
-	// World location for any spawns caused by this weapon
-	const FTransform* SpawnPoint;
+	
+	FORCEINLINE FTransform GetSpawnPoint()
+	{
+		FTransform Spawn;
+		Spawn = *SpawnPoint;
+		Spawn.SetLocation(Spawn.GetLocation() + SpawnPoint->GetRotation().GetForwardVector() * 50.f);
+		return Spawn;
+	}
 
 protected:
 	virtual void BeginPlay() override;
