@@ -57,7 +57,7 @@ public:
 		float AutoAttacksPerSecond = 5.f;
 
 	// Next attack times multiplied by this to prevent timers desyncing with attack times
-	float NextAttackMargin = 0.99f;
+	float NextAttackMargin = 0.95f;
 
 private:
 	int32 BurstCounter = 0;
