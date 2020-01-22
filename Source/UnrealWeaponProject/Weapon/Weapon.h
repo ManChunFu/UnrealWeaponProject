@@ -10,8 +10,11 @@
 #include "TimerManager.h"
 #include "Weapon.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWeaponDropped);
 
+class UProjectileComponent;
+class AProjectile;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWeaponDropped);
 UCLASS()
 class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
@@ -100,6 +103,9 @@ public:
 
 	bool CanAttack();
 private:
+	UProjectileComponent* ProjectileComponent;
+	AProjectile* Projectile;
 
+	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);
 
 };

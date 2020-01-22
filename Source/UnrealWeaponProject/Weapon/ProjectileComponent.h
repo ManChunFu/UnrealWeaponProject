@@ -16,8 +16,6 @@ class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent, pub
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		TSubclassOf<AProjectile> ProjectileClass;
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		int32 ProjectilesToSpawn = 1;
 	UPROPERTY(VisibleInstanceOnly, Category="Weapon")
 		AActor* Holder = nullptr;
@@ -33,8 +31,13 @@ protected:
 
 	virtual void BeginPlay() override;
 public:
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		TSubclassOf<AProjectile> ProjectileClass;
+
 	UFUNCTION(BlueprintCallable)
 		TArray<AProjectile*> FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
+
+	AProjectile* ProjectileInstance;
 
 
 };

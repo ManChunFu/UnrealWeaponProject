@@ -6,6 +6,9 @@
 #include "WeaponComponentInterface.h"
 #include "FireModeComponent.h"
 #include "Camera/CameraComponent.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
+#include "ProjectileComponent.h"
+#include "Projectile.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -122,6 +125,19 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 	{
 		IWeaponComponentInterface::Execute_OnWeaponEquipped(Component, Holder);
 	}
+	/*for (auto Component : CachedComponents)
+	{
+		if (Component->GetFName() == "ProjectileComponent")
+		{
+			ProjectileComponent = Cast<UProjectileComponent>(Component);
+		}
+	}*/
+	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
+	if (ProjectileComponent)
+	{
+		float Damage = ProjectileComponent->ProjectileInstance->Damage;
+			//ProjectileComponent->ProjectileInstance.Damage;
+	}
 
 }
 
@@ -131,6 +147,12 @@ void AWeapon::StartAttack_Implementation()
 	{
 		FireModeComponent->Start();
 	}
+
+	if (Projectile)
+	{
+		float Damage = Projectile->Damage;
+		PrintDamagePerShotOnHUD(Damage, "");
+	}
 }
 
 void AWeapon::StopAttack_Implementation()
@@ -138,6 +160,27 @@ void AWeapon::StopAttack_Implementation()
 	if (FireModeComponent)
 	{
 		FireModeComponent->Stop();
+	}
+}
+
+void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
+{
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	if (FireModeComponent)
+	{
+		if (FireModeComponent->CurrentFireMode == EFireMode::BurstFire)
+		{
+			Multiplier = "x 3";
+		}
+		else
+		{
+			Multiplier = "";
+		}
+	}
+
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintDamagePerShot(Value, Multiplier);
 	}
 }
 
