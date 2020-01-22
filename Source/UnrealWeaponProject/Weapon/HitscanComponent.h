@@ -8,7 +8,7 @@
 #include "HitscanComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UHitscanComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()

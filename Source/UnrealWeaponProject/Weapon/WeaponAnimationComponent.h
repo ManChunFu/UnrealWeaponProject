@@ -8,7 +8,7 @@
 #include "WeaponAnimationComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UWeaponAnimationComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()

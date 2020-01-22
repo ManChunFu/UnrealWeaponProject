@@ -14,7 +14,7 @@ void UFireModeComponent::BeginPlay()
 	Super::BeginPlay();
 	if (AllowedFireModes.Num() <= 0)
 	{
-		AllowedFireModes.Add(CurrentFireMode);
+		AllowedFireModes.Add(EFireMode::FullAuto);
 		UE_LOG(LogTemp, Warning, TEXT("No assigned fire modes for weapon : %s"), *GetOwner()->GetName());
 
 	}

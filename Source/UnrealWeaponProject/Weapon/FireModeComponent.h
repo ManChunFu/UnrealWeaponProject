@@ -17,7 +17,7 @@ enum class EFireMode : uint8
 	BurstFire	UMETA(DisplayName = "Burst Fire"),
 };
 
-UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), Blueprintable, meta = (BlueprintSpawnableComponent))
 class UNREALWEAPONPROJECT_API UFireModeComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()
@@ -30,7 +30,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 		TArray<EFireMode> AllowedFireModes;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
 		EFireMode CurrentFireMode;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Weapon")

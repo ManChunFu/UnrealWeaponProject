@@ -20,7 +20,7 @@ class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
 private:
-	TArray<UActorComponent*> CachedComponents;
+	
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
 
@@ -28,6 +28,10 @@ private:
 	const FTransform* SpawnPoint;
 public:
 	AWeapon();
+
+	UPROPERTY(BlueprintReadOnly, Category = "Weapon")
+	TArray<UActorComponent*> CachedComponents;
+
 
 	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
 	FOnWeaponDropped WeaponDropped;
@@ -80,21 +84,17 @@ public:
 		void StopAttack();
 	virtual void StopAttack_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StartAltAttack();
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StopAltAttack();
-
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
 		void Reload();
 	virtual void Reload_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
-		void Attack();
+	UFUNCTION(BlueprintNativeEvent, Category = "Weapon")
+	void Attack();
+	virtual void Attack_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Weapon")
 		void AltAttack();
+
 
 	bool TryAttack();
 
