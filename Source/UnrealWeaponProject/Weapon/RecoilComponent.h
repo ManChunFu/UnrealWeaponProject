@@ -4,11 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "WeaponComponentInterface.h"
 #include "RecoilComponent.generated.h"
 
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
-class UNREALWEAPONPROJECT_API URecoilComponent : public UActorComponent
+class UNREALWEAPONPROJECT_API URecoilComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()
 

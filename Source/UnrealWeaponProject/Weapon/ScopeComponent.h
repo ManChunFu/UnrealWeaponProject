@@ -30,6 +30,6 @@ protected:
 		void Zoom();
 
 public:
-	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder);
-	virtual void OnWeaponDropped_Implementation();
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
+	virtual void OnWeaponDropped_Implementation() override;
 };
