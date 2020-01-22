@@ -2,6 +2,12 @@
 
 
 #include "WeaponAnimationComponent.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Animation/AnimInstance.h"
+#include "GameFramework/PlayerController.h"	
+#include "GameFramework/PlayerController.h"	
+#include "Animation/AnimInstance.h"
+
 
 // Sets default values for this component's properties
 UWeaponAnimationComponent::UWeaponAnimationComponent()
@@ -10,7 +16,11 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> FireAnimationMontageObject(TEXT("AnimMontage'/Game/FirstPerson/Animations/FirstPersonFire_Montage.FirstPersonFire_Montage'"));
+	if (FireAnimationMontageObject.Succeeded())
+	{
+		FireAnimationMontage = FireAnimationMontageObject.Object;
+	}
 }
 
 
@@ -34,5 +44,26 @@ void UWeaponAnimationComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 void UWeaponAnimationComponent::OnWeaponReload_Implementation()
 {
+	/*UWorld* world = GetWorld();
+	if (world != nullptr)
+	{
+		auto Player = Cast<ACharacter>(world->GetFirstPlayerController()->GetCharacter());
+		if (Player != nullptr)
+			Player->PlayAnimMontage(FireAnimationMontage, 1.f, FName("Default"));
+	}
+	if (FireAnimationMontage)
+	{
+		if (Player)
+			Player->PlayAnimMontage(FireAnimationMontage, 1.f, FName("Default"));
+	}
+
+	if (FireAnimationMontage)
+	{
+		UAnimInstance* AnimInstance = Player->GetAnimInstance();
+		if (AnimInstance)
+		{
+			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
+		}
+	}*/
 }
 
