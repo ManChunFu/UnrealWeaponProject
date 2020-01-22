@@ -45,7 +45,15 @@ void UAmmoComponent::Reload()
 
 bool UAmmoComponent::CanAttack_Implementation()
 {
-	return MagazineAmmo > 0 && !bIsReloading;
+	if (!bIsReloading)
+	{
+		if (MagazineAmmo > 0)
+		{
+			return true;
+		}
+		//PlaySound();
+	}
+	return false;
 }
 
 void UAmmoComponent::OnWeaponAttack_Implementation()
