@@ -42,7 +42,10 @@ public:
 	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder)
 	{};
 
-
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
+	void OnWeaponReload();
+	virtual void OnWeaponReload_Implementation()
+	{ };
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:

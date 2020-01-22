@@ -32,7 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 public:
 	UFUNCTION(BlueprintCallable)
-		AProjectile* FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
+		TArray<AProjectile*> FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, int AmountToSpawn = 1, float SpeedMultiplier = 1.F);
 
 
 };
