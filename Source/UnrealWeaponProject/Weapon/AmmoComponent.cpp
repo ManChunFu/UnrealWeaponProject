@@ -36,8 +36,6 @@ bool UAmmoComponent::Reload()
 	if (bIsReloading == false)
 	{
 		bIsReloading = true;
-
-		Weapon->SuspendedFromAttack++;
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UAmmoComponent::FinishReload, ReloadTime, false);
 		UE_LOG(LogTemp, Warning, TEXT("Starting Reload"));
 	}
@@ -66,7 +64,6 @@ void UAmmoComponent::OnWeaponAttack_Implementation()
 void UAmmoComponent::FinishReload()
 {	
 	UE_LOG(LogTemp, Warning, TEXT("Finished Reload"));
-	Weapon->SuspendedFromAttack--;
 	bIsReloading = false;
 
 	// Enough Ammo to Fill Magazine

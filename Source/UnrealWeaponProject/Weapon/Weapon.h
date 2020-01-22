@@ -20,7 +20,7 @@ class UNREALWEAPONPROJECT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
 private:
-	TArray<UActorComponent*> CachedComponents;
+	
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
 
@@ -28,6 +28,10 @@ private:
 	const FTransform* SpawnPoint;
 public:
 	AWeapon();
+
+	UPROPERTY(BlueprintReadOnly, Category = "Weapon")
+	TArray<UActorComponent*> CachedComponents;
+
 
 	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
 	FOnWeaponDropped WeaponDropped;
@@ -49,11 +53,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
-	// If this is 0, the weapon can attack. Increment it if you want to suspend weapon
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		int32 SuspendedFromAttack = 0;
-
-
 	
 	FORCEINLINE FTransform GetSpawnPoint()
 	{
@@ -70,38 +69,37 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
+	void Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void StartAttack();
+	void StartAttack();
 	virtual void StartAttack_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void StopAttack();
+	void StopAttack();
 	virtual void StopAttack_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StartAltAttack();
-
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "Weapon")
-		void StopAltAttack();
-
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Weapon")
-		void Reload();
+	void Reload();
 	virtual void Reload_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
-		void Attack();
+	UFUNCTION(BlueprintNativeEvent, Category = "Weapon")
+	void Attack();
+	virtual void Attack_Implementation();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Weapon")
-		void AltAttack();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Weapon")
+	void AltAttack();
 
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	bool CanAttack();
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	bool TryAttack();
 
 	UFUNCTION()
-		void Drop();
+	void Drop();
 
-	bool CanAttack();
+	
 private:
 	UProjectileComponent* ProjectileComponent;
 	AProjectile* Projectile;

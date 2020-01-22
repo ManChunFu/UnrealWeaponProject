@@ -9,7 +9,7 @@
 
 class UAudioComponent;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UWeaponAudioComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()

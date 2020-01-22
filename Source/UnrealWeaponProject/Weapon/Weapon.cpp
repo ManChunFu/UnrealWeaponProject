@@ -52,14 +52,18 @@ void AWeapon::Reload_Implementation()
 	}
 }
 
+void AWeapon::Attack_Implementation()
+{
+	for (auto Component : CachedComponents)
+	{
+		IWeaponComponentInterface::Execute_OnWeaponAttack(Component);
+	}
+}
+
 bool AWeapon::TryAttack()
 {
 	if (CanAttack())
 	{
-		for (auto Component : CachedComponents)
-		{
-			IWeaponComponentInterface::Execute_OnWeaponAttack(Component);
-		}
 		Attack();
 		return true;
 	}
