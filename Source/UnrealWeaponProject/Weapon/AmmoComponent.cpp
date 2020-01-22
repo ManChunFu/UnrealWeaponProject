@@ -22,11 +22,11 @@ void UAmmoComponent::BeginPlay()
 
 }
 
-void UAmmoComponent::Reload()
+bool UAmmoComponent::Reload()
 {
 	if (MagazineAmmo >= MagazineSize || SpareAmmo <= 0)
 	{
-		return;
+		return false;
 	}
 	if (bIsReloading == false)
 	{
@@ -39,7 +39,7 @@ void UAmmoComponent::Reload()
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UAmmoComponent::FinishReload, ReloadTime, false);
 		UE_LOG(LogTemp, Warning, TEXT("Starting Reload"));
 	}
-
+	return true;
 }
 
 

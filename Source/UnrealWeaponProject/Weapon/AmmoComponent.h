@@ -41,7 +41,7 @@ public:
 		int32 MaxSpareAmmo = 200;
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-		void Reload();
+		bool Reload();
 	
 
 
