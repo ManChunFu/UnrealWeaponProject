@@ -33,7 +33,20 @@ public:
 		class USoundBase* ReloadSoundCue = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
-		class USoundBase* EmptyMagazineSoundCue = nullptr;
+		class USoundBase* WeaponEquippedSoundCue = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+		class USoundBase* WeaponDroppedSoundCue = nullptr;
+
+
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
+
+	virtual void OnWeaponDropped_Implementation() override;
+
+	virtual void OnWeaponAttack_Implementation() override;
+
+	virtual void OnWeaponReload_Implementation() override;
+
 
 	UFUNCTION()
 		void PlaySound(USoundBase* SoundCue, float StartTime);

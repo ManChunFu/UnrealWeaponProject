@@ -4,13 +4,18 @@
 #include "AmmoComponent.h"
 #include "Engine/World.h"
 #include "Weapon.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
 UAmmoComponent::UAmmoComponent()
 {
+	static ConstructorHelpers::FObjectFinder<USoundBase> EmptyMagazineSoundCueObject(TEXT("SoundCue'/Game/Audio/Sounds/Weapon_AssaultRifle/Stereo/AmmoEmptySound_Cue.AmmoEmptySound_Cue'"));
+	if (EmptyMagazineSoundCueObject.Succeeded())
+	{
+		EmptyMagazineSoundCue = EmptyMagazineSoundCueObject.Object;
+	}
 	SoundAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("SoundAudioComponent"));
-
 }
 
 
@@ -32,9 +37,6 @@ bool UAmmoComponent::Reload()
 	{
 		bIsReloading = true;
 
-		 //play reload sound effect
-		PlaySound(ReloadSoundCue);
-
 		Weapon->SuspendedFromAttack++;
 		GetWorld()->GetTimerManager().SetTimer(ReloadTimer, this, &UAmmoComponent::FinishReload, ReloadTime, false);
 		UE_LOG(LogTemp, Warning, TEXT("Starting Reload"));
@@ -51,7 +53,7 @@ bool UAmmoComponent::CanAttack_Implementation()
 		{
 			return true;
 		}
-		//PlaySound();
+		PlaySound(EmptyMagazineSoundCue);
 	}
 	return false;
 }

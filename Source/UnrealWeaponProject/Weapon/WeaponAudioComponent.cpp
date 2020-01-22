@@ -2,6 +2,7 @@
 
 
 #include "WeaponAudioComponent.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Components/AudioComponent.h"
 
 // Sets default values for this component's properties
@@ -10,6 +11,32 @@ UWeaponAudioComponent::UWeaponAudioComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> WeaponEquippedSoundCueObject(TEXT("SoundCue'/Game/Audio/Sounds/Weapon_AssaultRifle/Stereo/AssaultRifle_Equip_Stereo_Cue.AssaultRifle_Equip_Stereo_Cue'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase> WeaponDropppedSoundCueObject(TEXT("SoundCue'/Game/Audio/WeaponDropped_Cue.WeaponDropped_Cue'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase> FireSoundCueObject(TEXT("SoundCue'/Game/Audio/GunFire_Cue.GunFire_Cue'"));
+	static ConstructorHelpers::FObjectFinder<USoundBase> ReloadSoundCueObject(TEXT("SoundCue'/Game/Audio/Sounds/Weapon_AssaultRifle/Stereo/AssaultRifle_Reload_Stereo_Cue.AssaultRifle_Reload_Stereo_Cue'"));
+
+	if (WeaponEquippedSoundCueObject.Succeeded())
+	{
+		WeaponEquippedSoundCue = WeaponEquippedSoundCueObject.Object;
+	}
+
+	if (WeaponDropppedSoundCueObject.Succeeded())
+	{
+		WeaponDroppedSoundCue = WeaponDropppedSoundCueObject.Object;
+	}
+
+	if (FireSoundCueObject.Succeeded())
+	{
+		FireSoundCue = FireSoundCueObject.Object;
+	}
+
+	if (ReloadSoundCueObject.Succeeded())
+	{
+		ReloadSoundCue = ReloadSoundCueObject.Object;
+	}
+
 
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 }
@@ -33,6 +60,27 @@ void UWeaponAudioComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
+
+void UWeaponAudioComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
+{
+	PlaySound(WeaponEquippedSoundCue, 0.f);
+}
+
+void UWeaponAudioComponent::OnWeaponAttack_Implementation()
+{
+	PlaySound(FireSoundCue, 0.f);
+}
+
+void UWeaponAudioComponent::OnWeaponDropped_Implementation()
+{
+	PlaySound(WeaponDroppedSoundCue, 0.f);
+}
+
+void UWeaponAudioComponent::OnWeaponReload_Implementation()
+{
+	PlaySound(ReloadSoundCue, 0.f);
+}
+
 void UWeaponAudioComponent::PlaySound(USoundBase* SoundCue, float StartTime)
 {
 	if (AudioComponent && SoundCue)
@@ -50,6 +98,7 @@ void UWeaponAudioComponent::StopSound()
 	}
 
 }
+
 
 
 
