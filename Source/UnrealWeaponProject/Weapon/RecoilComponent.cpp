@@ -16,54 +16,6 @@ URecoilComponent::URecoilComponent()
 }
 
 
-// Called when the game starts
-
-
-//void URecoilComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//
-//	Timer += DeltaTime;
-//
-//	if (Timer >= DecreaseRate && bDecreseRecoilOverTime)
-//	{
-//		RecoilTimer();
-//		Timer = 0;
-//	}
-//}
-
-//void URecoilComponent::SetRecoilDecreaseRate(float MaxRecoilDecreaseAmount, float MinRecoilDecreaseAmount, float DecreaseRate)
-//{
-//	C_DecrRate = DecreaseRate;
-//}
-//
-//void URecoilComponent::AddRecoil(float PlusMaxRecoil, float PlusMinRecoil)
-//{
-//	
-//	
-//}
-//
-//void URecoilComponent::SetCurrentRecoil(float MaxRecoil, float MinRecoil)
-//{
-//	CurrentMaxRecoil = MaxRecoil;
-//	CurrentMinRecoil = MinRecoil;
-//}
-
-//void URecoilComponent::SetAllRecoilSettings(bool bReduceRecoilOverTime, float DecreaseRate,float MaxRecoilDecreaseAmount, float MinRecoilDecreaseAmount)
-//{
-//	bDecreseRecoilOverTime = bReduceRecoilOverTime;
-//
-//	
-//
-//	C_DecrRate = DecreaseRate;
-//
-//	
-//
-//	C_MaxRecDecrAmount = MaxRecoilDecreaseAmount;
-//	C_MinRecDecrAmount = MinRecoilDecreaseAmount;
-//
-//	
-//}
-
 
 void URecoilComponent::BeginPlay()
 {
@@ -103,37 +55,7 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	ActualRecoilY = r * sinf(a);
 
 
-	/*if (bNegativeValue)
-	{
-		ActualRecoilX = FMath::RandRange(CurrentMaxRecoil, CurrentMinRecoil);
-	}
-	else
-	{
-		ActualRecoilX = FMath::RandRange(CurrentMaxRecoil * -1, CurrentMinRecoil * -1);
-	}
 
-
-
-	
-	bNegativeValue = FMath::RandBool();
-	if (bNegativeValue)
-	{
-		ActualRecoilY = FMath::RandRange(CurrentMaxRecoil, CurrentMinRecoil);
-	}
-	else
-	{
-		ActualRecoilY = FMath::RandRange(CurrentMaxRecoil * -1, CurrentMinRecoil * -1);
-	}*/
-
-
-	/*if (CurrentMaxRecoil < MaxRecoilUpLimit)
-	{
-		CurrentMaxRecoil += MaxRecoilAddAmount;
-	}
-	if (CurrentMinRecoil < MinRecoilUpLimit)
-	{
-		CurrentMinRecoil += MinRecoilAddAmount;
-	}*/
 
 	if (!GetWorld()->GetTimerManager().IsTimerActive(Handle))
 	{
@@ -152,39 +74,4 @@ void URecoilComponent::AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd)
 }
 
 
-//UFUNCTION(BlueprintCallable, Category = "MyBlueprintFunctionLibrary")
-//void URecoilComponent::GetCurrentRecoil(float& ActualRecoilX, float& ActualRecoilY, float& MaxRecoil, float& MinRecoil)
-//{
-//	MaxRecoil = CurrentMaxRecoil;
-//	MinRecoil = CurrentMinRecoil;
-//	
-//	
-//	bool bNegativeValue = FMath::RandBool();
-//	if (bNegativeValue)
-//	{
-//		ActualRecoilX = FMath::RandRange(CurrentMaxRecoil, CurrentMinRecoil);	
-//	}
-//	else
-//	{
-//		ActualRecoilX = FMath::RandRange(CurrentMaxRecoil*-1, CurrentMinRecoil*-1);	
-//	}
-//
-//
-//	bNegativeValue = FMath::RandBool();
-//	if (bNegativeValue)
-//	{
-//		ActualRecoilY = FMath::RandRange(CurrentMaxRecoil, CurrentMinRecoil);
-//	}
-//	else
-//	{
-//		ActualRecoilY = FMath::RandRange(CurrentMaxRecoil * -1, CurrentMinRecoil * -1);
-//	}
-//	
-//}
 
-//void URecoilComponent::RecoilTimer()
-//{
-//	CurrentMaxRecoil -= MaxRecoilDecreaseAmount;
-//	CurrentMinRecoil -= MinRecDecreaseAmount;
-//
-//}

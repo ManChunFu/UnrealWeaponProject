@@ -32,28 +32,37 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 	if (TargetCharacter != nullptr)
 	{	
 		timer -= DeltaTime;
-		if (PitchToAdd < -0.5f || PitchToAdd > 0.5f)
+		if (CurrentPitchToAdd < -0.5f || CurrentPitchToAdd > 0.5f)
 		{
 			float PitchAdded = PitchAddSpeed;
-			PitchToAdd += PitchAdded;
+			CurrentPitchToAdd += PitchAdded;
 			CurrentPitchOffset += PitchAdded;
-			float r = 0.2;
+			
 			TargetCharacter->PitchCamera(PitchAdded);
+			
 		}
 		else if((CurrentPitchOffset < -0.5f || CurrentPitchOffset > 0.5f )&& timer <= 0 && bRecoildReset)		
 		{			
-			CurrentPitchOffset += PitchRemovedRate;
+			CurrentPitchOffset += PitchRemovedRate;	
 			TargetCharacter->PitchCamera(PitchRemovedRate);
+			
+		}
+		else if ((CurrentPitchOffset >= -0.5f && CurrentPitchOffset <= 0.5f) || !bRecoildReset)
+		{
+			bPitchDone = true;
 		}
 
-		if (YawToAdd < -0.4f || YawToAdd > 0.4f)
+
+		if (CurrentYawToAdd < -0.4f || CurrentYawToAdd > 0.4f)
 		{
 			float sign = YawToAdd > 0 ? 1 : -1;
 			float YawAdded = YawAddSpeed * sign;
-			YawToAdd -= YawAdded;
+			CurrentYawToAdd -= YawAdded;
 			CurrentYawOffset += YawAdded;
 			
 			TargetCharacter->RotateCamera(YawAdded);
+			
+			
 		}
 		else if ((CurrentYawOffset < -0.4f || CurrentYawOffset > 0.4f) && timer <= 0 && bRecoildReset)
 		{
@@ -63,24 +72,66 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 			CurrentYawOffset -= YawRemoved;
 
 			TargetCharacter->RotateCamera(-YawRemoved );
+			
+		}
+		else if ((CurrentYawOffset >= -0.4f && CurrentYawOffset <= 0.4f) || !bRecoildReset)
+		{
+			bYawDone = true;
+		}
+		
+
+		if (bPitchDone && bYawDone)
+		{
+			//UE_LOG(LogTemp, Warning, TEXT("Turning Off Timer"));
+			PrimaryComponentTick.SetTickFunctionEnable(false);
 		}
 	}
 }
 
 
-void UCameraShakeComponent::DoCameraShake(AUnrealWeaponProjectCharacter* Character)
+void UCameraShakeComponent::DoCameraShake(AActor* Character,bool bOverride,float O_PitchToAdd, float O_YawToAdd)
 {
-
 	if (Character != nullptr)
 	{
-		TargetCharacter = Character;
-		PrimaryComponentTick.SetTickFunctionEnable(true);
+		if (bOverride)
+		{
+			CurrentPitchToAdd = O_PitchToAdd;
+			CurrentYawToAdd = O_YawToAdd;
+		}
+		
+		{
+			CurrentPitchToAdd = PitchToAdd;
+			CurrentYawToAdd = YawToAdd;
+			
+		}
 
-		PitchToAdd += FMath::RandRange(MinRandPitch, MaxRandPitch);
-		YawToAdd += FMath::RandRange(MinRandYaw, MaxRandYaw);
+		TargetCharacter = Cast<AUnrealWeaponProjectCharacter>(Character);
+		bPitchDone = false;
+		bYawDone = false;	
+		PrimaryComponentTick.SetTickFunctionEnable(true);	
 		timer = TimeUntillReset;
-		//UE_LOG(LogTemp, Warning, TEXT("PitchToAdd: %f"), PitchToAdd);
 	}
+}
+
+void UCameraShakeComponent::ActivateCameraShake()
+{
+	PrimaryComponentTick.SetTickFunctionEnable(true);
+	timer = TimeUntillReset;
+}
+
+void UCameraShakeComponent::OnWeaponAttack_Implementation()
+{
+	DoCameraShake(Holder, false, PitchToAdd, YawToAdd);
+}
+
+void UCameraShakeComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
+{
+	Holder = NewHolder;
+}
+
+void UCameraShakeComponent::OnWeaponDropped_Implementation()
+{
+	Holder = nullptr;
 }
 
 

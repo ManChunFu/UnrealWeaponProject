@@ -7,10 +7,11 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "../UnrealWeaponProjectCharacter.h"
+#include "WeaponComponentInterface.h"
 #include "CameraShakeComponent.generated.h"
 class UInputComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class UNREALWEAPONPROJECT_API UCameraShakeComponent : public UActorComponent
+class UNREALWEAPONPROJECT_API UCameraShakeComponent : public UActorComponent, public IWeaponComponentInterface
 {
 	GENERATED_BODY()
 
@@ -25,25 +26,15 @@ protected:
 
 public:	
 
-	
-		float timer = 0.f;
-
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Timer")
 		float TimeUntillReset = 1.f;
 
-	
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			float PitchToAdd = 2.f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MaxRandYaw = 2.f;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MinRandYaw = -2.f;
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MaxRandPitch = 5.f;
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
-			float MinRandPitch = 4.f;
-
-   
+			float YawToAdd = -2.f;
+		
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test") 
 			bool bRecoildReset = true;
 
@@ -58,21 +49,27 @@ public:
 			float YawRemoveRate = 0.5f;
 
 
-
-		float PitchToAdd = 0.f;
-		float CurrentPitchOffset = 0.f;
-
-		float YawToAdd = 0.f;
-		float CurrentYawOffset = 0.f;
-		
-		bool bCurrentlymoving = false;
-		AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
-		UCameraComponent* Camera = nullptr;
-	// Called every frame
 	
 	UFUNCTION(BlueprintCallable)
-		void DoCameraShake(AUnrealWeaponProjectCharacter* Character);
+		void DoCameraShake(AActor* Character, bool bOverride = false,float O_PitchToAdd = 2.f, float O_YawToAdd = -2.f);
+
+	void ActivateCameraShake();
+	virtual void OnWeaponAttack_Implementation() override;
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override; 
+	virtual void OnWeaponDropped_Implementation() override;
 		
 private:
+	float timer = 0.f;
+
+	float CurrentPitchOffset = 0.f;
+	float CurrentYawOffset = 0.f;
+	bool bPitchDone = false;
+	bool bYawDone = false;
+
+	float CurrentPitchToAdd = 0.f;
+	float CurrentYawToAdd = 0.f;
+	AActor* Holder = nullptr;
+	AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
+	UCameraComponent* Camera = nullptr;
 
 };
