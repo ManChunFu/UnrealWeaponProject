@@ -35,7 +35,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		class UAnimMontage* ReloadAnimationMontage;
-
+	/**
+	* This particle system fires when you fire
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		class UParticleSystem* ParticleSystem;
 

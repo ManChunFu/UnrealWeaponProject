@@ -23,6 +23,12 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 		FireAnimationMontage = FireAnimationMontageObject.Object;
 	}
 
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> ReloadAnimationMontageObject(TEXT("AnimMontage'/Game/FirstPerson/Character/Mesh/Reload_mixamo_com_Montage.Reload_mixamo_com_Montage'"));
+	if (ReloadAnimationMontageObject.Succeeded())
+	{
+		ReloadAnimationMontage = ReloadAnimationMontageObject.Object;
+	}
+
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystemObject(TEXT("ParticleSystem'/Game/Effects/Weapons/Muzzle/P_AssaultRifle_MF.P_AssaultRifle_MF'"));
 	if (ParticleSystemObject.Succeeded())
 	{
@@ -87,12 +93,12 @@ void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 
 void UWeaponAnimationComponent::OnWeaponReload_Implementation()
 {
-	if (Player && FireAnimationMontage)
+	if (Player && ReloadAnimationMontage)
 	{
 		UAnimInstance* AnimInstance = Player->Mesh1P->GetAnimInstance();
 		if (AnimInstance)
 		{
-			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
+			AnimInstance->Montage_Play(ReloadAnimationMontage, 1.f);
 		}
 	}
 }
