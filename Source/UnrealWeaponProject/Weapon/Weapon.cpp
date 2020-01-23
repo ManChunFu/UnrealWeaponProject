@@ -19,8 +19,6 @@ AWeapon::AWeapon()
 	WeaponMesh->SetCollisionProfileName("Weapon");
 	BarrelEnd = CreateDefaultSubobject<UArrowComponent>(TEXT("Barrel End"));
 	BarrelEnd->SetupAttachment(WeaponMesh);
-	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particle System"));
-	ParticleSystem->SetupAttachment(BarrelEnd);
 	RootComponent = WeaponMesh;
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->SetGenerateOverlapEvents(true);

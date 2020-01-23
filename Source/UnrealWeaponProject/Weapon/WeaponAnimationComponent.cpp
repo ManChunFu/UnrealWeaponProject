@@ -34,8 +34,6 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 	{
 		ParticleSystem = ParticleSystemObject.Object;
 	}
-		
-
 }
 
 
@@ -66,11 +64,6 @@ void UWeaponAnimationComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-void UWeaponAnimationComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
-{
-	Holder = NewHolder;
-	Holder = Cast<AUnrealWeaponProjectCharacter>(Holder);
-}
 
 void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 {
@@ -86,8 +79,6 @@ void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 	if (Weapon && ParticleSystem)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleSystem, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle"));
-		UE_LOG(LogTemp, Warning, TEXT("--------------------Spawning-----------------------"));
-		
 	}
 }
 

@@ -41,7 +41,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		class UParticleSystem* ParticleSystem;
 
-	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
 	virtual void OnWeaponAttack_Implementation() override;
 	virtual void OnWeaponReload_Implementation() override;
 

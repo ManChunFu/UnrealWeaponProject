@@ -49,9 +49,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UArrowComponent* BarrelEnd = nullptr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
-		UParticleSystemComponent* ParticleSystem = nullptr;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
