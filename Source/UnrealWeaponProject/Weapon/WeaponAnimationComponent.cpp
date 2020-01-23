@@ -3,9 +3,10 @@
 
 #include "WeaponAnimationComponent.h"
 #include "UObject/ConstructorHelpers.h"
-#include "Animation/AnimInstance.h"
-#include "GameFramework/PlayerController.h"	
-#include "GameFramework/PlayerController.h"	
+#include "UnrealWeaponProject/UnrealWeaponProjectCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "GameFramework/Character.h"
 #include "Animation/AnimInstance.h"
 
 
@@ -29,8 +30,12 @@ void UWeaponAnimationComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	UWorld* World = GetWorld();
+	if (World != nullptr)
+	{
+		Player = Cast<AUnrealWeaponProjectCharacter>(World->GetFirstPlayerController()->GetCharacter());
+	}
+
 }
 
 
@@ -42,28 +47,33 @@ void UWeaponAnimationComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-void UWeaponAnimationComponent::OnWeaponReload_Implementation()
+void UWeaponAnimationComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 {
-	/*UWorld* world = GetWorld();
-	if (world != nullptr)
-	{
-		auto Player = Cast<ACharacter>(world->GetFirstPlayerController()->GetCharacter());
-		if (Player != nullptr)
-			Player->PlayAnimMontage(FireAnimationMontage, 1.f, FName("Default"));
-	}
-	if (FireAnimationMontage)
-	{
-		if (Player)
-			Player->PlayAnimMontage(FireAnimationMontage, 1.f, FName("Default"));
-	}
+	Holder = NewHolder;
+	Holder = Cast<AUnrealWeaponProjectCharacter>(Holder);
+}
 
-	if (FireAnimationMontage)
+void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
+{
+	if (Player && FireAnimationMontage)
 	{
-		UAnimInstance* AnimInstance = Player->GetAnimInstance();
+		UAnimInstance* AnimInstance = Player->Mesh1P->GetAnimInstance();
 		if (AnimInstance)
 		{
 			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
 		}
-	}*/
+	}
+}
+
+void UWeaponAnimationComponent::OnWeaponReload_Implementation()
+{
+	if (Player && FireAnimationMontage)
+	{
+		UAnimInstance* AnimInstance = Player->Mesh1P->GetAnimInstance();
+		if (AnimInstance)
+		{
+			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
+		}
+	}
 }
 

@@ -7,6 +7,7 @@
 #include "WeaponComponentInterface.h"
 #include "WeaponAnimationComponent.generated.h"
 
+class AUnrealWeaponProjectCharacter;
 
 UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UWeaponAnimationComponent : public UActorComponent, public IWeaponComponentInterface
@@ -25,10 +26,18 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Animation")
+		AActor* Holder = nullptr;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		class UAnimMontage* FireAnimationMontage;
 
-
+	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
+	virtual void OnWeaponAttack_Implementation() override;
 	virtual void OnWeaponReload_Implementation() override;
+
+	AUnrealWeaponProjectCharacter* Player;
+
+
 		
 };

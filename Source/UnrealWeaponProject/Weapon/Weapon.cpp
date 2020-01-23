@@ -7,8 +7,6 @@
 #include "FireModeComponent.h"
 #include "Camera/CameraComponent.h"
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
-#include "ProjectileComponent.h"
-#include "Projectile.h"
 #include "HitscanComponent.h"
 
 // Sets default values
