@@ -8,6 +8,7 @@
 #include "WeaponAnimationComponent.generated.h"
 
 class AUnrealWeaponProjectCharacter;
+class AWeapon;
 
 UCLASS( ClassGroup=(Custom), Blueprintable, meta=(BlueprintSpawnableComponent) )
 class UNREALWEAPONPROJECT_API UWeaponAnimationComponent : public UActorComponent, public IWeaponComponentInterface
@@ -32,12 +33,17 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
 		class UAnimMontage* FireAnimationMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+		class UAnimMontage* ReloadAnimationMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation", meta = (AllowPrivateAccess = "true"))
+		class UParticleSystem* ParticleSystem;
+
 	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
 	virtual void OnWeaponAttack_Implementation() override;
 	virtual void OnWeaponReload_Implementation() override;
 
 	AUnrealWeaponProjectCharacter* Player;
+	AWeapon* Weapon;
 
-
-		
 };

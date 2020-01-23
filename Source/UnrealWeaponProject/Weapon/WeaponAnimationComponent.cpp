@@ -5,9 +5,9 @@
 #include "UObject/ConstructorHelpers.h"
 #include "UnrealWeaponProject/UnrealWeaponProjectCharacter.h"
 #include "Kismet/GameplayStatics.h"
-#include "Components/SkeletalMeshComponent.h"
-#include "GameFramework/Character.h"
 #include "Animation/AnimInstance.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Weapon.h"
 
 
 // Sets default values for this component's properties
@@ -22,6 +22,14 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 	{
 		FireAnimationMontage = FireAnimationMontageObject.Object;
 	}
+
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystemObject(TEXT("ParticleSystem'/Game/Effects/Weapons/Muzzle/P_AssaultRifle_MF.P_AssaultRifle_MF'"));
+	if (ParticleSystemObject.Succeeded())
+	{
+		ParticleSystem = ParticleSystemObject.Object;
+	}
+		
+
 }
 
 
@@ -36,6 +44,11 @@ void UWeaponAnimationComponent::BeginPlay()
 		Player = Cast<AUnrealWeaponProjectCharacter>(World->GetFirstPlayerController()->GetCharacter());
 	}
 
+	Weapon = Cast<AWeapon>(GetOwner());
+	if (ParticleSystem == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("--------------------NoParticle-----------------------"));
+	}
 }
 
 
@@ -62,6 +75,13 @@ void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 		{
 			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
 		}
+	}
+
+	if (Weapon && ParticleSystem)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleSystem, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle"));
+		UE_LOG(LogTemp, Warning, TEXT("--------------------Spawning-----------------------"));
+		
 	}
 }
 
