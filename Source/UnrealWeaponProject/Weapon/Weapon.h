@@ -10,9 +10,7 @@
 #include "TimerManager.h"
 #include "Weapon.generated.h"
 
-
-class UProjectileComponent;
-class AProjectile;
+class UHitscanComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWeaponDropped);
 UCLASS()
@@ -101,9 +99,7 @@ public:
 
 	
 private:
-	UProjectileComponent* ProjectileComponent;
-	AProjectile* Projectile;
-
+	UHitscanComponent* HitscanComponent;
 	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);
 
 };

@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 #include "FireModeComponent.h"
+#include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -25,7 +26,6 @@ AProjectile::AProjectile()
 	ProjectileMesh->SetCollisionProfileName("NoCollision");
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileComp"));
 	ProjectileMesh->SetCastShadow(false);
-	
 
 }
 
@@ -36,6 +36,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
 		Destroy();
 	}
+	PrintDamagePerShotOnHUD(Damage, "");
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +60,28 @@ void AProjectile::OnConstruction(const FTransform& Transform)
 	ProjectileMovement->ProjectileGravityScale = GravityScale;
 	// Die after 30 seconds by default
 	InitialLifeSpan = 30.0f;
+}
+
+void AProjectile::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
+{
+	AUnrealWeaponProjectHUD* UnrealWeaponProjectHUD = Cast<AUnrealWeaponProjectHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
+	UFireModeComponent* FireModeComponent = FindComponentByClass<UFireModeComponent>();
+	if (FireModeComponent)
+	{
+		if (FireModeComponent->CurrentFireMode == EFireMode::BurstFire)
+		{
+			Multiplier = "x 3";
+		}
+		else
+		{
+			Multiplier = "";
+		}
+	}
+
+	if (UnrealWeaponProjectHUD)
+	{
+		UnrealWeaponProjectHUD->PrintDamagePerShot(Value, Multiplier);
+	}
 }
 
 

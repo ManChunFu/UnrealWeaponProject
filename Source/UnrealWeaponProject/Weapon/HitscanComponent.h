@@ -29,6 +29,7 @@ public:
 		TArray<FHitResult> Fire(float InaccuracyZ, float InaccuracyY, bool bDebugLine);
 
 	int ShotCount = 1;
+	float Damage = 5.f;
 	virtual void OnWeaponAttack_Implementation() override;
 		
 };

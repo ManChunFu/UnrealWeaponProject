@@ -49,7 +49,7 @@ TArray<FHitResult> UHitscanComponent::Fire(float InaccuracyZ, float InaccuracyY,
 
 		if (GetWorld()->LineTraceSingleByChannel(OutHit, TraceStart, TraceEnd, ECC_Visibility, TraceParams))
 		{
-			UGameplayStatics::ApplyDamage(OutHit.GetActor(), 5.f, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
+			UGameplayStatics::ApplyDamage(OutHit.GetActor(), Damage, GetOwner()->GetInstigatorController(), GetOwner(), nullptr);
 		}
 
 

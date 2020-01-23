@@ -9,6 +9,7 @@
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 #include "ProjectileComponent.h"
 #include "Projectile.h"
+#include "HitscanComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -129,20 +130,9 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 	{
 		IWeaponComponentInterface::Execute_OnWeaponEquipped(Component, Holder);
 	}
-	/*for (auto Component : CachedComponents)
-	{
-		if (Component->GetFName() == "ProjectileComponent")
-		{
-			ProjectileComponent = Cast<UProjectileComponent>(Component);
-		}
-	}*/
-	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
-	if (ProjectileComponent)
-	{
-		float Damage = ProjectileComponent->ProjectileInstance->Damage;
-			//ProjectileComponent->ProjectileInstance.Damage;
-	}
 
+	// Get access to hitscancomponent class in order to get Damage later
+	HitscanComponent = FindComponentByClass<UHitscanComponent>();
 }
 
 void AWeapon::StartAttack_Implementation()
@@ -151,12 +141,12 @@ void AWeapon::StartAttack_Implementation()
 	{
 		FireModeComponent->Start();
 	}
-
-	if (Projectile)
+	if (HitscanComponent != nullptr)
 	{
-		float Damage = Projectile->Damage;
+		float Damage = HitscanComponent->Damage;
 		PrintDamagePerShotOnHUD(Damage, "");
 	}
+
 }
 
 void AWeapon::StopAttack_Implementation()
