@@ -57,17 +57,6 @@ public:
 		float MinRecoilLowLimit = 0.01f;
 
 
-	//UFUNCTION(BlueprintCallable)
-		//void SetRecoilDecreaseRate(float MaxRecoilDecreaseAmount, float MinRecoilDecreaseAmount, float DecreaseRate);
-
-	//UFUNCTION(BlueprintCallable)
-		//void AddRecoil(float PlusMaxRecoil, float PlusMinRecoil);
-
-	//UFUNCTION(BlueprintCallable)	
-		//void SetCurrentRecoil( float MaxRecoil, float MinRecoil);
-
-	//UFUNCTION(BlueprintCallable)
-		//void SetAllRecoilSettings(bool bReduceRecoilOverTime, float DecreaseRate, float MaxRecoilDecreaseAmount, float MinRecoilDecreaseAmount);
 
 
 	UFUNCTION(BlueprintCallable)
@@ -76,8 +65,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd);
-	//UFUNCTION(BlueprintCallable, Category = "MyBlueprintFunctionLibrary") 
-		//void GetCurrentRecoil(float& ActualRecoilX, float& ActualRecoilY, float& MaxRecoil, float& MinRecoil);
 
 
 
@@ -87,5 +74,5 @@ private:
 	FTimerHandle Handle;
 	FTimerDelegate TimerCallback;
 	float Timer = 0;
-	//void RecoilTimer();
+	
 };

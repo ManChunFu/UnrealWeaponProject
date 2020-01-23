@@ -14,6 +14,7 @@ class UNREALWEAPONPROJECT_API UHitscanComponent : public UActorComponent, public
 	GENERATED_BODY()
 private:
 	class URecoilComponent* Recoil = nullptr;
+	class UCameraShakeComponent* Camshake = nullptr;
 public:	
 	// Sets default values for this component's properties
 	UHitscanComponent();

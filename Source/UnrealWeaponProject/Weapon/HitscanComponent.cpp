@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Weapon.h"
 #include "RecoilComponent.h"
+#include "CameraShakeComponent.h"
 #include "../MathHelperFunctions.h"
 
 // Sets default values for this component's properties
@@ -23,6 +24,12 @@ void UHitscanComponent::BeginPlay()
 	if (RecoilComp)
 	{
 		Recoil = Cast<URecoilComponent>(RecoilComp);
+	}
+
+	auto CamShakeComp = GetOwner()->GetComponentByClass(UCameraComponent::StaticClass());
+	if (CamShakeComp)
+	{
+		Camshake = Cast<UCameraShakeComponent>(Camshake);
 	}
 }
 
@@ -71,6 +78,8 @@ void UHitscanComponent::OnWeaponAttack_Implementation()
 		Fire(Recoil->CurrentMaxRecoil, Recoil->CurrentMaxRecoil, bDrawDebugLine);
 		return;
 	}
+
+	
 	UE_LOG(LogTemp, Warning, TEXT("No RecoilComp found on HitScan, using default numbers."));
 	Fire(0.f, 0.f, true);
 }
