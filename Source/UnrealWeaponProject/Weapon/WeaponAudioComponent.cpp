@@ -37,7 +37,6 @@ UWeaponAudioComponent::UWeaponAudioComponent()
 		ReloadSoundCue = ReloadSoundCueObject.Object;
 	}
 
-
 	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 }
 
@@ -63,7 +62,11 @@ void UWeaponAudioComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UWeaponAudioComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 {
-	PlaySound(WeaponEquippedSoundCue, 0.f);
+	if (!bHasPlayed)
+	{
+		bHasPlayed = true;
+		PlaySound(WeaponEquippedSoundCue, 0.f);
+	}
 }
 
 void UWeaponAudioComponent::OnWeaponAttack_Implementation()
@@ -73,6 +76,7 @@ void UWeaponAudioComponent::OnWeaponAttack_Implementation()
 
 void UWeaponAudioComponent::OnWeaponDropped_Implementation()
 {
+	bHasPlayed = false;
 	PlaySound(WeaponDroppedSoundCue, 0.f);
 }
 

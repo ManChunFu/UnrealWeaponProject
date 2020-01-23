@@ -59,7 +59,7 @@ TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, flo
 			FQuat ZRotation(FVector::UpVector, ZOnCircle * InaccuracyZ * PI / 180.f);
 			FQuat YRotation(FVector::RightVector, YOnCircle * InaccuracyY * PI / -180.f);
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
-			ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Holder);
+			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Holder);
 			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
 			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Holder);
 			if (Player)

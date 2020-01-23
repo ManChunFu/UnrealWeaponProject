@@ -57,5 +57,6 @@ public:
 
 private:
 	UAudioComponent* AudioComponent;
+	bool bHasPlayed = false;
 		
 };

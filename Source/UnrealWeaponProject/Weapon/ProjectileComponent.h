@@ -37,7 +37,4 @@ public:
 	UFUNCTION(BlueprintCallable)
 		TArray<AProjectile*> FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier = 1.F);
 
-	AProjectile* ProjectileInstance;
-
-
 };

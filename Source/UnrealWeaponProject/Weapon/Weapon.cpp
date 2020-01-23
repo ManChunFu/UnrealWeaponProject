@@ -129,7 +129,7 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 		IWeaponComponentInterface::Execute_OnWeaponEquipped(Component, Holder);
 	}
 
-	// Get access to hitscancomponent class in order to get Damage later
+	// Get access to hitscancomponent class in order to get Damage value later
 	HitscanComponent = FindComponentByClass<UHitscanComponent>();
 }
 
