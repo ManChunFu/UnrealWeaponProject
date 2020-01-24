@@ -101,6 +101,7 @@ public:
 	
 private:
 	UHitscanComponent* HitscanComponent;
+	UProjectileComponent* ProjectileComponent;
 	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);
 
 };

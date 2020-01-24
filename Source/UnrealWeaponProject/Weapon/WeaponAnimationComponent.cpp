@@ -17,10 +17,10 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> FireAnimationMontageObject(TEXT("AnimMontage'/Game/FirstPerson/Animations/FirstPersonFire_Montage.FirstPersonFire_Montage'"));
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> FireAnimationMontageObject(TEXT("AnimMontage'/Game/FirstPerson/Animations/FirstPersonFire_Montage.FirstPersonFire_Montage'")); // Get the file referernce
 	if (FireAnimationMontageObject.Succeeded())
 	{
-		FireAnimationMontage = FireAnimationMontageObject.Object;
+		FireAnimationMontage = FireAnimationMontageObject.Object; // Assign the file as default
 	}
 
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> ReloadAnimationMontageObject(TEXT("AnimMontage'/Game/FirstPerson/Character/Mesh/Reload_mixamo_com_Montage.Reload_mixamo_com_Montage'"));
@@ -32,7 +32,7 @@ UWeaponAnimationComponent::UWeaponAnimationComponent()
 	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleSystemObject(TEXT("ParticleSystem'/Game/Effects/Weapons/Muzzle/P_AssaultRifle_MF.P_AssaultRifle_MF'"));
 	if (ParticleSystemObject.Succeeded())
 	{
-		ParticleSystem = ParticleSystemObject.Object;
+		MuzzleFlash = ParticleSystemObject.Object;
 	}
 }
 
@@ -49,14 +49,13 @@ void UWeaponAnimationComponent::BeginPlay()
 	}
 
 	Weapon = Cast<AWeapon>(GetOwner());
-	if (ParticleSystem == nullptr)
+	if (MuzzleFlash == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("--------------------NoParticle-----------------------"));
 	}
 }
 
 
-// Called every frame
 void UWeaponAnimationComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
@@ -69,16 +68,18 @@ void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 {
 	if (Player && FireAnimationMontage)
 	{
-		UAnimInstance* AnimInstance = Player->Mesh1P->GetAnimInstance();
+		UAnimInstance* AnimInstance = Player->Mesh1P->GetAnimInstance(); // Get handle of player's AnimInstance
 		if (AnimInstance)
 		{
 			AnimInstance->Montage_Play(FireAnimationMontage, 1.f);
 		}
 	}
 
-	if (Weapon && ParticleSystem)
+	if (Weapon && MuzzleFlash)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ParticleSystem, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle"), true, EPSCPoolMethod::None, true);
+		UGameplayStatics::SpawnEmitterAtLocation(
+			GetWorld(), MuzzleFlash, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle"), 
+			true, EPSCPoolMethod::None, true); // spawn particle system from gun's muzzle socket
 	}
 }
 

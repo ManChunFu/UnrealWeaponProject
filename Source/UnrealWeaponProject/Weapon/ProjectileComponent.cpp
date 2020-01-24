@@ -53,6 +53,7 @@ TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, flo
 			{
 				ProjSpawn = OverrideSpawn;
 			}
+
 			float ZOnCircle, YOnCircle;
 			UMathHelperFunctions::GetRandomPointOnCircle(ZOnCircle, YOnCircle);
 			// Before spawning, rotate the spawn transform to account for inaccuracy

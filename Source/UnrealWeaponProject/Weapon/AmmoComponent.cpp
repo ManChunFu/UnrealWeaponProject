@@ -24,7 +24,6 @@ void UAmmoComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Weapon = Cast<AWeapon>(GetOwner());
-
 }
 
 bool UAmmoComponent::Reload()

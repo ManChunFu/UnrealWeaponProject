@@ -8,6 +8,7 @@
 #include "Camera/CameraComponent.h"
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 #include "HitscanComponent.h"
+#include "ProjectileComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -131,6 +132,8 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 
 	// Get access to hitscancomponent class in order to get Damage value later
 	HitscanComponent = FindComponentByClass<UHitscanComponent>();
+	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
+
 }
 
 void AWeapon::StartAttack_Implementation()
@@ -164,7 +167,10 @@ void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 		{
 			Multiplier = "x 3";
 		}
-		else
+		else if ((AmmoComponent->MagazineAmmo - AmmoComponent->CurrentAmmoCount) > 1)
+		{
+		}
+		else 
 		{
 			Multiplier = "";
 		}

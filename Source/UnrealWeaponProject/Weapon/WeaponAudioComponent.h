@@ -15,26 +15,44 @@ class UNREALWEAPONPROJECT_API UWeaponAudioComponent : public UActorComponent, pu
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	/*
+	* Sets default values for this component's properties
+	*/
 	UWeaponAudioComponent();
 
 protected:
-	// Called when the game starts
+	/*
+	* Called when the game starts
+	*/
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
+	/*
+	* Called every frame
+	*/
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	/*
+	* This firing weapon sound plays when weapon fires
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	class USoundBase* FireSoundCue = nullptr;
 
+	/*
+	* This reloading magazine sound plays when realod the magazine
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		class USoundBase* ReloadSoundCue = nullptr;
 
+	/*
+	* This weapon equipped sound plays when the player picks up a weapon
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		class USoundBase* WeaponEquippedSoundCue = nullptr;
 
+	/*
+	* This weapon dropped sound plays when the player throw away a gun
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		class USoundBase* WeaponDroppedSoundCue = nullptr;
 
@@ -47,12 +65,17 @@ public:
 
 	virtual void OnWeaponReload_Implementation() override;
 
-
+	/*
+	* This function allows you to play sound, it requires a SoundCue, Starting time, and Volume
+	*/
 	UFUNCTION()
-		void PlaySound(USoundBase* SoundCue, float StartTime);
+		void PlaySoundCue(USoundBase* SoundCue, float StartTime, int32 VolumeMultiplier);
 
+	/*
+	* This function allows you to stop playing sound if it is playing
+	*/
 	UFUNCTION()
-		void StopSound();
+		void StopSoundCue();
 
 
 private:

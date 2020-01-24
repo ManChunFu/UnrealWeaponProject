@@ -64,37 +64,38 @@ void UWeaponAudioComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 {
 	if (!bHasPlayed)
 	{
-		bHasPlayed = true;
-		PlaySound(WeaponEquippedSoundCue, 0.f);
+		bHasPlayed = true; //Stop playing sound all the time when the player moves with a weapon equipped
+		PlaySoundCue(WeaponEquippedSoundCue, 0.f, 1.f);
 	}
 }
 
 void UWeaponAudioComponent::OnWeaponAttack_Implementation()
 {
-	PlaySound(FireSoundCue, 0.f);
+	PlaySoundCue(FireSoundCue, 0.f, 1.f);
 }
 
 void UWeaponAudioComponent::OnWeaponDropped_Implementation()
 {
-	bHasPlayed = false;
-	PlaySound(WeaponDroppedSoundCue, 0.f);
+	bHasPlayed = false; // Reset the value so the player can play the weapon equipped sound once he picks up a weapon
+	PlaySoundCue(WeaponDroppedSoundCue, 0.f, 1.f);
 }
 
 void UWeaponAudioComponent::OnWeaponReload_Implementation()
 {
-	PlaySound(ReloadSoundCue, 0.f);
+	PlaySoundCue(ReloadSoundCue, 0.f, 1.f);
 }
 
-void UWeaponAudioComponent::PlaySound(USoundBase* SoundCue, float StartTime)
+void UWeaponAudioComponent::PlaySoundCue(USoundBase* SoundCue, float StartTime, int32 VolumeMultiplier)
 {
 	if (AudioComponent && SoundCue)
 	{
 		AudioComponent->SetSound(SoundCue);
+		AudioComponent->SetVolumeMultiplier(VolumeMultiplier);
 		AudioComponent->Play(0.0f);
 	}
 }
 
-void UWeaponAudioComponent::StopSound()
+void UWeaponAudioComponent::StopSoundCue()
 {
 	if (AudioComponent && AudioComponent->IsPlaying())
 	{
