@@ -7,27 +7,29 @@
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
-{}
+{
+	AllowedFireModes.Add(EFireMode::FullAuto);
+}
 
 void UFireModeComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	if (AllowedFireModes.Num() <= 0)
-	{
-		AllowedFireModes.Add(EFireMode::FullAuto);
-		UE_LOG(LogTemp, Warning, TEXT("No assigned fire modes for weapon : %s"), *GetOwner()->GetName());
+	CurrentFireMode = AllowedFireModes[0];
 
-	}
 	Weapon = Cast<AWeapon>(GetOwner());
 	BurstDelegate.BindLambda([=]
 		{
-			Weapon->TryAttack();
-			NextAttackTime = GetWorld()->GetTimeSeconds() + (BurstDelay * NextAttackMargin);
+			if (!Weapon->TryAttack())
+			{
+				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
+				bBursting = false;
+			}
+
 			BurstCounter++;
 			if (BurstCounter >= AttacksPerBurst)
 			{
 				bBursting = false;
-				NextAttackTime = GetWorld()->GetTimeSeconds() - (AttacksPerBurst*BurstDelay) + (1/BurstsPerSecond)* NextAttackMargin;
+				NextAttackTime = GetWorld()->GetTimeSeconds() - ((AttacksPerBurst * BurstDelay) + (1 / BurstsPerSecond) * NextAttackMargin);
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
@@ -38,6 +40,9 @@ void UFireModeComponent::ChangeFireMode()
 {
 	int32 Index = AllowedFireModes.Find(CurrentFireMode);
 	CurrentFireMode = AllowedFireModes[(Index + 1) % AllowedFireModes.Num()];
+	bBursting = false;
+	GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
+	Stop();
 
 }
 
@@ -46,7 +51,6 @@ void UFireModeComponent::BurstFire()
 {
 	Burst();
 	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
-
 }
 
 void UFireModeComponent::Attack()
@@ -91,8 +95,12 @@ void UFireModeComponent::Start()
 
 
 	case EFireMode::BurstFire:
-		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true, 0.f);
-		PrintShotRateOnHUD(BurstsPerSecond);
+		if (!bBursting)
+		{
+			Burst();
+			PrintShotRateOnHUD(BurstsPerSecond);
+		}
+		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
 		break;
 
 
@@ -102,7 +110,6 @@ void UFireModeComponent::Start()
 
 		break;
 	}
-
 }
 
 void UFireModeComponent::Stop()

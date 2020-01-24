@@ -30,7 +30,6 @@ protected:
 	class UProjectileMovementComponent* ProjectileMovement;
 	
 
-
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
@@ -42,11 +41,11 @@ protected:
 	virtual void OnConstruction(const FTransform& Transform) override;
 
 public:	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 		float ProjectileSpeed = 1000;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
-		float Damage = 10.f;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Projectile")
+		float Damage = 100.f;
 
 private:
 	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);

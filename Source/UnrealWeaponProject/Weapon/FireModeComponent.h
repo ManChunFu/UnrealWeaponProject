@@ -61,23 +61,31 @@ public:
 
 private:
 	int32 BurstCounter = 0;
+
+	/** Inner Burst function that Fires Weapon X Times */
 	UFUNCTION()
-		void Burst();
+	void Burst();
 
 public:
 
 	void BeginPlay();
 
+	/** Toggles between allowed fire modes */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void ChangeFireMode();
 
+	/** Outer Burst Function that loops the inner burst function */
 	UFUNCTION()
 		void BurstFire();
+
+
 	UFUNCTION()
 		void Attack();
 	
+	/** Start this fire mode component */
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Start();
+	/** Stop this fire mode component */
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Stop();
 private:

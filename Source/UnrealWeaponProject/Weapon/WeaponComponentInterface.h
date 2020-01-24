@@ -25,6 +25,7 @@ public:
 	virtual void OnWeaponDropped_Implementation()
 	{};
 
+	/** Overridable function to tell the weapon if it should be allowed to fire */
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Weapon")
 	bool CanAttack();
 	virtual bool CanAttack_Implementation()

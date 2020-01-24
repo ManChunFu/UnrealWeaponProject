@@ -35,7 +35,7 @@ void UProjectileComponent::BeginPlay()
 
 }
 
-TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn, float SpeedMultiplier)
+TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn)
 {
 	TArray<AProjectile*> Projectiles;
 
@@ -45,75 +45,27 @@ TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, flo
 		for (int i = 0; i < ProjectilesToSpawn; i++)
 		{
 			FTransform ProjSpawn;
-			if (OverrideSpawn.Equals(FTransform()))
-			{
-				ProjSpawn = Cast<AWeapon>(GetOwner())->GetSpawnPoint();
-			}
-			else
-			{
-				ProjSpawn = OverrideSpawn;
-			}
 
+			if (OverrideSpawn.Equals(FTransform()))
+			{ ProjSpawn = Cast<AWeapon>(GetOwner())->GetSpawnPoint(); }
+			else
+			{ ProjSpawn = OverrideSpawn; }
 			float ZOnCircle, YOnCircle;
 			UMathHelperFunctions::GetRandomPointOnCircle(ZOnCircle, YOnCircle);
 			// Before spawning, rotate the spawn transform to account for inaccuracy
 			FQuat ZRotation(FVector::UpVector, ZOnCircle * InaccuracyZ * PI / 180.f);
 			FQuat YRotation(FVector::RightVector, YOnCircle * InaccuracyY * PI / -180.f);
 			ProjSpawn.SetRotation(ProjSpawn.GetRotation() * ZRotation * YRotation);
+
+
 			AProjectile* ProjectileInstance = World->SpawnActorDeferred<AProjectile>(ProjectileClass, ProjSpawn, Holder);
-			ProjectileInstance->ProjectileSpeed *= SpeedMultiplier;
+			ProjectileInstance->Damage = Damage;
 			AUnrealWeaponProjectCharacter* Player = Cast<AUnrealWeaponProjectCharacter>(Holder);
 			if (Player)
-			{
-				Player->GetCapsuleComponent()->IgnoreActorWhenMoving(ProjectileInstance, true);
-			}
+			{ Player->GetCapsuleComponent()->IgnoreActorWhenMoving(ProjectileInstance, true); }
 			UGameplayStatics::FinishSpawningActor(ProjectileInstance, ProjSpawn);
 			Projectiles.Add(ProjectileInstance);
 		}
 	}
 	return Projectiles;
 }
-// David är en bananrumpa
-
-
-
-
-
-
-// Not used but if i have time i should fix this
-			/*FHitResult Hit;
-			FCollisionQueryParams temp;
-			temp.AddIgnoredActor(Owner);
-			World->LineTraceSingleByChannel(Hit, CameraTransform.GetLocation(),
-				CameraTransform.GetLocation() + CameraTransform.GetRotation().GetForwardVector() * 100000.f,
-				ECollisionChannel::ECC_Camera, temp);
-
-
-
-			if (bDebugLine)
-			{
-				DrawDebugLine(GetWorld(), CameraTransform.GetLocation(), CameraTransform.GetLocation() + CameraTransform.GetRotation().GetForwardVector() * 10000.f, FColor::Red, false, 1.f);
-
-				if (Hit.bBlockingHit)
-				{
-					DrawDebugLine(GetWorld(), SpawnTransform.GetLocation(), Hit.Location, FColor::Green, false, 1.f);
-
-				}
-				else
-				{
-					DrawDebugLine(GetWorld(), SpawnTransform.GetLocation(), CameraTransform.GetLocation() + CameraTransform.GetRotation().GetForwardVector() * 10000.f, FColor::Red, false, 1.f);
-				}
-			}
-			if (Hit.bBlockingHit)
-			{
-				FRotator Rotation((Hit.Location - SpawnTransform.GetLocation()).Rotation());
-				SpawnTransform.SetRotation(Rotation.Quaternion());
-			}*/
-
-
-			// not using at the moment
-			//// Make visible, fake bullet
-			//AProjectile* VisibleProj = World->SpawnActorDeferred<AProjectile>(ProjectileClass, SpawnTransform, Owner);
-			//VisibleProj->ProjectileSpeed *= SpeedMultiplier;
-			//VisibleProj->CollisionComp->SetCollisionProfileName("PhantomProjectile");
-			//UGameplayStatics::FinishSpawningActor(VisibleProj, SpawnTransform);
