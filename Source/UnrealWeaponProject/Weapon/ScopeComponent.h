@@ -18,14 +18,14 @@ private:
 	float OriginalFov = -1;
 	UCameraComponent* HolderCamera = nullptr;
 public:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float ZoomedFoV = 50.f;
-	// Sets default values for this component's properties
 	UScopeComponent();
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	float ZoomedFoV = 50.f;
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	/** Toggles zoom */
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		void Zoom();
 
