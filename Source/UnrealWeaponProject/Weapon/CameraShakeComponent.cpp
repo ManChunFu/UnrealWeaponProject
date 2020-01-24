@@ -43,8 +43,8 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		}
 		else if((CurrentPitchOffset < -0.5f || CurrentPitchOffset > 0.5f )&& timer <= 0 && bRecoildReset)		
 		{			
-			CurrentPitchOffset += PitchRemovedRate;	
-			TargetCharacter->PitchCamera(PitchRemovedRate);
+			CurrentPitchOffset += PitchRemovedSpeed;	
+			TargetCharacter->PitchCamera(PitchRemovedSpeed);
 			
 		}
 		else if ((CurrentPitchOffset >= -0.5f && CurrentPitchOffset <= 0.5f) || !bRecoildReset)
@@ -67,7 +67,7 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 		else if ((CurrentYawOffset < -0.4f || CurrentYawOffset > 0.4f) && timer <= 0 && bRecoildReset)
 		{
 			float sign = CurrentYawOffset > 0 ? 1 : -1;
-			float YawRemoved = YawRemoveRate * sign;
+			float YawRemoved = YawRemoveSpeed * sign;
 			
 			CurrentYawOffset -= YawRemoved;
 
