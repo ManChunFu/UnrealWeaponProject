@@ -26,11 +26,17 @@ protected:
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		bool bDrawDebugLine = false;
+
+	/*
+	* Damage apply per shot
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		float Damage = 5.f;
+
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		TArray<FHitResult> Fire(float InaccuracyZ, float InaccuracyY, bool bDebugLine);
 
 	int ShotCount = 1;
-	float Damage = 5.f;
 	virtual void OnWeaponAttack_Implementation() override;
 		
 };

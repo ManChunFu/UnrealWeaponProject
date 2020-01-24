@@ -11,6 +11,7 @@
 #include "Weapon.generated.h"
 
 class UHitscanComponent;
+class UProjectileComponent;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWeaponDropped);
 UCLASS()

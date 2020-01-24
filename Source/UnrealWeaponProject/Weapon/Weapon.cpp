@@ -31,6 +31,11 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	CachedComponents = GetComponentsByInterface(UWeaponComponentInterface::StaticClass());
+
+
+	// Get access to hitscancomponent class in order to get Damage value later
+	HitscanComponent = FindComponentByClass<UHitscanComponent>();
+	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
 }
 
 void AWeapon::OnConstruction(const FTransform& Transform)
@@ -130,10 +135,6 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 		IWeaponComponentInterface::Execute_OnWeaponEquipped(Component, Holder);
 	}
 
-	// Get access to hitscancomponent class in order to get Damage value later
-	HitscanComponent = FindComponentByClass<UHitscanComponent>();
-	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
-
 }
 
 void AWeapon::StartAttack_Implementation()
@@ -145,6 +146,11 @@ void AWeapon::StartAttack_Implementation()
 	if (HitscanComponent != nullptr)
 	{
 		float Damage = HitscanComponent->Damage;
+		PrintDamagePerShotOnHUD(Damage, "");
+	}
+	else if (ProjectileComponent != nullptr)
+	{
+		float Damage = ProjectileComponent->Damage;
 		PrintDamagePerShotOnHUD(Damage, "");
 	}
 
@@ -167,9 +173,6 @@ void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 		{
 			Multiplier = "x 3";
 		}
-		else if ((AmmoComponent->MagazineAmmo - AmmoComponent->CurrentAmmoCount) > 1)
-		{
-		}
 		else 
 		{
 			Multiplier = "";
@@ -178,7 +181,12 @@ void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 
 	if (UnrealWeaponProjectHUD)
 	{
+		if (Multiplier != "x 3")
+		{
+			__debugbreak();
+		}
 		UnrealWeaponProjectHUD->PrintDamagePerShot(Value, Multiplier);
+		
 	}
 }
 

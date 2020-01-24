@@ -19,8 +19,6 @@ private:
 		int32 ProjectilesToSpawn = 1;
 	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
 		AActor* Holder = nullptr;
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		float Damage = 10.f;
 
 
 public:
@@ -36,6 +34,9 @@ protected:
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		TSubclassOf<AProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		float Damage = 10.f;
 
 	UFUNCTION(BlueprintCallable)
 		TArray<AProjectile*> FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn);

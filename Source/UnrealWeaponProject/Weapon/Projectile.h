@@ -48,6 +48,5 @@ public:
 		float Damage = 100.f;
 
 private:
-	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);
 
 };
