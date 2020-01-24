@@ -98,5 +98,8 @@ private:
 	FTimerHandle BurstHandle;
 	FTimerDelegate BurstDelegate;
 
+	/**
+	*Print the shot rate on UI when fire the weapon
+	*/
 	void PrintShotRateOnHUD(float Value);
 };

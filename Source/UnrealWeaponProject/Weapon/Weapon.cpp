@@ -9,6 +9,7 @@
 #include "UnrealWeaponProject/UnrealWeaponProjectHUD.h"
 #include "HitscanComponent.h"
 #include "ProjectileComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -153,7 +154,6 @@ void AWeapon::StartAttack_Implementation()
 		float Damage = ProjectileComponent->Damage;
 		PrintDamagePerShotOnHUD(Damage, "");
 	}
-
 }
 
 void AWeapon::StopAttack_Implementation()

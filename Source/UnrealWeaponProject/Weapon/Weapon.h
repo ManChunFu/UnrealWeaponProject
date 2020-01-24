@@ -107,10 +107,10 @@ public:
 	UFUNCTION()
 	void Drop();
 
-	
 private:
 	UHitscanComponent* HitscanComponent;
 	UProjectileComponent* ProjectileComponent;
+
 	/*
 	* Print damage value on UI each time weapon fires 
 	*/

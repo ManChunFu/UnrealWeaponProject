@@ -77,9 +77,7 @@ void UWeaponAnimationComponent::OnWeaponAttack_Implementation()
 
 	if (Weapon && MuzzleFlash)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(
-			GetWorld(), MuzzleFlash, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle"), 
-			true, EPSCPoolMethod::None, true); // spawn particle system from gun's muzzle socket
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), MuzzleFlash, Weapon->WeaponMesh->GetSocketLocation("Muzzle"), Weapon->WeaponMesh->GetSocketRotation("Muzzle")); // spawn particle system from gun's muzzle socket
 	}
 }
 
