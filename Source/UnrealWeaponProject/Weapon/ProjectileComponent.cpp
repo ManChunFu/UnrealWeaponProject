@@ -30,9 +30,7 @@ void UProjectileComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 void UProjectileComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-
+	BulletsPerShot = Cast<AWeapon>(GetOwner())->BulletsPerShot;
 }
 
 TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn)
@@ -42,7 +40,7 @@ TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, flo
 	UWorld* const World = GetWorld();
 	if (World != NULL && ProjectileClass->IsValidLowLevel())
 	{
-		for (int i = 0; i < ProjectilesToSpawn; i++)
+		for (int i = 0; i < BulletsPerShot; i++)
 		{
 			FTransform ProjSpawn;
 

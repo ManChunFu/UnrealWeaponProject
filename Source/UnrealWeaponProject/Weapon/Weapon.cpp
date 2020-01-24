@@ -181,12 +181,7 @@ void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 
 	if (UnrealWeaponProjectHUD)
 	{
-		if (Multiplier != "x 3")
-		{
-			__debugbreak();
-		}
 		UnrealWeaponProjectHUD->PrintDamagePerShot(Value, Multiplier);
-		
 	}
 }
 

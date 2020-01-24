@@ -20,6 +20,10 @@ UHitscanComponent::UHitscanComponent()
 void UHitscanComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	BulletsPerShot = Cast<AWeapon>(GetOwner())->BulletsPerShot;
+
+
 	auto RecoilComp = GetOwner()->GetComponentByClass(URecoilComponent::StaticClass());
 	if (RecoilComp)
 	{
@@ -37,7 +41,7 @@ TArray<FHitResult> UHitscanComponent::Fire(float InaccuracyZ, float InaccuracyY,
 {
 
 	TArray<FHitResult> Hits;
-	for (int i = 0; i < ShotCount; i++)
+	for (int i = 0; i < BulletsPerShot; i++)
 	{
 		float YOnCircle, ZOnCircle;
 		UMathHelperFunctions::GetRandomPointOnCircle(ZOnCircle, YOnCircle);

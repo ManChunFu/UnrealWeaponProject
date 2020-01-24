@@ -15,8 +15,8 @@ class UNREALWEAPONPROJECT_API UProjectileComponent : public UActorComponent, pub
 	GENERATED_BODY()
 
 private:
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-		int32 ProjectilesToSpawn = 1;
+	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
+		int32 BulletsPerShot = 1;
 	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
 		AActor* Holder = nullptr;
 

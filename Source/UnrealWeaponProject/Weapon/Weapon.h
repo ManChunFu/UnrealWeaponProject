@@ -53,6 +53,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+		int32 BulletsPerShot = 1;
 	
 	FORCEINLINE FTransform GetSpawnPoint()
 	{

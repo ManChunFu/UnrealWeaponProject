@@ -15,6 +15,8 @@ class UNREALWEAPONPROJECT_API UHitscanComponent : public UActorComponent, public
 private:
 	class URecoilComponent* Recoil = nullptr;
 	class UCameraShakeComponent* Camshake = nullptr;
+	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
+	int32 BulletsPerShot = 1;
 public:	
 	// Sets default values for this component's properties
 	UHitscanComponent();
