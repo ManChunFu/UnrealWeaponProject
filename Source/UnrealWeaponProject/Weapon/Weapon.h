@@ -106,6 +106,9 @@ public:
 private:
 	UHitscanComponent* HitscanComponent;
 	UProjectileComponent* ProjectileComponent;
+	/*
+	* Print damage value on UI each time weapon fires 
+	*/
 	void PrintDamagePerShotOnHUD(float Value, FString Multiplier);
 
 };

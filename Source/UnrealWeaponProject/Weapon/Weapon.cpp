@@ -171,7 +171,15 @@ void AWeapon::PrintDamagePerShotOnHUD(float Value, FString Multiplier)
 	{
 		if (FireModeComponent->CurrentFireMode == EFireMode::BurstFire)
 		{
-			Multiplier = "x 3";
+			Multiplier = " x 3";
+			if (BulletsPerShot > 1)
+			{
+				Multiplier = " x 3  x " + FString::FromInt(BulletsPerShot);
+			}
+		}
+		else if (BulletsPerShot > 1)
+		{
+			Multiplier = " x " + FString::FromInt(BulletsPerShot);
 		}
 		else 
 		{
