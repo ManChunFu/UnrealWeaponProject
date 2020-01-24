@@ -23,11 +23,12 @@ private:
 	FTimerDelegate DropDelegate;
 	FTimerHandle DropHandle;
 
-	// World location for any spawns caused by this weapon
+	/** Pointer to the holders world location */
 	const FTransform* SpawnPoint;
 public:
 	AWeapon();
 
+	/** List of all the components attached to the weapon */
 	UPROPERTY(BlueprintReadOnly, Category = "Weapon")
 	TArray<UActorComponent*> CachedComponents;
 
@@ -35,28 +36,32 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "EventDispatchers")
 	FOnWeaponDropped WeaponDropped;
 
+	/** Reference to the Weapon Mesh of the weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 		USkeletalMeshComponent* WeaponMesh = nullptr;
 
+	/** Reference to the fire mode component of the weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	class UFireModeComponent* FireModeComponent = nullptr;
 
+	/** Reference to the ammo component of the weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 		class UAmmoComponent* AmmoComponent = nullptr;
 
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
-	//	USkeletalMeshComponent* ArmsMesh = nullptr;
 
+	/** Reference to the barrel endpoint of the weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Weapon")
 		UArrowComponent* BarrelEnd = nullptr;
 
+	/** Reference to the holder of the weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 		AActor* Holder = nullptr;
 
-
+	/** Amount of bullets per shot, like a shotgun */
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 		int32 BulletsPerShot = 1;
 	
+	/** @Return The Transform used by other components to spawn / start bullets */
 	FORCEINLINE FTransform GetSpawnPoint()
 	{
 		FTransform Spawn;
