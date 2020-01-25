@@ -34,7 +34,7 @@ void AWeapon::BeginPlay()
 	CachedComponents = GetComponentsByInterface(UWeaponComponentInterface::StaticClass());
 
 
-	// Get access to hitscancomponent class in order to get Damage value later
+	// Get access to hitscancomponent and projectilecomponent class in order to get Damage value later
 	HitscanComponent = FindComponentByClass<UHitscanComponent>();
 	ProjectileComponent = FindComponentByClass<UProjectileComponent>();
 }
