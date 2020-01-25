@@ -30,11 +30,6 @@ void UHitscanComponent::BeginPlay()
 		Recoil = Cast<URecoilComponent>(RecoilComp);
 	}
 
-	auto CamShakeComp = GetOwner()->GetComponentByClass(UCameraComponent::StaticClass());
-	if (CamShakeComp)
-	{
-		Camshake = Cast<UCameraShakeComponent>(Camshake);
-	}
 }
 
 TArray<FHitResult> UHitscanComponent::Fire(float InaccuracyZ, float InaccuracyY, bool bDebugLine)

@@ -89,23 +89,15 @@ void UCameraShakeComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 }
 
 
-void UCameraShakeComponent::DoCameraShake(AActor* Character,bool bOverride,float O_PitchToAdd, float O_YawToAdd)
+void UCameraShakeComponent::DoCameraShake(float O_PitchToAdd, float O_YawToAdd)
 {
-	if (Character != nullptr)
+	if (Holder != nullptr)
 	{
-		if (bOverride)
-		{
-			CurrentPitchToAdd = O_PitchToAdd;
-			CurrentYawToAdd = O_YawToAdd;
-		}
 		
-		{
-			CurrentPitchToAdd = PitchToAdd;
-			CurrentYawToAdd = YawToAdd;
-			
-		}
-
-		TargetCharacter = Cast<AUnrealWeaponProjectCharacter>(Character);
+		CurrentPitchToAdd = O_PitchToAdd;
+		CurrentYawToAdd = O_YawToAdd;
+	
+		TargetCharacter = Cast<AUnrealWeaponProjectCharacter>(Holder);
 		bPitchDone = false;
 		bYawDone = false;	
 		PrimaryComponentTick.SetTickFunctionEnable(true);	
@@ -121,7 +113,7 @@ void UCameraShakeComponent::ActivateCameraShake()
 
 void UCameraShakeComponent::OnWeaponAttack_Implementation()
 {
-	DoCameraShake(Holder, false, PitchToAdd, YawToAdd);
+	DoCameraShake(PitchToAdd, YawToAdd);
 }
 
 void UCameraShakeComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)

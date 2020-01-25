@@ -20,6 +20,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Weapon")
 		AActor* Holder = nullptr;
 
+	class URecoilComponent* Recoil = nullptr;
 
 public:
 	UProjectileComponent();
@@ -27,6 +28,8 @@ public:
 	virtual void OnWeaponDropped_Implementation() override;
 
 	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
+
+	virtual void OnWeaponAttack_Implementation()override;
 
 protected:
 

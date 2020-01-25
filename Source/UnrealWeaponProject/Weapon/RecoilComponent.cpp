@@ -43,7 +43,7 @@ void URecoilComponent::BeginPlay()
 
 }
 
-void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
+void URecoilComponent::DoRecoil(bool bAddRecoil)
 {
 	UE_LOG(LogTemp, Warning, TEXT("MaxRecoil %f"), CurrentMaxRecoil);
 	UE_LOG(LogTemp, Warning, TEXT("MinRecoil %f"), CurrentMinRecoil);
@@ -51,26 +51,40 @@ void URecoilComponent::DoRecoil(float& ActualRecoilX, float& ActualRecoilY)
 	float a = FMath::RandRange(0.f, 1.f) * 2.f * PI;
 	float r = FMath::RandRange(CurrentMinRecoil,CurrentMaxRecoil) * sqrt(FMath::RandRange(0.f, 1.f));
 
-	ActualRecoilX = r * cosf(a);
-	ActualRecoilY = r * sinf(a);
+	float ActualRecoilX = r * cosf(a);
+	float ActualRecoilY = r * sinf(a);
 
-
+	
 
 
 	if (!GetWorld()->GetTimerManager().IsTimerActive(Handle))
 	{
 		GetWorld()->GetTimerManager().SetTimer(Handle, TimerCallback, DecreaseRate, true);
 	}
-
+	if (bAddRecoil)
+	{
+		AddRecoil(MaxRecoilAddAmount, MinRecoilAddAmount);
+	}
 
 	UE_LOG(LogTemp, Warning, TEXT("MaxRecoil %f"), CurrentMaxRecoil);
 	UE_LOG(LogTemp, Warning, TEXT("MinRecoil %f"), CurrentMinRecoil);
 }
 
-void URecoilComponent::AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd)
+void URecoilComponent::AddRecoil( float O_MaxRecoilToAdd, float O_MinRecoildToAdd)
 {
-	CurrentMaxRecoil += MaxRecoilToAdd;
-	CurrentMinRecoil += MinRecoildToAdd;
+	if (CurrentMaxRecoil < MaxRecoilUpLimit)
+	{
+		CurrentMaxRecoil += O_MaxRecoilToAdd;
+	}
+	if (CurrentMinRecoil < MinRecoilUpLimit)
+	{
+		CurrentMinRecoil += O_MinRecoildToAdd;
+	}
+}
+
+void URecoilComponent::OnWeaponAttack_Implementation()
+{
+	DoRecoil(true);
 }
 
 

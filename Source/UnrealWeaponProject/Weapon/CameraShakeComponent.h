@@ -27,31 +27,42 @@ protected:
 public:	
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Timer")
-		float TimeUntillReset = 1.f;
+			/**Time until the camera starts reseting after the gun has stopped firring.*/	
+			float TimeUntillReset = 1.f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**If the camera should reset itself after being fired, Time until reset is represented by "TimeUntillReset" */
+			bool bRecoildReset = true;
+	
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**How Much Pitch to add whenever the gun fires*/
 			float PitchToAdd = 2.f;
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**How Much Yaw to add whenever the gun fires*/
 			float YawToAdd = -2.f;
 		
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test") 
-			bool bRecoildReset = true;
-
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**How fast the camera should move when adding Pitch*/
 			float PitchAddSpeed = -1.f;
+	
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**How fast the camera should move when adding Yaw*/
 			float YawAddSpeed = 1.f;
 		
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")	
+			/**How fast the camera should move when resetting Pitch*/
 			float PitchRemovedRate = 0.5f;
+		
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+			/**How fast the camera should move when resetting Yaw*/
 			float YawRemoveRate = 0.5f;
 
 
 	
 	UFUNCTION(BlueprintCallable)
-		void DoCameraShake(AActor* Character, bool bOverride = false,float O_PitchToAdd = 2.f, float O_YawToAdd = -2.f);
+		/**Node to override the standard input values. Due to lazy programming, remember to check the "override" Bool to override the values from this node*/
+		void DoCameraShake(float O_PitchToAdd = 2.f, float O_YawToAdd = -2.f);
 
 	void ActivateCameraShake();
 	virtual void OnWeaponAttack_Implementation() override;
@@ -63,13 +74,13 @@ private:
 
 	float CurrentPitchOffset = 0.f;
 	float CurrentYawOffset = 0.f;
-	bool bPitchDone = false;
+	bool bPitchDone = false; // bPitchDone and bYawDone checks if the pitch and yaw have been reset.
 	bool bYawDone = false;
 
 	float CurrentPitchToAdd = 0.f;
 	float CurrentYawToAdd = 0.f;
 	AActor* Holder = nullptr;
 	AUnrealWeaponProjectCharacter* TargetCharacter = nullptr;
-	UCameraComponent* Camera = nullptr;
+	
 
 };

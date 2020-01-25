@@ -32,41 +32,42 @@ public:
 
 	// Current Decrease Rate
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
-		float DecreaseRate = 1.f;
+		float DecreaseRate = 0.2f;
 
 	// Current Recoil Decrease Amount
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
-		float MaxRecoilDecreaseAmount = 0.002f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
-		float MinRecoilDecreaseAmount = 0.002f;
+		float MaxRecoilDecreaseAmount = 0.25f;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
+		float MinRecoilDecreaseAmount = 0.25f;
 
 	// Current Recoil Add Amount
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
-		float MaxRecoilAddAmount = 0.05f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
-		float MinRecoilAddAmount = 0.05f;
+		float MaxRecoilAddAmount = 0.5f;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
+		float MinRecoilAddAmount = 0.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
 		float MaxRecoilUpLimit = 3.f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
 		float MinRecoilUpLimit = 0.5f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
 		float MaxRecoilLowLimit = 0.03;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Recoil")
 		float MinRecoilLowLimit = 0.01f;
 
 
 
 
 	UFUNCTION(BlueprintCallable)
-		void DoRecoil(float& ActualRecoilX, float& ActualRecoilY);
+		void DoRecoil(bool bAddRecoil);
 
 
 	UFUNCTION(BlueprintCallable)
-		void AddRecoil(float MaxRecoilToAdd, float MinRecoildToAdd);
+		void AddRecoil(float O_PitchToAdd, float O_YawToAdd);
 
 
+	virtual void OnWeaponAttack_Implementation();
 
 private:
 

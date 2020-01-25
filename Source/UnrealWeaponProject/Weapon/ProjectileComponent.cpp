@@ -7,6 +7,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "../UnrealWeaponProjectCharacter.h"
+#include "RecoilComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "../MathHelperFunctions.h"
 
@@ -26,11 +27,27 @@ void UProjectileComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 	Holder = NewHolder;
 }
 
+void UProjectileComponent::OnWeaponAttack_Implementation()
+{
+	if (Recoil)
+	{
+		FireProjectile(Recoil->CurrentMaxRecoil, Recoil->CurrentMaxRecoil, Cast<AWeapon>(GetOwner())->GetSpawnPoint());
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("No Recoil Component Found!"));
+	FireProjectile(0.f, 0.f, Cast<AWeapon>(GetOwner())->GetSpawnPoint());	
+}
+
 // Called when the game starts
 void UProjectileComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	BulletsPerShot = Cast<AWeapon>(GetOwner())->BulletsPerShot;
+	auto RecoilComp = GetOwner()->GetComponentByClass(URecoilComponent::StaticClass());
+	if (RecoilComp)
+	{
+		Recoil = Cast<URecoilComponent>(RecoilComp);
+	}
 }
 
 TArray<AProjectile*> UProjectileComponent::FireProjectile(float InaccuracyZ, float InaccuracyY, FTransform OverrideSpawn)
