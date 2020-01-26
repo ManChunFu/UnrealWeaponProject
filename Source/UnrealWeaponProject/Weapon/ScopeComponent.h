@@ -8,6 +8,7 @@
 #include "WeaponComponentInterface.h"
 #include "ScopeComponent.generated.h"
 
+class UAudioComponent;
 
 UCLASS(ClassGroup = (Custom), Blueprintable, meta = (BlueprintSpawnableComponent))
 class UNREALWEAPONPROJECT_API UScopeComponent : public UActorComponent, public IWeaponComponentInterface
@@ -24,6 +25,9 @@ public:
 	float ZoomedFoV = 50.f;
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
 	bool bIsZoomedIn = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
+	class USoundBase* ZoomSoundCue = nullptr;
 protected:
 	virtual void BeginPlay() override;
 
@@ -34,4 +38,7 @@ protected:
 public:
 	virtual void OnWeaponEquipped_Implementation(AActor* NewHolder) override;
 	virtual void OnWeaponDropped_Implementation() override;
+
+	UAudioComponent* AudioComponent;
+	void PlaySoundCue(USoundBase* SoundCue, float StartTime, float VolumMultiplier);
 };

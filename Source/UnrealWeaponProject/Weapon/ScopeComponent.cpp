@@ -3,10 +3,19 @@
 #include "ScopeComponent.h"
 #include "../UnrealWeaponProjectCharacter.h"
 #include "Weapon.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Components/AudioComponent.h"
+
 
 // Sets default values for this component's properties
 UScopeComponent::UScopeComponent()
 {
+	static ConstructorHelpers::FObjectFinder<USoundBase> ZoomSoundCueObject(TEXT("SoundCue'/Game/Audio/SnaiperZoom_Cue.SnaiperZoom_Cue'"));
+	if (ZoomSoundCueObject.Succeeded())
+	{
+		ZoomSoundCue = ZoomSoundCueObject.Object;
+	}
+	AudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("AudioComponent"));
 }
 
 
@@ -30,6 +39,7 @@ void UScopeComponent::Zoom()
 			HolderCamera->FieldOfView = ZoomedFoV;
 			bIsZoomedIn = true;
 		}
+		PlaySoundCue(ZoomSoundCue, 0.0f, 2.f);
 	}
 }
 
@@ -55,5 +65,15 @@ void UScopeComponent::OnWeaponDropped_Implementation()
 	}
 	HolderCamera = nullptr;
 	OriginalFov = -1;
+}
+
+void UScopeComponent::PlaySoundCue(USoundBase* SoundCue, float StartTime, float VolumMultiplier)
+{
+	if (AudioComponent && SoundCue)
+	{
+		AudioComponent->SetSound(SoundCue);
+		AudioComponent->SetVolumeMultiplier(VolumMultiplier);
+		AudioComponent->Play(StartTime);
+	}
 }
 

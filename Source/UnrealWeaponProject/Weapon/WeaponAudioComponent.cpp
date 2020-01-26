@@ -91,7 +91,7 @@ void UWeaponAudioComponent::PlaySoundCue(USoundBase* SoundCue, float StartTime, 
 	{
 		AudioComponent->SetSound(SoundCue);
 		AudioComponent->SetVolumeMultiplier(VolumeMultiplier);
-		AudioComponent->Play(0.0f);
+		AudioComponent->Play(StartTime);
 	}
 }
 
