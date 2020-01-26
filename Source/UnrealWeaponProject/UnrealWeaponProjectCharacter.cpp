@@ -103,7 +103,7 @@ void AUnrealWeaponProjectCharacter::SetupPlayerInputComponent(class UInputCompon
 
 void AUnrealWeaponProjectCharacter::EquipWeapon(AWeapon* Weapon)
 {
-	if (Weapon)
+	if (Weapon && !EquippedWeapon)
 	{
 		GetCapsuleComponent()->IgnoreActorWhenMoving(Weapon, true);
 		Weapon->Equip(this, Mesh1P, "GripPoint");
