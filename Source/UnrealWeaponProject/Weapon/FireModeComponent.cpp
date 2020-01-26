@@ -7,9 +7,7 @@
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
-{
-	//AllowedFireModes.Add(EFireMode::FullAuto);
-}
+{}
 
 void UFireModeComponent::BeginPlay()
 {
