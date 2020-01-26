@@ -25,15 +25,6 @@ void AEnemyController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("ControlledEnemy not start yet"));
 		return;
 	}
-
-	try
-	{
-		UE_LOG(LogTemp, Warning, TEXT("EnemeyController: %s found player: %s"), *(ControlledEnemy->GetName()), *(PlayerCharacter->GetName()));
-	}
-	catch (const std::exception&)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed in AEnemyController"));
-	}
 }
 
 AEnemy* AEnemyController::GetControlledEnemy() const
