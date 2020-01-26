@@ -85,6 +85,7 @@ void AWeapon::Drop()
 
 	WeaponMesh->SetGenerateOverlapEvents(false);
 	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	WeaponMesh->AddImpulse(WeaponMesh->GetRightVector() * 5000.f + Holder->GetRootComponent()->GetUpVector() * 2000.f);
 	StopAttack();
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
@@ -115,6 +116,7 @@ bool AWeapon::CanAttack()
 
 void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketName)
 {
+	UE_LOG(LogTemp, Warning, TEXT("Equip"));
 	Holder = NewHolder;
 	if (Holder->IsA<AUnrealWeaponProjectCharacter>())
 	{
@@ -123,13 +125,12 @@ void AWeapon::Equip(AActor* NewHolder, USceneComponent* AttachTo, FName SocketNa
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Weapon Start Attack"));
-
+	
 		SpawnPoint = &BarrelEnd->GetComponentTransform();
 	}
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->AttachToComponent(AttachTo, FAttachmentTransformRules::SnapToTargetNotIncludingScale, SocketName);
-
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	for (auto Component : CachedComponents)
 	{
