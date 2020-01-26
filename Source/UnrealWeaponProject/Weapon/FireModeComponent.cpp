@@ -8,7 +8,7 @@
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
 {
-	AllowedFireModes.Add(EFireMode::FullAuto);
+	//AllowedFireModes.Add(EFireMode::FullAuto);
 }
 
 void UFireModeComponent::BeginPlay()
@@ -29,7 +29,7 @@ void UFireModeComponent::BeginPlay()
 			if (BurstCounter >= AttacksPerBurst)
 			{
 				bBursting = false;
-				NextAttackTime = GetWorld()->GetTimeSeconds() - ((AttacksPerBurst * BurstDelay) + (1 / BurstsPerSecond) * NextAttackMargin);
+				NextAttackTime = GetWorld()->GetTimeSeconds() + ((1. / BurstsPerSecond) * NextAttackMargin) - (AttacksPerBurst * BurstDelay);
 				GetWorld()->GetTimerManager().ClearTimer(BurstHandle);
 			}
 		});
@@ -101,10 +101,10 @@ void UFireModeComponent::Start()
 	case EFireMode::BurstFire:
 		if (!bBursting)
 		{
-			Burst();
 			PrintShotRateOnHUD(BurstsPerSecond);
+			Burst();
+			GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
 		}
-		GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
 		break;
 
 

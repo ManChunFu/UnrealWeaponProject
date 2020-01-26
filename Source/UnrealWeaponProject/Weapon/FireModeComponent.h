@@ -27,7 +27,7 @@ public:
 	UFireModeComponent();
 
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Weapon")
 		TArray<EFireMode> AllowedFireModes;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
