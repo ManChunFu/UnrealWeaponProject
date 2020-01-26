@@ -26,6 +26,10 @@ public:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
 	bool bIsZoomedIn = false;
 
+	/**
+	* The zooming sound plays when zoom in or out the scope
+	* Only scope zooming sound calling from this class
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 	class USoundBase* ZoomSoundCue = nullptr;
 protected:
@@ -40,5 +44,9 @@ public:
 	virtual void OnWeaponDropped_Implementation() override;
 
 	UAudioComponent* AudioComponent;
+	/**
+	* Play a sound cue
+	*/
+	UFUNCTION()
 	void PlaySoundCue(USoundBase* SoundCue, float StartTime, float VolumMultiplier);
 };

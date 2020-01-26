@@ -43,8 +43,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 		bool Reload();
 	
-
-	// only empty magazine sound calling from this class.
+	/**
+	* Empty magazine sound plays when running out of bullets
+	* Only empty magazine sound calling from this class
+	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon|Audio")
 		class USoundBase* EmptyMagazineSoundCue = nullptr;
 
@@ -60,6 +62,10 @@ private:
 		void FinishReload();
 
 	UAudioComponent* SoundAudioComponent;
+	/**
+	* Play a sound cue
+	*/
+	UFUNCTION()
 	void PlaySound(USoundBase* SoundCue);
 
 
