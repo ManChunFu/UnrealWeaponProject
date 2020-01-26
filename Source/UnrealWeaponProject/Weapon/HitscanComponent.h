@@ -36,6 +36,7 @@ public:
 		float Damage = 5.f;
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		/**Fires a line trace. Inaccuracy determines how much the line should deviate from a straight line (works well with the recoil component)*/
 		TArray<FHitResult> Fire(float InaccuracyZ, float InaccuracyY, bool bDebugLine);
 
 	int ShotCount = 1;

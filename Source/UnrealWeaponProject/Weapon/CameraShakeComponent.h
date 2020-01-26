@@ -61,7 +61,7 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable)
-		/**Node to override the standard input values. Due to lazy programming, remember to check the "override" Bool to override the values from this node*/
+		/**Node to override the standard input values.*/
 		void DoCameraShake(float O_PitchToAdd = 2.f, float O_YawToAdd = -2.f);
 
 	void ActivateCameraShake();
