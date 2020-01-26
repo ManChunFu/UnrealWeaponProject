@@ -20,19 +20,15 @@ void UScopeComponent::Zoom()
 {
 	if (HolderCamera)
 	{
-
-		if (OriginalFov == -1)
+		if (bIsZoomedIn)
 		{
-			OriginalFov = HolderCamera->FieldOfView;
-		}
-
-		if (HolderCamera->FieldOfView == OriginalFov)
-		{
-			HolderCamera->FieldOfView = ZoomedFoV;
+			HolderCamera->FieldOfView = OriginalFov;
+			bIsZoomedIn = false;
 		}
 		else
 		{
-			HolderCamera->FieldOfView = OriginalFov;
+			HolderCamera->FieldOfView = ZoomedFoV;
+			bIsZoomedIn = true;
 		}
 	}
 }
@@ -43,6 +39,7 @@ void UScopeComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 	if (NewHolder->IsA<AUnrealWeaponProjectCharacter>())
 	{
 		HolderCamera = Cast<AUnrealWeaponProjectCharacter>(NewHolder)->GetFirstPersonCameraComponent();
+		OriginalFov = HolderCamera->FieldOfView;
 	}
 	else
 	{
@@ -52,10 +49,11 @@ void UScopeComponent::OnWeaponEquipped_Implementation(AActor* NewHolder)
 
 void UScopeComponent::OnWeaponDropped_Implementation()
 {
-	if (HolderCamera)
+	if (bIsZoomedIn)
 	{
 		HolderCamera->FieldOfView = OriginalFov;
 	}
 	HolderCamera = nullptr;
+	OriginalFov = -1;
 }
 

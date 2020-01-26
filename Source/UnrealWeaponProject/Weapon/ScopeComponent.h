@@ -20,8 +20,10 @@ private:
 public:
 	UScopeComponent();
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	float ZoomedFoV = 50.f;
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, Category = "Weapon")
+	bool bIsZoomedIn = false;
 protected:
 	virtual void BeginPlay() override;
 

@@ -71,6 +71,10 @@ void UFireModeComponent::Attack()
 			break;
 		}
 	}
+	else
+	{
+		Stop();
+	}
 }
 
 void UFireModeComponent::Burst()
