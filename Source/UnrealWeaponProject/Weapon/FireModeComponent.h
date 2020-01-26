@@ -60,11 +60,7 @@ public:
 	float NextAttackMargin = 0.90f;
 
 private:
-	int32 BurstCounter = 0;
-
-	/** Inner Burst function that Fires Weapon X Times */
-	UFUNCTION()
-	void Burst();
+	
 
 public:
 
@@ -74,9 +70,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Weapon")
 	void ChangeFireMode();
 
-	/** Outer Burst Function that loops the inner burst function */
+	/** Outer Burst Function that loops the burst lambda */
 	UFUNCTION()
-		void BurstFire();
+		void Burst();
 
 
 	UFUNCTION()
@@ -97,6 +93,7 @@ private:
 	FTimerHandle FireHandle;
 	FTimerHandle BurstHandle;
 	FTimerDelegate BurstDelegate;
+	int32 BurstCounter = 0;
 
 	/**
 	*Print the shot rate on UI when fire the weapon
