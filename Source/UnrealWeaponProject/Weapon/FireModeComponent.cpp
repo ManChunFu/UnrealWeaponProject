@@ -7,14 +7,19 @@
 
 // Sets default values for this component's properties
 UFireModeComponent::UFireModeComponent()
-{
-	//AllowedFireModes.Add(EFireMode::FullAuto);
-}
+{}
 
 void UFireModeComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	CurrentFireMode = AllowedFireModes[0];
+	if (AllowedFireModes.Num() > 0)
+	{
+		CurrentFireMode = AllowedFireModes[0];
+	}
+	else
+	{
+		CurrentFireMode = EFireMode::SemiAuto;
+	}
 
 	Weapon = Cast<AWeapon>(GetOwner());
 	BurstDelegate.BindLambda([=]
@@ -46,12 +51,6 @@ void UFireModeComponent::ChangeFireMode()
 
 }
 
-
-void UFireModeComponent::BurstFire()
-{
-	Burst();
-	GetWorld()->GetTimerManager().SetTimer(FireHandle, this, &UFireModeComponent::Burst, 1.f / BurstsPerSecond, true);
-}
 
 void UFireModeComponent::Attack()
 {
