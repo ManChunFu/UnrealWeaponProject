@@ -26,35 +26,35 @@ protected:
 
 public:	
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Timer")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake")
 			/**Time until the camera starts reseting after the gun has stopped firring.*/	
 			float TimeUntillReset = 1.f;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake")
 			/**If the camera should reset itself after being fired, Time until reset is represented by "TimeUntillReset" */
 			bool bRecoildReset = true;
 	
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |Add Value")
 			/**How Much Pitch to add whenever the gun fires*/
 			float PitchToAdd = 2.f;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |Add Value")
 			/**How Much Yaw to add whenever the gun fires*/
 			float YawToAdd = -2.f;
 		
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |Speed")
 			/**How fast the camera should move when adding Pitch*/
 			float PitchAddSpeed = -1.f;
 	
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |Speed")
 			/**How fast the camera should move when adding Yaw*/
 			float YawAddSpeed = 1.f;
 		
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")	
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |RemoveRate")	
 			/**How fast the camera should move when resetting Pitch*/
 			float PitchRemovedRate = 0.5f;
 		
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Test")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CamShake |RemoveRate")
 			/**How fast the camera should move when resetting Yaw*/
 			float YawRemoveRate = 0.5f;
 
